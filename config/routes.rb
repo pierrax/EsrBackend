@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
     get 'test', to: 'users#test'
     resources :users
+    resources :institutions
   end
 end
