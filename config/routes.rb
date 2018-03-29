@@ -7,6 +7,8 @@ Rails.application.routes.draw do
 
     get 'test', to: 'users#test'
     resources :users
-    resources :institutions
+    resources :institutions do
+      resources :institution_names
+    end
   end
 end

@@ -13,12 +13,12 @@ class Api::InstitutionsController < Api::BaseController
   end
 
   def show
-    respond_with @institution
+    # respond_with @institution
   end
 
   def update
     if @institution.update(institution_params)
-      respond_with @institution
+      # respond_with @institution
     else
       return not_found
     end
