@@ -18,9 +18,6 @@ class InstitutionName < ApplicationRecord
   end
 
   def archive_others
-    p self.institution.names
-    p 'in archive others'
-    self.institution.names.each { |n| p n.status }
     self.institution.names.each { |n| n.update_attributes(status: 0) }
   end
 end
