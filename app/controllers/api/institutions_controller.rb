@@ -3,6 +3,13 @@ class Api::InstitutionsController < Api::BaseController
   skip_before_action :authenticate_request, only: %i[login register]
   before_action :set_institution, except: %i[create index]
 
+  swagger_controller :institutions, "Les établissements de l'ESR"
+
+  swagger_api :index do
+    summary 'Returns all institutions'
+    notes 'Tous les établissements de l ESR'
+  end
+
   def create
     @institution = Institution.new(institution_params)
     if @institution.save
