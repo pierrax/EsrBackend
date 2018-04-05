@@ -1,13 +1,19 @@
 class Api::InstitutionsController < Api::BaseController
   # before_action :authenticate, except: :create
   skip_before_action :authenticate_request, only: %i[login register]
-  before_action :set_institution, except: %i[create index]
+  before_action :set_institution, except: %i[create index search]
 
   swagger_controller :institutions, "Les établissements de l'ESR"
 
   swagger_api :index do
     summary 'Returns all institutions'
     notes 'Tous les établissements de l ESR'
+  end
+
+  swagger_api :search do
+    summary 'Returns all institutions with name or initials matches'
+    notes 'Filtre les établissements de l ESR par nom ou sigle'
+    param :query, :q, :string, :required, 'query string'
   end
 
   def create
@@ -39,6 +45,10 @@ class Api::InstitutionsController < Api::BaseController
   def index
     @institutions = Institution.all
     respond_with @institutions
+  end
+
+  def search
+    @institutions = Institution.with_name_or_initials(params[:q]).uniq
   end
 
   private

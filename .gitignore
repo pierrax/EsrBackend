@@ -21,6 +21,4 @@
 .idea/*
 .env
 
-## Ignore Swagger JSON files.
-/api/apidocs/
-/public/apidocs/*
+

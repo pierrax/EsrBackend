@@ -11,5 +11,6 @@ Rails.application.routes.draw do
       resources :institution_names
       resources :addresses
     end
+    post 'institutions/search', to: 'institutions#search'
   end
 end

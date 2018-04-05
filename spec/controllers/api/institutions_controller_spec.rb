@@ -9,8 +9,8 @@ RSpec.describe Api::InstitutionsController, :type => :request do
 
   describe '#index' do
     it 'returns all institutions' do
-      i1 = create(:institution)
-      i2 = create(:institution)
+      create(:institution)
+      create(:institution)
 
       get 'api/institutions', format: :json
 
@@ -52,6 +52,44 @@ RSpec.describe Api::InstitutionsController, :type => :request do
       delete "api/institutions/#{i.id}"
       expect(last_response.status).to eq(200)
       expect(Institution.count).to eq(0)
+    end
+  end
+
+  describe '#search' do
+    context 'when institution name mixes case' do
+      it 'returns an institution' do
+        i = create(:institution)
+        i.names.first.update(text: 'abCde')
+
+        post 'api/institutions/search?q=ABC', format: 'json'
+
+        expect(last_response.status).to eq(200)
+        expect(JSON.parse(last_response.body).count).to eq(1)
+      end
+    end
+
+    context 'when match is in institution initials' do
+      it 'returns an institution' do
+        i = create(:institution)
+        i.names.first.update(text: 'XXXX', initials: 'xxabcxx')
+
+        post 'api/institutions/search?q=ABC', format: 'json'
+
+        expect(last_response.status).to eq(200)
+        expect(JSON.parse(last_response.body).count).to eq(1)
+      end
+    end
+
+    context 'when no match in institution name or initials' do
+      it 'returns an empty array' do
+        i = create(:institution)
+        i.names.first.update(text: 'aaaaa', initials: 'bbbbb')
+
+        post 'api/institutions/search?q=ABC', format: 'json'
+
+        expect(last_response.status).to eq(200)
+        expect(JSON.parse(last_response.body).count).to eq(0)
+      end
     end
   end
 end
