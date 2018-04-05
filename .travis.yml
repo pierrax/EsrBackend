@@ -1,0 +1,19 @@
+language: ruby
+
+rvm:
+  - 2.4.0
+
+addons:
+  postgresql: 9.6
+
+before_script:
+  - psql -c 'create database esr_backend_test;' -U postgres
+
+dist: trusty
+
+script:
+  - bundle exec rails db:migrate RAILS_ENV=test
+  - bundle exec rspec
+
+services:
+  - redis-server

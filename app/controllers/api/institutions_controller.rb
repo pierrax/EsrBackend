@@ -1,6 +1,4 @@
 class Api::InstitutionsController < Api::BaseController
-  # before_action :authenticate, except: :create
-  skip_before_action :authenticate_request, only: %i[login register]
   before_action :set_institution, except: %i[create index search]
 
   swagger_controller :institutions, "Les établissements de l'ESR"
