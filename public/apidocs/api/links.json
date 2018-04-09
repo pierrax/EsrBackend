@@ -1,0 +1,116 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "links",
+  "apis": [
+    {
+      "path": "/api/institutions/{institution_id}/links",
+      "operations": [
+        {
+          "summary": "Returns all links for an institution",
+          "notes": "Tous les liens pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Links#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/links",
+      "operations": [
+        {
+          "summary": "Create a link",
+          "notes": "Crée un lien pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "integer",
+              "name": "category_link_id",
+              "type": "integer",
+              "description": "Category link ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Links#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/links/{id}",
+      "operations": [
+        {
+          "summary": "Show a link",
+          "notes": "Afficher un lien",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "link_id",
+              "type": "integer",
+              "description": "link ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Links#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/links/{id}",
+      "operations": [
+        {
+          "summary": "Update a link",
+          "notes": "Mettre à jour un lien",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "link_id",
+              "type": "integer",
+              "description": "link ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Links#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/links/{id}",
+      "operations": [
+        {
+          "summary": "Delete a link",
+          "notes": "Effacer un lien",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "link_id",
+              "type": "integer",
+              "description": "link ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Links#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

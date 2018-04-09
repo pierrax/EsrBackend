@@ -1,0 +1,116 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "codes",
+  "apis": [
+    {
+      "path": "/api/institutions/{institution_id}/codes",
+      "operations": [
+        {
+          "summary": "Returns all codes for an institution",
+          "notes": "Tous les codes pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Codes#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/codes",
+      "operations": [
+        {
+          "summary": "Create a code",
+          "notes": "Crée un code pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "integer",
+              "name": "category_code_id",
+              "type": "integer",
+              "description": "Category code ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Codes#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/codes/{id}",
+      "operations": [
+        {
+          "summary": "Show a code",
+          "notes": "Afficher un code",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "code_id",
+              "type": "integer",
+              "description": "code ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Codes#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/codes/{id}",
+      "operations": [
+        {
+          "summary": "Update a code",
+          "notes": "Mettre à jour un code",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "code_id",
+              "type": "integer",
+              "description": "code ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Codes#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/codes/{id}",
+      "operations": [
+        {
+          "summary": "Delete a code",
+          "notes": "Effacer un code",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "code_id",
+              "type": "integer",
+              "description": "code ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Codes#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

@@ -25,6 +25,10 @@ class Api::BaseController < ApplicationController
     return api_error(status: 404, errors: 'Record not found')
   end
 
+  def not_saved
+    return api_error(status: 404, errors: 'Not saved')
+  end
+
   def unauthorized!(message = t('errors.not_authorized'))
     render json: { error: message }, status: 403
   end

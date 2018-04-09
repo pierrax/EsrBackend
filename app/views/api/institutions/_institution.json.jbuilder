@@ -24,3 +24,16 @@ json.addresses(institution.addresses) do |address|
   json.date_end address.date_end
   json.status address.status
 end
+json.links(institution.links) do |link|
+  json.id link.id
+  json.content link.content
+  json.category link.category.title
+end
+json.codes(institution.codes) do |code|
+  json.id code.id
+  json.content code.content
+  json.category code.category.title
+  json.date_start code.date_start
+  json.date_end code.date_end
+  json.status code.status
+end

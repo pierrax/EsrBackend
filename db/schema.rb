@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180329170105) do
+ActiveRecord::Schema.define(version: 20180409121353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,30 @@ ActiveRecord::Schema.define(version: 20180329170105) do
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
   end
 
+  create_table "category_codes", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "category_links", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "codes", force: :cascade do |t|
+    t.bigint "institution_id"
+    t.string "content"
+    t.integer "category_code_id"
+    t.date "date_start"
+    t.date "date_end"
+    t.integer "status", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["institution_id"], name: "index_codes_on_institution_id"
+  end
+
   create_table "institution_names", force: :cascade do |t|
     t.bigint "institution_id"
     t.integer "status", default: 1
@@ -52,6 +76,18 @@ ActiveRecord::Schema.define(version: 20180329170105) do
     t.datetime "date_end"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "links", force: :cascade do |t|
+    t.bigint "institution_id"
+    t.string "content"
+    t.integer "category_link_id"
+    t.date "date_start"
+    t.date "date_end"
+    t.integer "status", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["institution_id"], name: "index_links_on_institution_id"
   end
 
   create_table "users", force: :cascade do |t|

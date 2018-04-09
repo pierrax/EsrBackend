@@ -60,6 +60,8 @@ class Api::InstitutionsController < Api::BaseController
         :esr_id,
         :date_start,
         :date_end
+    # ,
+    #     name_attributes: { :text, :initials }
     )
   end
 

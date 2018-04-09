@@ -1,0 +1,89 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "category_codes",
+  "apis": [
+    {
+      "path": "/api/category_codes",
+      "operations": [
+        {
+          "summary": "Create a category code",
+          "notes": "Crée un type de code",
+          "parameters": [
+            {
+              "paramType": "string",
+              "name": "title",
+              "type": "string",
+              "description": "Title",
+              "required": true
+            }
+          ],
+          "nickname": "Api::CategoryCodes#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/category_codes/{id}",
+      "operations": [
+        {
+          "summary": "Show a category code",
+          "notes": "Afficher un type de code",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "category_code_id",
+              "type": "integer",
+              "description": "Category code ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::CategoryCodes#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/category_codes/{id}",
+      "operations": [
+        {
+          "summary": "Update a category code",
+          "notes": "Mettre à jour un type de code",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "category_code_id",
+              "type": "integer",
+              "description": "Category code ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::CategoryCodes#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/category_codes/{id}",
+      "operations": [
+        {
+          "summary": "Delete a category code",
+          "notes": "Effacer un type de code",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "category_code_id",
+              "type": "integer",
+              "description": "Category code ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::CategoryCodes#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

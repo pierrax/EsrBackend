@@ -1,0 +1,89 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "category_links",
+  "apis": [
+    {
+      "path": "/api/category_links",
+      "operations": [
+        {
+          "summary": "Create a category link",
+          "notes": "Crée un type de lien",
+          "parameters": [
+            {
+              "paramType": "string",
+              "name": "title",
+              "type": "string",
+              "description": "Title",
+              "required": true
+            }
+          ],
+          "nickname": "Api::CategoryLinks#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/category_links/{id}",
+      "operations": [
+        {
+          "summary": "Show a category lien",
+          "notes": "Afficher un type de lien",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "category_lien_id",
+              "type": "integer",
+              "description": "Category lien ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::CategoryLinks#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/category_links/{id}",
+      "operations": [
+        {
+          "summary": "Update a category lien",
+          "notes": "Mettre à jour un type de lien",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "category_lien_id",
+              "type": "integer",
+              "description": "Category lien ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::CategoryLinks#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/category_links/{id}",
+      "operations": [
+        {
+          "summary": "Delete a category lien",
+          "notes": "Effacer un type de lien",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "category_lien_id",
+              "type": "integer",
+              "description": "Category lien ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::CategoryLinks#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}
