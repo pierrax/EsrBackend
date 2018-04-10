@@ -6,10 +6,27 @@ class Swagger::Docs::Config
 end
 
 Swagger::Docs::Config.register_apis({
-                                        '1.0' => {
-                                            controller_base_path: '',
-                                            api_file_path: 'public/apidocs',
-                                            base_path: ENV['DOMAIN_URL'],
-                                            clean_directory: true
-                                        }
-                                    })
+  '1.0' => {
+      controller_base_path: '',
+      api_file_path: 'public/apidocs',
+      base_path: ENV['DOMAIN_URL'],
+      clean_directory: true,
+      "securityDefinitions": {
+          "bearer": {
+              "type": "apiKey",
+              "name": "Authorization",
+              "in": "header"
+          }
+      },
+      :attributes => {
+          :info => {
+              "title" => "Api documentation",
+              "description" => "Explore our API documentation",
+              "termsOfServiceUrl" => "",
+              "contact" => "",
+              "license" => "Apache 2.0",
+              "licenseUrl" => "http://www.apache.org/licenses/LICENSE-2.0.html"
+          }
+      }
+  }
+})

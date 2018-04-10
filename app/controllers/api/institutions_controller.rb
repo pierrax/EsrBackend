@@ -11,14 +11,50 @@ class Api::InstitutionsController < Api::BaseController
   swagger_api :search do
     summary 'Returns all institutions with name or initials matches'
     notes 'Filtre les établissements de l ESR par nom ou sigle'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
     param :query, :q, :string, :required, 'query string'
   end
 
+  swagger_api :create do
+    summary 'Create an institution'
+    notes 'Créer un établissement'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :name, :string, :optional, 'Institution Name'
+    param :query, :initials, :string, :optional, 'Institution Initials'
+    param :query, :date_start, :string, :optional, 'Institution date start'
+    param :query, :date_end, :string, :optional, 'Institution date end'
+  end
+
+  swagger_api :show do
+    summary 'Show an institution'
+    notes 'Afficher un établissement'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :institution_id, :integer, :required, 'Institution ID'
+  end
+
+  swagger_api :update do
+    summary 'Update an institution'
+    notes 'Mettre à jour un établissement'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :institution_id, :integer, :required, 'Institution ID'
+  end
+
+  swagger_api :destroy do
+    summary 'Delete an institution'
+    notes 'Effacer un établissement'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :institution_id, :integer, :required, 'Institution ID'
+  end
+
   def create
+    if params[:institution][:name].present? || params[:institution][:initials].present?
+      params[:institution][:names_attributes] = [{ text: params[:institution][:name], initials: params[:institution][:initials], insitution_id: params[:institution_id]  }]
+    end
     @institution = Institution.new(institution_params)
     if @institution.save
-      respond_with @institution
+      # respond_with @institution
     else
+      p @institution.errors
       return not_found
     end
   end
@@ -57,11 +93,9 @@ class Api::InstitutionsController < Api::BaseController
 
   def institution_params
     params[:institution].permit(
-        :esr_id,
         :date_start,
-        :date_end
-    # ,
-    #     name_attributes: { :text, :initials }
+        :date_end,
+        names_attributes: [:text, :initials]
     )
   end
 

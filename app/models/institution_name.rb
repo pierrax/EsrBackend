@@ -2,7 +2,7 @@ class InstitutionName < ApplicationRecord
 
   enum status: { archived: 0, active: 1 }
   # Relations
-  belongs_to :institution
+  belongs_to :institution, required: false
 
   # Validations
   validates :text, presence: true, length: { in: 2..30 }

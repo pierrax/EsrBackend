@@ -4,6 +4,10 @@
   "basePath": "https://esr-backend-staging.herokuapp.com",
   "apis": [
     {
+      "path": "/apidocs/api/users.{format}",
+      "description": "Les utilisateurs"
+    },
+    {
       "path": "/apidocs/api/links.{format}",
       "description": "Liens des établissements"
     },
@@ -24,5 +28,13 @@
       "description": "Type de codes des établissements"
     }
   ],
-  "authorizations": null
+  "authorizations": null,
+  "info": {
+    "title": "Api documentation",
+    "description": "Explore our API documentation",
+    "termsOfServiceUrl": "",
+    "contact": "",
+    "license": "Apache 2.0",
+    "licenseUrl": "http://www.apache.org/licenses/LICENSE-2.0.html"
+  }
 }

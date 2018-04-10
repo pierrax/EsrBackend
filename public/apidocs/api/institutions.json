@@ -16,12 +16,148 @@
       ]
     },
     {
+      "path": "/api/institutions",
+      "operations": [
+        {
+          "summary": "Create an institution",
+          "notes": "Créer un établissement",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "name",
+              "type": "string",
+              "description": "Institution Name",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "initials",
+              "type": "string",
+              "description": "Institution Initials",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "date_start",
+              "type": "string",
+              "description": "Institution date start",
+              "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "date_end",
+              "type": "string",
+              "description": "Institution date end",
+              "required": false
+            }
+          ],
+          "nickname": "Api::Institutions#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{id}",
+      "operations": [
+        {
+          "summary": "Show an institution",
+          "notes": "Afficher un établissement",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Institutions#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{id}",
+      "operations": [
+        {
+          "summary": "Update an institution",
+          "notes": "Mettre à jour un établissement",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Institutions#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{id}",
+      "operations": [
+        {
+          "summary": "Delete an institution",
+          "notes": "Effacer un établissement",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Institutions#destroy",
+          "method": "delete"
+        }
+      ]
+    },
+    {
       "path": "/api/institutions/search",
       "operations": [
         {
           "summary": "Returns all institutions with name or initials matches",
           "notes": "Filtre les établissements de l ESR par nom ou sigle",
           "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
             {
               "paramType": "query",
               "name": "q",

@@ -20,23 +20,45 @@ RSpec.describe Api::InstitutionsController, :type => :request do
   end
 
   describe '#create' do
-    it 'creates an institution' do
-      params = { 'institution': {
-          'date_start': Date.current,
+    context 'when no name is given' do
+      it 'creates an institution' do
+        params = {
+          institution: {
+            date_start: Date.current
+          }
         }
-      }
 
-      post 'api/institutions', params.merge(format: 'json')
-      expect(last_response.status).to eq(200)
+        post 'api/institutions', params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(Institution.last.names.first).to be_nil
+      end
+    end
+
+    context 'when a name is given' do
+      it 'creates an institution' do
+        params = {
+          institution: {
+            date_start: Date.current,
+            name: 'New Uni',
+            initials: 'UNI'
+          }
+        }
+
+        post 'api/institutions', params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(Institution.last.names.first.text).to eq('New Uni')
+        expect(Institution.last.names.first.initials).to eq('UNI')
+      end
     end
   end
 
   describe '#update' do
     it 'updates an institution' do
       i = create(:institution)
-      params = { 'institution': {
-          'id': i.id,
-          'date_start': Date.current - 2.days,
+      params = {
+        institution: {
+          id: i.id,
+          date_start: Date.current - 2.days,
         }
       }
 
