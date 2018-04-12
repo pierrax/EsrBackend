@@ -12,11 +12,14 @@ Rails.application.routes.draw do
       resources :addresses
       resources :links, only: [:create, :index]
       resources :codes, only: [:create, :index]
+      resources :institution_categories, only: [:create, :index]
     end
     resources :links, only: [:show, :update, :destroy]
     resources :codes, only: [:show, :update, :destroy]
-    resources :category_links
-    resources :category_codes
+    resources :institution_categories, only: [:show, :update, :destroy]
+    resources :link_categories
+    resources :code_categories
+    resources :institution_category_labels
     post 'institutions/search', to: 'institutions#search'
   end
 end

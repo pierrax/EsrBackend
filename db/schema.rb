@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180409121353) do
+ActiveRecord::Schema.define(version: 20180410141119) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,13 +35,7 @@ ActiveRecord::Schema.define(version: 20180409121353) do
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
   end
 
-  create_table "category_codes", force: :cascade do |t|
-    t.string "title"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "category_links", force: :cascade do |t|
+  create_table "code_categories", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -50,13 +44,33 @@ ActiveRecord::Schema.define(version: 20180409121353) do
   create_table "codes", force: :cascade do |t|
     t.bigint "institution_id"
     t.string "content"
-    t.integer "category_code_id"
+    t.integer "code_category_id"
     t.date "date_start"
     t.date "date_end"
     t.integer "status", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["code_category_id"], name: "index_codes_on_code_category_id"
     t.index ["institution_id"], name: "index_codes_on_institution_id"
+  end
+
+  create_table "institution_categories", force: :cascade do |t|
+    t.bigint "institution_id"
+    t.integer "institution_category_label_id"
+    t.date "date_start"
+    t.date "date_end"
+    t.integer "status", default: 1
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["institution_category_label_id"], name: "index_institution_categories_on_institution_category_label_id"
+    t.index ["institution_id"], name: "index_institution_categories_on_institution_id"
+  end
+
+  create_table "institution_category_labels", force: :cascade do |t|
+    t.string "short_label"
+    t.string "long_label"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "institution_names", force: :cascade do |t|
@@ -78,16 +92,23 @@ ActiveRecord::Schema.define(version: 20180409121353) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "link_categories", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "links", force: :cascade do |t|
     t.bigint "institution_id"
     t.string "content"
-    t.integer "category_link_id"
+    t.integer "link_category_id"
     t.date "date_start"
     t.date "date_end"
     t.integer "status", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["institution_id"], name: "index_links_on_institution_id"
+    t.index ["link_category_id"], name: "index_links_on_link_category_id"
   end
 
   create_table "users", force: :cascade do |t|

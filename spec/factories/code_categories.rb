@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :category_code do
+  factory :code_category do
     title { FFaker::Lorem.characters(10) }
   end
 end

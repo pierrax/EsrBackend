@@ -1,7 +1,7 @@
-class CategoryCode < ApplicationRecord
+class LinkCategory < ApplicationRecord
 
   # Relations
-  has_many :codes
+  has_many :links
 
   # Validations
   validates :title, presence: true

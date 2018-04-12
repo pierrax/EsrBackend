@@ -6,6 +6,7 @@ class Institution < ApplicationRecord
   has_many :addresses, as: :addressable
   has_many :links
   has_many :codes
+  has_many :categories, class_name: 'InstitutionCategory', foreign_key: 'institution_id'
 
   # Validation
   validates :date_start, presence: true

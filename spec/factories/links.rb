@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :link do
     association :institution
-    association :category, factory: :category_link
+    association :category, factory: :link_category
     content { FFaker::Internet.http_url }
 
     date_start { 10.years.ago }

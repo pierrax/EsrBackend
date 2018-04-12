@@ -36,7 +36,6 @@ class Api::LinksController < Api::BaseController
 
   def create
     @institution = Institution.find(params[:institution_id])
-    p link_params
     @link = @institution.links.new(link_params)
     if @link.save
       @link
@@ -79,7 +78,7 @@ class Api::LinksController < Api::BaseController
     params[:link].permit(
         :content,
         :institution_id,
-        :category_link_id,
+        :link_category_id,
         :date_start,
         :date_end,
         :status

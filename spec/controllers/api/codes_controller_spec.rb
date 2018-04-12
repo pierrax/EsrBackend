@@ -8,14 +8,15 @@ RSpec.describe Api::CodesController, :type => :request do
   end
 
   describe '#create' do
-    let(:category_code) { create(:category_code) }
+    let(:code_category) { create(:code_category) }
 
     it 'creates a code' do
       i = create(:institution)
-      params = { 'code': {
-          'content': 'XXX111XXX',
-          'category_code_id': category_code.id
-      }
+      params = {
+        code: {
+          content: 'XXX111XXX',
+          code_category_id: code_category.id
+        }
       }
 
       post "api/institutions/#{i.id}/codes", params.merge(format: 'json')
@@ -28,9 +29,10 @@ RSpec.describe Api::CodesController, :type => :request do
   describe '#update' do
     it 'updates a code' do
       l = create(:code)
-      params = { 'code': {
-          'content': 'NEWCODE'
-      }
+      params = {
+        code: {
+          content: 'NEWCODE'
+        }
       }
 
       put "api/codes/#{l.id}", params.merge(format: 'json')

@@ -7,14 +7,29 @@ RSpec.describe Api::LinksController, :type => :request do
     api_logged_in_as_user
   end
 
+  describe '#index' do
+    let(:link_category) { create(:link_category) }
+
+    it 'returns all links' do
+      i = create(:institution)
+      create(:link, institution_id: i.id)
+      create(:link, institution_id: i.id)
+
+      get "api/institutions/#{i.id}/links", format: :json
+      expect(last_response.status).to eq(200)
+      expect(JSON.parse(last_response.body).count).to eq(2)
+    end
+  end
+
   describe '#create' do
-    let(:category_link) { create(:category_link) }
+    let(:link_category) { create(:link_category) }
 
     it 'creates a link' do
       i = create(:institution)
-      params = { 'link': {
-          'content': 'www.dataesr.com',
-          'category_link_id': category_link.id
+      params = {
+        link: {
+          content: 'www.dataesr.com',
+          link_category_id: link_category.id
         }
       }
 
@@ -28,9 +43,10 @@ RSpec.describe Api::LinksController, :type => :request do
   describe '#update' do
     it 'updates a link' do
       l = create(:link)
-      params = { 'link': {
-          'content': 'www.new-url.com'
-      }
+      params = {
+        link: {
+          content: 'www.new-url.com'
+        }
       }
 
       put "api/links/#{l.id}", params.merge(format: 'json')

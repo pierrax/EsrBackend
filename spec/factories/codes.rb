@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :code do
     association :institution
-    association :category, factory: :category_code
+    association :category, factory: :code_category
     content { FFaker::Lorem.characters(10) }
 
     date_start { 10.years.ago }

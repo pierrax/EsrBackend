@@ -78,7 +78,7 @@ class Api::CodesController < Api::BaseController
     params[:code].permit(
         :content,
         :institution_id,
-        :category_code_id,
+        :code_category_id,
         :date_start,
         :date_end,
         :status
