@@ -9,5 +9,12 @@ FactoryGirl.define do
       create(:institution_name, institution_id: institution.id)
       create(:address, addressable_type: 'Institution', addressable_id: institution.id)
     end
+
+    trait :with_predecessors do
+      after(:create) do |institution|
+        create(:institution_evolution, follower_id: institution.id)
+        create(:institution_evolution, follower_id: institution.id)
+      end
+    end
   end
 end

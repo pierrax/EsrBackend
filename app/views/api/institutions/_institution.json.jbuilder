@@ -37,3 +37,17 @@ json.codes(institution.codes) do |code|
   json.date_end code.date_end
   json.status code.status
 end
+json.categories(institution.categories) do |category|
+  json.id category.id
+  json.category_short_label category.label.short_label
+  json.category_long_label category.label.long_label
+  json.date_start category.date_start
+  json.date_end category.date_end
+  json.status category.status
+end
+json.predecessors(institution.predecessors) do |institution|
+  json.id institution.id
+end
+json.followers(institution.followers) do |institution|
+  json.id institution.id
+end

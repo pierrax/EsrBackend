@@ -26,6 +26,20 @@ RSpec.describe Api::CodesController, :type => :request do
     end
   end
 
+  describe '#index' do
+    let(:code_category) { create(:code_category) }
+
+    it 'returns all codes' do
+      i = create(:institution)
+      create(:code, institution_id: i.id)
+      create(:code, institution_id: i.id)
+
+      get "api/institutions/#{i.id}/codes", format: :json
+      expect(last_response.status).to eq(200)
+      expect(JSON.parse(last_response.body).count).to eq(2)
+    end
+  end
+
   describe '#update' do
     it 'updates a code' do
       l = create(:code)

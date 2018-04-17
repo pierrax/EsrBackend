@@ -8,6 +8,12 @@ class Institution < ApplicationRecord
   has_many :codes
   has_many :categories, class_name: 'InstitutionCategory', foreign_key: 'institution_id'
 
+  has_many :predecessor_evolutions, foreign_key: :follower_id, class_name: 'InstitutionEvolution'
+  has_many :predecessors, through: :predecessor_evolutions, source: :predecessor
+
+  has_many :follower_evolutions, foreign_key: :predecessor_id, class_name: 'InstitutionEvolution'
+  has_many :followers, through: :follower_evolutions, source: :follower
+
   # Validation
   validates :date_start, presence: true
 

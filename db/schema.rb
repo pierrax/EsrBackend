@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180410141119) do
+ActiveRecord::Schema.define(version: 20180412142533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -71,6 +71,24 @@ ActiveRecord::Schema.define(version: 20180410141119) do
     t.string "long_label"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "institution_evolution_categories", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "institution_evolutions", force: :cascade do |t|
+    t.integer "predecessor_id"
+    t.integer "follower_id"
+    t.integer "institution_evolution_category_id"
+    t.datetime "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["follower_id", "predecessor_id"], name: "index_institution_evolutions_on_follower_id_and_predecessor_id", unique: true
+    t.index ["follower_id"], name: "index_institution_evolutions_on_follower_id"
+    t.index ["predecessor_id"], name: "index_institution_evolutions_on_predecessor_id"
   end
 
   create_table "institution_names", force: :cascade do |t|

@@ -13,6 +13,15 @@ Rails.application.routes.draw do
       resources :links, only: [:create, :index]
       resources :codes, only: [:create, :index]
       resources :institution_categories, only: [:create, :index]
+      post 'predecessors', to: 'institution_evolutions#create_predecessor'
+      get 'predecessors', to: 'institution_evolutions#index_predecessors'
+      put 'predecessors/:predecessor_id', to: 'institution_evolutions#update_predecessor'
+      delete 'predecessors/:predecessor_id', to: 'institution_evolutions#destroy_predecessor'
+
+      post 'followers', to: 'institution_evolutions#create_follower'
+      get 'followers', to: 'institution_evolutions#index_followers'
+      put 'followers/:follower_id', to: 'institution_evolutions#update_follower'
+      delete 'followers/:follower_id', to: 'institution_evolutions#destroy_follower'
     end
     resources :links, only: [:show, :update, :destroy]
     resources :codes, only: [:show, :update, :destroy]
@@ -20,6 +29,7 @@ Rails.application.routes.draw do
     resources :link_categories
     resources :code_categories
     resources :institution_category_labels
+    resources :institution_evolution_categories
     post 'institutions/search', to: 'institutions#search'
   end
 end
