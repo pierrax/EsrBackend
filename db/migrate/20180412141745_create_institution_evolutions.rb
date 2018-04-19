@@ -4,7 +4,7 @@ class CreateInstitutionEvolutions < ActiveRecord::Migration[5.1]
       t.integer :predecessor_id
       t.integer :follower_id
       t.integer :institution_evolution_category_id
-      t.datetime :date
+      t.date :date
 
       t.timestamps
     end

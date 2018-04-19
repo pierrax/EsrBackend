@@ -2,6 +2,7 @@ class Api::BaseController < ApplicationController
   skip_before_action :verify_authenticity_token
   before_action :authenticate_request
   attr_reader :current_user
+  include Paginator
 
   class Responder < ActionController::Responder
     # simply render the resource even on POST instead of redirecting for ajax

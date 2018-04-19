@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-
+  get 'db_schema', to: redirect('/erd.pdf')
   namespace :api do
     post 'auth/register', to: 'users#register', as: :register
     post 'auth/login', to: 'users#login', as: :login

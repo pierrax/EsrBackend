@@ -33,7 +33,9 @@ class Api::AddressesController < Api::BaseController
 
   def index
     @institution = Institution.find(params[:institution_id])
-    @addresses = @institution.addresses
+    @addresses = @institution.addresses.page(params[:page_number]).per(params[:page_size])
+    paginator @addresses, params.permit!
+    respond_with @addresses
   end
 
   private

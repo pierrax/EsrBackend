@@ -77,7 +77,8 @@ class Api::InstitutionsController < Api::BaseController
   end
 
   def index
-    @institutions = Institution.all
+    @institutions = Institution.all.page(params[:page_number]).per(params[:page_size])
+    paginator @institutions, params.permit!
     respond_with @institutions
   end
 
