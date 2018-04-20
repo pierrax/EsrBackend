@@ -13,6 +13,11 @@ Rails.application.routes.draw do
       resources :links, only: [:create, :index]
       resources :codes, only: [:create, :index]
       resources :institution_categories, only: [:create, :index]
+
+      get 'tags', to: 'institutions#tags'
+      post 'tags/:tag_id', to: 'institutions#add_tag'
+      delete 'tags/:tag_id', to: 'institutions#remove_tag'
+
       post 'predecessors', to: 'institution_evolutions#create_predecessor'
       get 'predecessors', to: 'institution_evolutions#index_predecessors'
       put 'predecessors/:predecessor_id', to: 'institution_evolutions#update_predecessor'
@@ -29,6 +34,8 @@ Rails.application.routes.draw do
     resources :link_categories
     resources :code_categories
     resources :institution_category_labels
+    resources :institution_tag_categories
+    resources :institution_tags
     resources :institution_evolution_categories
     post 'institutions/search', to: 'institutions#search'
   end

@@ -6,7 +6,9 @@ class Institution < ApplicationRecord
   has_many :addresses, as: :addressable
   has_many :links
   has_many :codes
-  has_many :categories, class_name: 'InstitutionCategory', foreign_key: 'institution_id'
+  # has_many :categories, class_name: 'InstitutionCategory', foreign_key: 'institution_id'
+  has_many :institution_taggings, foreign_key: :institution_id, class_name: 'InstitutionTagging'
+  has_many :tags, through: :institution_taggings, source: :institution_tag
 
   has_many :predecessor_evolutions, foreign_key: :follower_id, class_name: 'InstitutionEvolution'
   has_many :predecessors, through: :predecessor_evolutions, source: :predecessor

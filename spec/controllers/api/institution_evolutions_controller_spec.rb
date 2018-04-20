@@ -17,7 +17,7 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       params = {
         predecessor: {
           predecessor_id: predecessor.id,
-          date: '2018-01-01',
+          date: '2018-01-13',
           institution_evolution_category_id: evolution_category.id
         }
       }
@@ -26,7 +26,7 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       expect(last_response.status).to eq(200)
       expect(InstitutionEvolution.count).to eq(1)
       expect(InstitutionEvolution.first.predecessor_id).to eq(predecessor.id)
-      expect(InstitutionEvolution.first.date).to eq('2018-01-01 00:00:00.000000000 +0000')
+      expect(InstitutionEvolution.first.date).to eq(Date.new(2018,01,13))
     end
   end
 
@@ -65,7 +65,7 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       params = {
           follower: {
               follower_id: follower.id,
-              date: '2018-01-01',
+              date: '2018-01-13',
               institution_evolution_category_id: evolution_category.id
           }
       }
@@ -74,7 +74,7 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       expect(last_response.status).to eq(200)
       expect(InstitutionEvolution.count).to eq(1)
       expect(InstitutionEvolution.first.follower_id).to eq(follower.id)
-      expect(InstitutionEvolution.first.date).to eq('2018-01-01 00:00:00.000000000 +0000')
+      expect(InstitutionEvolution.first.date).to eq(Date.new(2018,01,13))
     end
   end
 
