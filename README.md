@@ -23,3 +23,6 @@ Things you may want to cover:
 
 * Generate Api documentation
 run rake swagger:docs
+
+* Generate DB diagram
+run bundle exec erd

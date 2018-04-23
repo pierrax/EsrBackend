@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180419125510) do
+ActiveRecord::Schema.define(version: 20180423130934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,23 @@ ActiveRecord::Schema.define(version: 20180419125510) do
     t.datetime "updated_at", null: false
     t.index ["code_category_id"], name: "index_codes_on_code_category_id"
     t.index ["institution_id"], name: "index_codes_on_institution_id"
+  end
+
+  create_table "institution_connection_categories", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "institution_connections", force: :cascade do |t|
+    t.integer "mother_id"
+    t.integer "daughter_id"
+    t.integer "institution_connection_category_id"
+    t.date "date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["daughter_id"], name: "index_institution_connections_on_daughter_id"
+    t.index ["mother_id"], name: "index_institution_connections_on_mother_id"
   end
 
   create_table "institution_evolution_categories", force: :cascade do |t|

@@ -16,6 +16,12 @@ class Institution < ApplicationRecord
   has_many :follower_evolutions, foreign_key: :predecessor_id, class_name: 'InstitutionEvolution'
   has_many :followers, through: :follower_evolutions, source: :follower
 
+  has_many :mother_connections, foreign_key: :daughter_id, class_name: 'InstitutionConnection'
+  has_many :mothers, through: :mother_connections, source: :mother
+
+  has_many :daughter_connections, foreign_key: :mother_id, class_name: 'InstitutionConnection'
+  has_many :daughters, through: :daughter_connections, source: :daughter
+
   # Validation
   validates :date_start, presence: true
 
