@@ -1,5 +1,6 @@
 class InstitutionTag < ApplicationRecord
 
+  enum status: { archived: 0, active: 1 }
   # Relations
   has_many :institution_taggings, foreign_key: :institution_tag_id, class_name: 'InstitutionTagging'
   has_many :institutions, through: :institution_taggings, source: :institution

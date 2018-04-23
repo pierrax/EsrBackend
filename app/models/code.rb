@@ -1,5 +1,6 @@
 class Code < ApplicationRecord
 
+  enum status: { archived: 0, active: 1 }
   # Relations
   belongs_to :institution
   belongs_to :category, class_name: 'CodeCategory', foreign_key: 'code_category_id'
