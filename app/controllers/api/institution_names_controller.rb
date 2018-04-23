@@ -1,5 +1,4 @@
 class Api::InstitutionNamesController < Api::BaseController
-  # before_action :authenticate, except: :create
   skip_before_action :authenticate_request, only: %i[login register]
   before_action :set_institution_name, except: %i[create index]
 

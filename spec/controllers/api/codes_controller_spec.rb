@@ -8,21 +8,40 @@ RSpec.describe Api::CodesController, :type => :request do
   end
 
   describe '#create' do
-    let(:code_category) { create(:code_category) }
-
-    it 'creates a code' do
-      i = create(:institution)
-      params = {
-        code: {
-          content: 'XXX111XXX',
-          code_category_id: code_category.id
+    context 'when  no archived params' do
+      it 'creates a code and set others to archived' do
+        code_category = create(:code_category)
+        i = create(:institution)
+        params = {
+          code: {
+            content: 'XXX111XXX',
+            code_category_id: code_category.id
+          }
         }
-      }
 
-      post "api/institutions/#{i.id}/codes", params.merge(format: 'json')
-      expect(last_response.status).to eq(200)
-      expect(i.codes.count).to eq(1)
-      expect(i.codes.first.content).to eq('XXX111XXX')
+        post "api/institutions/#{i.id}/codes", params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(i.codes.count).to eq(1)
+        expect(i.codes.first.content).to eq('XXX111XXX')
+      end
+    end
+
+    context 'when archived params' do
+      it 'creates a code' do
+        code_category = create(:code_category)
+        i = create(:institution)
+        params = {
+            code: {
+                content: 'XXX111XXX',
+                code_category_id: code_category.id
+            }
+        }
+
+        post "api/institutions/#{i.id}/codes", params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(i.codes.count).to eq(1)
+        expect(i.codes.first.content).to eq('XXX111XXX')
+      end
     end
   end
 

@@ -20,6 +20,7 @@ class Address < ApplicationRecord
   end
 
   def archive_others
+    return if self.status == 'archived'
     self.addressable.addresses.each { |a| a.update_attributes(status: 0) }
   end
 end

@@ -18,6 +18,7 @@ class InstitutionName < ApplicationRecord
   end
 
   def archive_others
+    return if self.status == 'archived'
     self.institution.names.each { |n| n.update_attributes(status: 0) }
   end
 end

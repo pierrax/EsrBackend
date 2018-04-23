@@ -8,8 +8,8 @@ Rails.application.routes.draw do
     get 'test', to: 'users#test'
     resources :users
     resources :institutions do
-      resources :institution_names
-      resources :addresses
+      resources :institution_names, only: [:create, :index]
+      resources :addresses, only: [:create, :index]
       resources :links, only: [:create, :index]
       resources :codes, only: [:create, :index]
       resources :institution_categories, only: [:create, :index]
@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     end
     resources :links, only: [:show, :update, :destroy]
     resources :codes, only: [:show, :update, :destroy]
+    resources :institution_names, only: [:show, :update, :destroy]
+    resources :addresses
     resources :institution_categories, only: [:show, :update, :destroy]
     resources :link_categories
     resources :code_categories
