@@ -39,6 +39,7 @@ RSpec.configure do |config|
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
   config.include AuthHelper #, type: :api
+  config.include Request::JsonHelpers, type: :request
   config.include Rails.application.routes.url_helpers #, type: :api
   # config.include ApiHelper
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

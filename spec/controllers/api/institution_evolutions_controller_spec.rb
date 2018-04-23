@@ -23,10 +23,11 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       }
 
       post "api/institutions/#{i.id}/predecessors", params.merge(format: 'json')
+
       expect(last_response.status).to eq(200)
       expect(InstitutionEvolution.count).to eq(1)
-      expect(InstitutionEvolution.first.predecessor_id).to eq(predecessor.id)
-      expect(InstitutionEvolution.first.date).to eq(Date.new(2018,01,13))
+      expect(i.predecessors.last).to eq(predecessor)
+      expect(InstitutionEvolution.last.date).to eq(Date.new(2018,01,13))
     end
   end
 
@@ -39,7 +40,7 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       get "api/institutions/#{i.id}/predecessors", format: :json
 
       expect(last_response.status).to eq(200)
-      expect(JSON.parse(last_response.body).count).to eq(2)
+      expect(json_response[:evolutions].count).to eq(2)
     end
   end
 
@@ -71,9 +72,10 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       }
 
       post "api/institutions/#{i.id}/followers", params.merge(format: 'json')
+
       expect(last_response.status).to eq(200)
       expect(InstitutionEvolution.count).to eq(1)
-      expect(InstitutionEvolution.first.follower_id).to eq(follower.id)
+      expect(i.followers.last).to eq(follower)
       expect(InstitutionEvolution.first.date).to eq(Date.new(2018,01,13))
     end
   end
@@ -87,7 +89,7 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       get "api/institutions/#{i.id}/followers", format: :json
 
       expect(last_response.status).to eq(200)
-      expect(JSON.parse(last_response.body).count).to eq(2)
+      expect(json_response[:evolutions].count).to eq(2)
     end
   end
 

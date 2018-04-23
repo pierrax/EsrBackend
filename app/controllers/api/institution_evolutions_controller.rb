@@ -4,7 +4,9 @@ class Api::InstitutionEvolutionsController < Api::BaseController
     @institution = Institution.find(params[:institution_id])
     @evolution = InstitutionEvolution.new(predecessor_params)
     if @evolution.save
+      @evolutions = @institution.predecessor_evolutions
     else
+      p @evolution.errors
       return not_saved
     end
   end
@@ -12,6 +14,7 @@ class Api::InstitutionEvolutionsController < Api::BaseController
   def index_predecessors
     @institution = Institution.find(params[:institution_id])
     @predecessors = @institution.predecessors
+    @evolutions = @institution.predecessor_evolutions
   end
 
   def destroy_predecessor
@@ -26,6 +29,7 @@ class Api::InstitutionEvolutionsController < Api::BaseController
     @evolution = InstitutionEvolution.new(follower_params)
 
     if @evolution.save
+      @evolutions = @institution.follower_evolutions
     else
       p @evolution.errors
       return not_saved
@@ -35,6 +39,7 @@ class Api::InstitutionEvolutionsController < Api::BaseController
   def index_followers
     @institution = Institution.find(params[:institution_id])
     @followers = @institution.followers
+    @evolutions = @institution.follower_evolutions
   end
 
   def destroy_follower
