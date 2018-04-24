@@ -5,10 +5,13 @@ module Paginator
   def paginator(collection, options={})
     return unless collection && is_paginated?(collection)
 
+    links = []
     pages_from(collection).map do |key, value|
       params = query_parameters(options).merge(page_number: value, page_size: collection.size).to_query
-      headers[key] = "#{options.fetch(:url, request.base_url)}?#{params}"
+      links << %(<#{options.fetch(:url, request.base_url)}?#{params}>; rel="#{key}")
     end
+    headers['Link'] = links.join(', ') unless links.empty?
+    headers['Access-Control-Expose-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token, Link'
   end
 
   def pages_from(collection)

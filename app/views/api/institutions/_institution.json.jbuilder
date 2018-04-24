@@ -52,3 +52,9 @@ end
 json.followers(institution.followers) do |institution|
   json.id institution.id
 end
+json.mothers(institution.mothers) do |institution|
+  json.id institution.id
+end
+json.daughters(institution.daughters) do |institution|
+  json.id institution.id
+end
