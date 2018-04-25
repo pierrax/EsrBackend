@@ -15,9 +15,9 @@ RSpec.describe Api::InstitutionsController, :type => :request do
 
       expect(last_response.status).to eq(200)
       expect(JSON.parse(last_response.body).count).to eq(20)
-      expect(last_response.header['Link'].split(',')[0]).to eq("<http://example.org?page_number=1&page_size=20>; rel=\"self\"")
-      expect(last_response.header['Link'].split(',')[1].strip).to eq("<http://example.org?page_number=2&page_size=20>; rel=\"next\"")
-      expect(last_response.header['Link'].split(',')[2].strip).to eq("<http://example.org?page_number=3&page_size=20>; rel=\"last\"")
+      expect(last_response.header['Link'].split(',')[0]).to eq("<http://example.org/api/institutions?page_number=1&page_size=20>; rel=\"self\"")
+      expect(last_response.header['Link'].split(',')[1].strip).to eq("<http://example.org/api/institutions?page_number=2&page_size=20>; rel=\"next\"")
+      expect(last_response.header['Link'].split(',')[2].strip).to eq("<http://example.org/api/institutions?page_number=3&page_size=20>; rel=\"last\"")
     end
   end
 
