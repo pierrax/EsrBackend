@@ -86,28 +86,6 @@ class Api::InstitutionsController < Api::BaseController
     @institutions = Institution.with_name_or_initials(params[:q]).uniq
   end
 
-  def tags
-    @tags = @institution.tags
-  end
-
-  def add_tag
-    @tag = InstitutionTag.find(params[:tag_id])
-    @tags = @institution.tags
-    return api_error(status: 302, errors: 'Error: Tag already added') if @tags.include?(@tag)
-
-    @institution.tags << @tag
-    @tags = @institution.tags
-  end
-
-  def remove_tag
-    @tag = InstitutionTag.find(params[:tag_id])
-    @tags = @institution.tags
-    return api_error(status: 302, errors: "Error: Can't remove this tag" ) unless @tags.include?(@tag)
-
-    @institution.tags.delete(@tag)
-    @tags = @institution.tags
-  end
-
   private
 
   def set_institution

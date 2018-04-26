@@ -45,8 +45,6 @@ class Api::InstitutionTagsController < Api::BaseController
       :short_label,
       :long_label,
       :institution_tag_category_id,
-      :date_start,
-      :date_end,
       :status
     )
   end

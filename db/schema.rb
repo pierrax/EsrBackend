@@ -108,9 +108,12 @@ ActiveRecord::Schema.define(version: 20180423130934) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "institution_taggings", id: false, force: :cascade do |t|
+  create_table "institution_taggings", force: :cascade do |t|
     t.bigint "institution_id"
     t.bigint "institution_tag_id"
+    t.date "date_start"
+    t.date "date_end"
+    t.integer "status", default: 1
     t.index ["institution_id"], name: "index_institution_taggings_on_institution_id"
     t.index ["institution_tag_id"], name: "index_institution_taggings_on_institution_tag_id"
   end
@@ -119,8 +122,6 @@ ActiveRecord::Schema.define(version: 20180423130934) do
     t.string "short_label"
     t.string "long_label"
     t.integer "institution_tag_category_id"
-    t.date "date_start"
-    t.date "date_end"
     t.integer "status", default: 1
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

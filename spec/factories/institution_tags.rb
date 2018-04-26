@@ -5,7 +5,5 @@ FactoryGirl.define do
     long_label  { FFaker::Lorem.characters(30) }
 
     status { 1 }
-    date_start { 10.years.ago }
-    date_end { nil }
   end
 end
