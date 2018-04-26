@@ -39,12 +39,9 @@ json.codes(institution.codes) do |code|
 end
 json.tags(institution.tags) do |tag|
   json.id tag.id
-  json.short_label tag.label.short_label
-  json.long_label tag.label.long_label
+  json.short_label tag.short_label
+  json.long_label tag.long_label
   json.category tag.category.title
-  json.date_start tag.date_start
-  json.date_end tag.date_end
-  json.status tag.status
 end
 json.predecessors(institution.predecessors) do |institution|
   json.id institution.id

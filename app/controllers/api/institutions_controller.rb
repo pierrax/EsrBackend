@@ -83,7 +83,8 @@ class Api::InstitutionsController < Api::BaseController
   end
 
   def search
-    @institutions = Institution.with_name_or_initials(params[:q]).uniq
+    @institutions = Institution.with_name_or_initials(params[:q]).distinct.page(params[:page_number]).per(params[:page_size])
+    paginator @institutions, params.permit!
   end
 
   private

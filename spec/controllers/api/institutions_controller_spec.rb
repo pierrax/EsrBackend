@@ -84,13 +84,15 @@ RSpec.describe Api::InstitutionsController, :type => :request do
   describe '#search' do
     context 'when institution name mixes case' do
       it 'returns an institution' do
-        i = create(:institution)
-        i.names.first.update(text: 'abCde')
+        35.times do
+          i = create(:institution)
+          i.names.first.update(text: 'abCde')
+        end
 
         post 'api/institutions/search?q=ABC', format: 'json'
 
         expect(last_response.status).to eq(200)
-        expect(JSON.parse(last_response.body).count).to eq(1)
+        expect(json_response.count).to eq(20)
       end
     end
 
@@ -102,7 +104,7 @@ RSpec.describe Api::InstitutionsController, :type => :request do
         post 'api/institutions/search?q=ABC', format: 'json'
 
         expect(last_response.status).to eq(200)
-        expect(JSON.parse(last_response.body).count).to eq(1)
+        expect(json_response.count).to eq(1)
       end
     end
 
