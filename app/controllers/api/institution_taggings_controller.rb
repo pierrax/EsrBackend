@@ -2,7 +2,7 @@ class Api::InstitutionTaggingsController < Api::BaseController
   before_action :set_institution, except: :update
 
   def index
-    @tags = @institution.tags
+    @taggings = @institution.institution_taggings
   end
 
   def create
