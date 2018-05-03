@@ -6,7 +6,6 @@ class Institution < ApplicationRecord
   has_many :addresses, as: :addressable
   has_many :links
   has_many :codes
-  # has_many :categories, class_name: 'InstitutionCategory', foreign_key: 'institution_id'
   has_many :institution_taggings, foreign_key: :institution_id, class_name: 'InstitutionTagging'
   has_many :tags, through: :institution_taggings, source: :institution_tag
 
@@ -22,7 +21,7 @@ class Institution < ApplicationRecord
   has_many :daughter_connections, foreign_key: :mother_id, class_name: 'InstitutionConnection'
   has_many :daughters, through: :daughter_connections, source: :daughter
 
-  # Validation
+  # Validations
   validates :date_start, presence: true
 
   # Scopes
