@@ -7,8 +7,8 @@ module Paginator
 
     links = []
     pages_from(collection).map do |key, value|
-      params = query_parameters(options).merge(page_number: value, page_size: collection.size).to_query
-      links << %(<#{options.fetch(:url, request.base_url)}#{request.path}?#{params}>; rel="#{key}")
+      params = query_parameters(options).merge(page_number: value, page_size: collection.limit_value).to_query
+      links << %(<#{options.fetch(:url, request.base_url)}#{request.path}?#{request.query_parameters.except(:page_number, :page_size).to_query}&#{params}>; rel="#{key}")
     end
     headers['Link'] = links.join(', ') unless links.empty?
     headers['Access-Control-Expose-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token, Link'
