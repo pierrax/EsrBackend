@@ -1,5 +1,5 @@
 class Api::CodesController < Api::BaseController
-  before_action :set_code, except: %i[create index]
+  before_action :set_code, except: %i[create index search]
 
   swagger_controller :codes, 'Codes des établissements'
 
@@ -65,6 +65,11 @@ class Api::CodesController < Api::BaseController
   def index
     @institution = Institution.find(params[:institution_id])
     @codes = @institution.codes
+  end
+
+  def search
+    @code = Code.where(content: params[:q]).first
+    @institution = @code.institution
   end
 
   private

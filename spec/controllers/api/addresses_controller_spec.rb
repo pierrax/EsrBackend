@@ -15,7 +15,7 @@ RSpec.describe Api::AddressesController, :type => :request do
         params = {
           address: {
             business_name: 'Sorbonne 12',
-            address_1: '1 rue des bois',
+            address_1: '1 rue des écoles',
             address_2: '',
             zip_code: '75005',
             city: 'Paris',
@@ -32,14 +32,14 @@ RSpec.describe Api::AddressesController, :type => :request do
         expect(last_response.status).to eq(200)
         expect(i.addresses.count).to eq(2)
         expect(i.addresses.last.business_name).to eq('Sorbonne 12')
-        expect(i.addresses.last.address_1).to eq('1 rue des bois')
+        expect(i.addresses.last.address_1).to eq('1 rue des écoles')
         expect(i.addresses.last.address_2).to eq('')
         expect(i.addresses.last.zip_code).to eq('75005')
         expect(i.addresses.last.city).to eq('Paris')
         expect(i.addresses.last.country).to eq('France')
         expect(i.addresses.last.phone).to eq('0101010101')
-        expect(i.addresses.last.latitude).to eq(2.0)
-        expect(i.addresses.last.longitude).to eq(4.0)
+        expect(i.addresses.last.latitude).to eq(48.847408)
+        expect(i.addresses.last.longitude).to eq(2.352397)
         expect(i.addresses.last.status).to eq('active')
         expect(i.addresses.first.status).to eq('archived')
       end
@@ -53,7 +53,7 @@ RSpec.describe Api::AddressesController, :type => :request do
         params = {
           address: {
             business_name: 'Sorbonne 12',
-            address_1: '1 rue des bois',
+            address_1: '1 rue des écoles',
             address_2: '',
             zip_code: '75005',
             city: 'Paris',
@@ -71,14 +71,14 @@ RSpec.describe Api::AddressesController, :type => :request do
         expect(last_response.status).to eq(200)
         expect(i.addresses.count).to eq(3)
         expect(i.addresses.last.business_name).to eq('Sorbonne 12')
-        expect(i.addresses.last.address_1).to eq('1 rue des bois')
+        expect(i.addresses.last.address_1).to eq('1 rue des écoles')
         expect(i.addresses.last.address_2).to eq('')
         expect(i.addresses.last.zip_code).to eq('75005')
         expect(i.addresses.last.city).to eq('Paris')
         expect(i.addresses.last.country).to eq('France')
         expect(i.addresses.last.phone).to eq('0101010101')
-        expect(i.addresses.last.latitude).to eq(2.0)
-        expect(i.addresses.last.longitude).to eq(4.0)
+        expect(i.addresses.last.latitude).to eq(48.847408)
+        expect(i.addresses.last.longitude).to eq(2.352397)
         expect(i.addresses.last.status).to eq('archived')
         expect(archived_address.reload.status).to eq('archived')
         expect(i.addresses.first.status).to eq('active')
@@ -99,37 +99,61 @@ RSpec.describe Api::AddressesController, :type => :request do
   end
 
   describe '#update' do
-    it 'updates a name' do
-      address = create(:address)
+    context 'when address changes' do
+      it 'updates a name and coordinates' do
+        address = create(:address)
 
-      params = {
-          address: {
-              business_name: 'Sorbonne 12',
-              address_1: '1 rue des bois',
-              address_2: '',
-              zip_code: '75005',
-              city: 'Paris',
-              country: 'France',
-              phone: '0101010101',
-              latitude: 2.00,
-              longitude: 4.00
-          }
-      }
+        params = {
+            address: {
+                business_name: 'Sorbonne 12',
+                address_1: '1 rue des écoles',
+                address_2: '',
+                zip_code: '75005',
+                city: 'Paris',
+                country: 'France',
+                phone: '0101010101',
+                latitude: 2.00,
+                longitude: 4.00
+            }
+        }
 
-      put "api/addresses/#{address.id}", params.merge(format: 'json')
+        put "api/addresses/#{address.id}", params.merge(format: 'json')
 
-      address.reload
-      expect(last_response.status).to eq(200)
-      expect(address.business_name).to eq('Sorbonne 12')
-      expect(address.address_1).to eq('1 rue des bois')
-      expect(address.address_2).to eq('')
-      expect(address.zip_code).to eq('75005')
-      expect(address.city).to eq('Paris')
-      expect(address.country).to eq('France')
-      expect(address.phone).to eq('0101010101')
-      expect(address.latitude).to eq(2.0)
-      expect(address.longitude).to eq(4.0)
+        address.reload
+        expect(last_response.status).to eq(200)
+        expect(address.business_name).to eq('Sorbonne 12')
+        expect(address.address_1).to eq('1 rue des écoles')
+        expect(address.address_2).to eq('')
+        expect(address.zip_code).to eq('75005')
+        expect(address.city).to eq('Paris')
+        expect(address.country).to eq('France')
+        expect(address.phone).to eq('0101010101')
+        expect(address.latitude).to eq(48.847408)
+        expect(address.longitude).to eq(2.352397)
+      end
     end
+
+    context 'when address does not change' do
+      it 'only updates a name' do
+        address = create(:address)
+        address.update_columns(latitude: 2.00, longitude: 4.00)
+
+        params = {
+          address: {
+            business_name: 'Sorbonne 12'
+          }
+        }
+
+        put "api/addresses/#{address.id}", params.merge(format: 'json')
+
+        address.reload
+        expect(last_response.status).to eq(200)
+        expect(address.business_name).to eq('Sorbonne 12')
+        expect(address.latitude).to eq(2.00)
+        expect(address.longitude).to eq(4.00)
+      end
+    end
+
   end
 
   describe '#delete' do

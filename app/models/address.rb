@@ -13,6 +13,13 @@ class Address < ApplicationRecord
   # Callback
   before_create :set_date_start, :archive_others
 
+  geocoded_by :full_address
+  after_validation :geocode, if: ->(obj){ obj.address_1.present? and (obj.address_1_changed? || obj.address_2_changed? || obj.city_changed? || obj.zip_code_changed?) }
+
+  def full_address
+    "#{address_1} #{address_2} #{zip_code} #{city} #{country}"
+  end
+  
   private
 
   def set_date_start

@@ -30,4 +30,8 @@ class Institution < ApplicationRecord
   def name
     names.active.first.try(:text)
   end
+
+  def address
+    addresses.active.first
+  end
 end

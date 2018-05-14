@@ -35,6 +35,8 @@ gem 'swagger-docs'
 gem 'swagger-ui_rails5'
 gem 'kaminari'
 
+gem 'geocoder'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

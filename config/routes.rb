@@ -41,6 +41,7 @@ Rails.application.routes.draw do
     end
     resources :links, only: [:show, :update, :destroy]
     resources :codes, only: [:show, :update, :destroy]
+    post 'codes/search', to: 'codes#search'
     resources :institution_names, only: [:show, :update, :destroy]
     resources :addresses
     resources :institution_categories, only: [:show, :update, :destroy]

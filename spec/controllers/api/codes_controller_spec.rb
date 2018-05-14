@@ -69,7 +69,7 @@ RSpec.describe Api::CodesController, :type => :request do
 
       get "api/institutions/#{i.id}/codes", format: :json
       expect(last_response.status).to eq(200)
-      expect(JSON.parse(last_response.body).count).to eq(2)
+      expect(json_response.count).to eq(2)
     end
   end
 
@@ -96,6 +96,19 @@ RSpec.describe Api::CodesController, :type => :request do
       delete "api/codes/#{l.id}"
       expect(last_response.status).to eq(200)
       expect(Code.count).to eq(0)
+    end
+  end
+
+  describe '#search' do
+    it 'returns an institution' do
+      i = create(:institution)
+      code = create(:code, institution_id: i.id)
+
+      post "api/codes/search?q=#{code.content}", format: 'json'
+
+      expect(last_response.status).to eq(200)
+      expect(json_response.count).to eq(1)
+      expect(json_response[:institution][:codes].first[:content]).to eq(code.content)
     end
   end
 end
