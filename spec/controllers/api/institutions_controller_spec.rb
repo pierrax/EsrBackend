@@ -128,8 +128,21 @@ RSpec.describe Api::InstitutionsController, :type => :request do
         post 'api/institutions/search?q=ABC', format: 'json'
 
         expect(last_response.status).to eq(200)
-        expect(JSON.parse(last_response.body).count).to eq(0)
+        expect(json_response.count).to eq(0)
       end
+    end
+  end
+
+  describe '#import' do
+    let(:file) { Rack::Test::UploadedFile.new (fixture_path + '/institutions.csv'), 'text/csv' }
+
+    it 'creates 2 institutions' do
+      create(:code_category, title: 'uai')
+
+      post 'api/institutions/import', file: file
+
+      expect(last_response.status).to eq(200)
+      expect(Institution.count).to eq(2)
     end
   end
 end

@@ -4,5 +4,5 @@ class CodeCategory < ApplicationRecord
   has_many :codes
 
   # Validations
-  validates :title, presence: true
+  validates :title, presence: true, uniqueness: true
 end

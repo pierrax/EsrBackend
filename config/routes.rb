@@ -38,7 +38,10 @@ Rails.application.routes.draw do
       get 'daughters', to: 'institution_connections#index_daughters'
       put 'daughters/:daughter_id', to: 'institution_connections#update_daughter'
       delete 'daughters/:daughter_id', to: 'institution_connections#destroy_daughter'
+
     end
+    post 'institutions/import', to: 'institutions#import'
+
     resources :links, only: [:show, :update, :destroy]
     resources :codes, only: [:show, :update, :destroy]
     post 'codes/search', to: 'codes#search'

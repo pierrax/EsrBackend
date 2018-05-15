@@ -1,5 +1,5 @@
 class Api::InstitutionsController < Api::BaseController
-  before_action :set_institution, except: %i[create index search]
+  before_action :set_institution, except: %i[create index search import]
 
   swagger_controller :institutions, "Les établissements de l'ESR"
 
@@ -87,6 +87,14 @@ class Api::InstitutionsController < Api::BaseController
     paginator @institutions, params.permit!
   end
 
+  def import
+    if ImportInstitutions.new(params[:file].tempfile).call
+      render json: { message: 'Institution uploaded' }, status: 200
+    else
+      render json: { message: 'Error with the file uploaded' }, status: 401
+    end
+  end
+
   private
 
   def set_institution
@@ -100,5 +108,4 @@ class Api::InstitutionsController < Api::BaseController
         names_attributes: [:text, :initials]
     )
   end
-
 end
