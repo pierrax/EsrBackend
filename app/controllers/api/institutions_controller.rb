@@ -83,8 +83,14 @@ class Api::InstitutionsController < Api::BaseController
   end
 
   def search
-    @institutions = Institution.with_name_or_initials(params[:q]).distinct.page(params[:page_number]).per(params[:page_size])
-    paginator @institutions, params.permit!
+    if params[:download] == 'true'
+      @institutions = Institution.with_name_or_initials(params[:q])
+      ExportInstitutions.new(@institutions).call
+      send_file "#{Rails.root}/tmp/etablissements_ens_sup.csv", type: 'text/csv', disposition: 'inline'
+    else
+      @institutions = Institution.with_name_or_initials(params[:q]).distinct.page(params[:page_number]).per(params[:page_size])
+      paginator @institutions, params.permit!
+    end
   end
 
   def import

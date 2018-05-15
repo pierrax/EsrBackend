@@ -34,4 +34,8 @@ class Institution < ApplicationRecord
   def address
     addresses.active.first
   end
+
+  def code_uai
+    codes.from_category(CodeCategory::UAI_ID).first.try(:content)
+  end
 end

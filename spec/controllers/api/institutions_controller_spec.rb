@@ -131,6 +131,17 @@ RSpec.describe Api::InstitutionsController, :type => :request do
         expect(json_response.count).to eq(0)
       end
     end
+
+    context 'when params donwload is true' do
+      it 'returns the url of the CSV file' do
+        i = create(:institution)
+        i.names.first.update(text: 'aaaaa', initials: 'bbbbb')
+
+        post 'api/institutions/search?q=a&download=true', format: 'json'
+
+        expect(last_response.status).to eq(200)
+      end
+    end
   end
 
   describe '#import' do
