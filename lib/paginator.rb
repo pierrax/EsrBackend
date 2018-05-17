@@ -24,7 +24,7 @@ module Paginator
         pages['prev']  = collection.current_page - ONE_PAGE
       end
 
-      unless collection.current_page == collection.total_pages
+      unless (collection.current_page == collection.total_pages) || (collection.total_pages == 0)
         pages['next'] = collection.current_page + ONE_PAGE
         pages['last'] = collection.total_pages
       end

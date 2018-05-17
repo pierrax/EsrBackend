@@ -129,6 +129,8 @@ RSpec.describe Api::InstitutionsController, :type => :request do
 
         expect(last_response.status).to eq(200)
         expect(json_response.count).to eq(0)
+
+        expect(last_response.header['Link'].split(',')[0]).to eq("<http://example.org/api/institutions/search?q=ABC&page_number=1&page_size=20>; rel=\"self\"")
       end
     end
 
