@@ -32,6 +32,7 @@ class ImportInstitutions
         else
           # create institution
           @institution = Institution.create(date_start: row[DATE_START])
+          @institution.codes.create(content: row[UAI_CODE], category: @code_uai)
           @institution.names.create(text: row[NAME], initials: row[INITIALS])
           @institution.addresses.create(business_name: row[BUSINESS_NAME], address_1: row[ADDRESS_1], address_2: row[ADDRESS_2], zip_code: row[ZIP_CODE], city: row[CITY], country: row[COUNTRY], phone: row[PHONE] )
         end

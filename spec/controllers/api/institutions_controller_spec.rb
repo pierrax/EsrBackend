@@ -156,6 +156,17 @@ RSpec.describe Api::InstitutionsController, :type => :request do
 
       expect(last_response.status).to eq(200)
       expect(Institution.count).to eq(2)
+      expect(Institution.last.date_start).to eq(Date.new(2000, 01, 01))
+      expect(Institution.last.codes.first.content).to eq('Uaaa33bbb')
+      expect(Institution.last.names.first.text).to eq('Central')
+      expect(Institution.last.names.first.initials).to eq('CCC')
+      expect(Institution.last.addresses.first.business_name).to eq('Central')
+      expect(Institution.last.addresses.first.address_1).to eq('1 rue des bois')
+      expect(Institution.last.addresses.first.address_2).to be_nil
+      expect(Institution.last.addresses.first.zip_code).to eq('92150')
+      expect(Institution.last.addresses.first.city).to eq('Suresnes')
+      expect(Institution.last.addresses.first.country).to eq('France')
+      expect(Institution.last.addresses.first.phone).to eq('0100990099')
     end
   end
 end
