@@ -1,13 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
   get 'db_schema', to: redirect('/erd.pdf')
 
   namespace :api do
-    post 'auth/register', to: 'users#register', as: :register
-    post 'auth/login', to: 'users#login', as: :login
-
-    get 'test', to: 'users#test'
-    resources :users
     resources :institutions do
       resources :institution_names, only: [:create, :index]
       resources :addresses, only: [:create, :index]
