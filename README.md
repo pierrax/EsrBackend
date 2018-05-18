@@ -1,28 +1,62 @@
-# DataESR backend
+# DataESR Institutions
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+DataESR Institutions is a Rails open source application to manage higher education institutions and expose data through a REST API. 
 
-Things you may want to cover:
+![Data ESR Institutions](public/data_esr_institutions_home.png)
 
-* Ruby version
+### Ruby version
 
-* System dependencies
+2.4.0
 
-* Configuration
+### Installation
 
-* Database creation
+First, clone down the repository:
 
-* Database initialization
+    git clone https://github.com/pierrax/EsrBackend.git && cd esrbackend
 
-* How to run the test suite
+Update dependencies, run:
 
-* Services (job queues, cache servers, search engines, etc.)
+    bundle install
 
-* Deployment instructions
+Create database, run:
 
-* Generate Api documentation
-run rake swagger:docs
+    rake db:create
 
-* Generate DB diagram
-run bundle exec erd
+Run migrations:
+
+    rake db:migrate
+    
+Populate database, run:
+     
+     rake db:seed
+    
+Environment variables, add a ```.env``` file to the root, with:
+
+    DOMAIN_URL=http://localhost:3000
+    CHECK_TOKEN_URL=my_auth_application_url
+    
+
+### Launch 
+
+In a console, launch the Rails server, run :
+
+    rails s
+
+That's it !
+
+### Database schema
+
+To generate a db diagram, run:
+
+    bundle exec erd
+
+### Dependencies
+
+##### Authentification
+
+You need to add an authentification application in order to successfully authenticate your requests.
+Please check: https://github.com/pierrax/data_esr_authenfication
+
+##### Front-end
+
+Please check: 

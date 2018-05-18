@@ -5,7 +5,7 @@ class InstitutionName < ApplicationRecord
   belongs_to :institution, required: false
 
   # Validations
-  validates :text, presence: true, length: { in: 2..30 }
+  validates :text, presence: true, length: { in: 2..100 }
   validates :initials, presence: true, length: { in: 2..30 }
 
   # Callback
