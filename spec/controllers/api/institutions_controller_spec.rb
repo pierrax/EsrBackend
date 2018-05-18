@@ -135,7 +135,7 @@ RSpec.describe Api::InstitutionsController, :type => :request do
     end
 
     context 'when params donwload is true' do
-      it 'returns the url of the CSV file' do
+      it 'returns the url the CSV file in the body' do
         i = create(:institution)
         i.names.first.update(text: 'aaaaa', initials: 'bbbbb')
 

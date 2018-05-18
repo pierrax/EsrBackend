@@ -6,7 +6,7 @@ class ExportInstitutions
   end
 
   def call
-    institutions_csv = CSV.generate(col_sep: ';') do |csv|
+    CSV.generate(col_sep: ';') do |csv|
       csv << %w(NumeroUAI NomEtablissement SigleEtablissement BusinessName Adresse1 Adresse2 CodePostal Ville Pays Telephone DateCreation)
 
       @institutions.each do |institution|
@@ -23,7 +23,5 @@ class ExportInstitutions
                 institution.date_start]
       end
     end
-
-    File.open('tmp/etablissements_ens_sup.csv', 'w:UTF-8') {|file| file.write(institutions_csv)}
   end
 end
