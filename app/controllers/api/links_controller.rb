@@ -5,33 +5,34 @@ class Api::LinksController < Api::BaseController
 
   swagger_api :create do
     summary 'Create a link'
-    notes 'Crée un lien pour un établissement'
+    notes 'Créer un lien pour un établissement'
     param :integer, :institution_id, :integer, :required, 'Institution ID'
-    param :integer, :category_link_id, :integer, :required, 'Category link ID'
+    param :query, :category_link_id, :integer, :required, 'Category link ID'
+    param :query, :content, :string, :required, 'Content link'
   end
 
   swagger_api :index do
     summary 'Returns all links for an institution'
     notes 'Tous les liens pour un établissement'
-    param :integer, :institution_id, :integer, :required, 'Institution ID'
+    param :query, :institution_id, :integer, :required, 'Institution ID'
   end
 
   swagger_api :show do
     summary 'Show a link'
     notes 'Afficher un lien'
-    param :integer, :link_id, :integer, :required, 'link ID'
+    param :query, :link_id, :integer, :required, 'link ID'
   end
 
   swagger_api :update do
     summary 'Update a link'
     notes 'Mettre à jour un lien'
-    param :integer, :link_id, :integer, :required, 'link ID'
+    param :query, :link_id, :integer, :required, 'link ID'
   end
 
   swagger_api :destroy do
     summary 'Delete a link'
     notes 'Effacer un lien'
-    param :integer, :link_id, :integer, :required, 'link ID'
+    param :query, :link_id, :integer, :required, 'link ID'
   end
 
   def create

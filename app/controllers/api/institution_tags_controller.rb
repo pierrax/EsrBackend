@@ -1,6 +1,40 @@
 class Api::InstitutionTagsController < Api::BaseController
   before_action :set_tag, except: %i[create index]
 
+  swagger_controller :tags, 'Tags des établissements'
+
+  swagger_api :index do
+    summary 'Returns all tags for an institution'
+    notes 'Tous les tags pour un établissement'
+    param :query, :institution_id, :integer, :required, 'Institution ID'
+  end
+
+  swagger_api :create do
+    summary 'Create a tag'
+    notes 'Créer un tag pour un établissement'
+    param :integer, :institution_id, :integer, :required, 'Institution ID'
+    param :query, :category_tag_id, :integer, :required, 'Category tag ID'
+    param :query, :content, :string, :required, 'Content tag'
+  end
+
+  swagger_api :show do
+    summary 'Show a tag'
+    notes 'Afficher un tag'
+    param :query, :tag_id, :integer, :required, 'tag ID'
+  end
+
+  swagger_api :update do
+    summary 'Update a tag'
+    notes 'Mettre à jour un tag'
+    param :query, :tag_id, :integer, :required, 'tag ID'
+  end
+
+  swagger_api :destroy do
+    summary 'Delete a tag'
+    notes 'Effacer un tag'
+    param :query, :tag_id, :integer, :required, 'tag ID'
+  end
+  
   def create
     @tag = InstitutionTag.new(tag_params)
     if @tag.save

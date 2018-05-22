@@ -51,6 +51,12 @@ To generate a db diagram, run:
 
     bundle exec erd
 
+### API documentation
+
+Visit ```http://localhost:3000/api``` :
+
+![Data ESR documentation](public/swagger_doc.png)
+
 ### Dependencies
 
 ##### Authentification

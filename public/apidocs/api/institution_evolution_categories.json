@@ -1,0 +1,107 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "institution_evolution_categories",
+  "apis": [
+    {
+      "path": "/api/institution_evolution_categories",
+      "operations": [
+        {
+          "summary": "Returns all evolution categories",
+          "notes": "Tous les types d'evolution",
+          "nickname": "Api::InstitutionEvolutionCategories#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_evolution_categories",
+      "operations": [
+        {
+          "summary": "Create a evolution category",
+          "notes": "Créer un type de evolution",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "title",
+              "type": "string",
+              "description": "Title",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutionCategories#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_evolution_categories/{id}",
+      "operations": [
+        {
+          "summary": "Show a evolution category",
+          "notes": "Afficher un type de evolution",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "evolution_category_id",
+              "type": "integer",
+              "description": "Evolution Category ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutionCategories#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_evolution_categories/{id}",
+      "operations": [
+        {
+          "summary": "Update a evolution category",
+          "notes": "Mettre à jour un type de evolution",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "evolution_category_id",
+              "type": "integer",
+              "description": "Evolution Category ID",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "title",
+              "type": "json",
+              "description": "Title",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutionCategories#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_evolution_categories/{id}",
+      "operations": [
+        {
+          "summary": "Delete a evolution category",
+          "notes": "Effacer un type de evolution",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "evolution_category_id",
+              "type": "integer",
+              "description": "Evolution Category ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutionCategories#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

@@ -3,28 +3,33 @@ class Api::CodeCategoriesController < Api::BaseController
 
   swagger_controller :codes, 'Type de codes des établissements'
 
+  swagger_api :index do
+    summary 'Returns all code categories'
+    notes 'Tous les types de codes'
+  end
+
   swagger_api :create do
     summary 'Create a code category'
-    notes 'Crée un type de code'
-    param :string, :title, :string, :required, 'Title'
+    notes 'Créer un type de code'
+    param :query, :title, :string, :required, 'Title'
   end
 
   swagger_api :show do
     summary 'Show a code category'
     notes 'Afficher un type de code'
-    param :integer, :code_category_id, :integer, :required, 'Code category ID'
+    param :query, :code_category_id, :integer, :required, 'Code category ID'
   end
 
   swagger_api :update do
     summary 'Update a code category'
     notes 'Mettre à jour un type de code'
-    param :integer, :code_category_id, :integer, :required, 'Code category ID'
+    param :query, :code_category_id, :integer, :required, 'Code category ID'
   end
 
   swagger_api :destroy do
     summary 'Delete a code category'
     notes 'Effacer un type de code'
-    param :integer, :code_category_id, :integer, :required, 'Code category ID'
+    param :query, :code_category_id, :integer, :required, 'Code category ID'
   end
 
   def create

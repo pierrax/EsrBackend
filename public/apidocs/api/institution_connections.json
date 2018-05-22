@@ -1,0 +1,157 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "institution_connections",
+  "apis": [
+    {
+      "path": "/api/institutions/{institution_id}/mothers",
+      "operations": [
+        {
+          "summary": "Create a mother",
+          "notes": "Créer une connection mère pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "mother",
+              "type": "integer",
+              "description": "mother_id institution_connection_category_id date",
+              "required": false
+            }
+          ],
+          "nickname": "Api::InstitutionConnections#create_mother",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/mothers",
+      "operations": [
+        {
+          "summary": "Returns all mothers for an institution",
+          "notes": "Tous les établissements mère pour un établissement",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnections#index_mothers",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/mothers/{mother_id}",
+      "operations": [
+        {
+          "summary": "Delete a mother connection",
+          "notes": "Effacer une connection mère",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "link_id",
+              "type": "integer",
+              "description": "link ID",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "mother_id",
+              "type": "integer",
+              "description": "mother ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnections#destroy_mother",
+          "method": "delete"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/daughters",
+      "operations": [
+        {
+          "summary": "Create a daughter",
+          "notes": "Créer une connection fille pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "daughter",
+              "type": "integer",
+              "description": "daughter_id institution_connection_category_id date",
+              "required": false
+            }
+          ],
+          "nickname": "Api::InstitutionConnections#create_daughter",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/daughters",
+      "operations": [
+        {
+          "summary": "Returns all daughters for an institution",
+          "notes": "Tous les établissements fille pour un établissement",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnections#index_daughters",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/daughters/{daughter_id}",
+      "operations": [
+        {
+          "summary": "Delete a daughter connection",
+          "notes": "Effacer une connection fille",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "link_id",
+              "type": "integer",
+              "description": "link ID",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "daughter_id",
+              "type": "integer",
+              "description": "daughter ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnections#destroy_daughter",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

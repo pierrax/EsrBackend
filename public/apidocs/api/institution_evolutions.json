@@ -1,0 +1,157 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "institution_evolutions",
+  "apis": [
+    {
+      "path": "/api/institutions/{institution_id}/predecessors",
+      "operations": [
+        {
+          "summary": "Create a predecessor",
+          "notes": "Créer une évolution prédécesseur pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "predecessor",
+              "type": "integer",
+              "description": "predecessor_id institution_evolution_category_id date",
+              "required": false
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutions#create_predecessor",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/predecessors",
+      "operations": [
+        {
+          "summary": "Returns all predecessors for an institution",
+          "notes": "Tous les établissements prédécesseur pour un établissement",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutions#index_predecessors",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/predecessors/{predecessor_id}",
+      "operations": [
+        {
+          "summary": "Delete a predecessor connection",
+          "notes": "Effacer une évolution prédécesseur",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "predecessor_id",
+              "type": "integer",
+              "description": "predecessor ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutions#destroy_predecessor",
+          "method": "delete"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/followers",
+      "operations": [
+        {
+          "summary": "Create a follower",
+          "notes": "Créer une évolution suiveur pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "follower",
+              "type": "integer",
+              "description": "follower_id institution_connection_category_id date",
+              "required": false
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutions#create_follower",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/followers",
+      "operations": [
+        {
+          "summary": "Returns all followers for an institution",
+          "notes": "Tous les évolutions suiveur pour un établissement",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutions#index_followers",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/followers/{follower_id}",
+      "operations": [
+        {
+          "summary": "Delete a follower connection",
+          "notes": "Effacer une évolution suiveur",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "follower_id",
+              "type": "integer",
+              "description": "follower ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutions#destroy_follower",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

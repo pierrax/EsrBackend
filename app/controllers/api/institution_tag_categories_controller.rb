@@ -1,6 +1,41 @@
 class Api::InstitutionTagCategoriesController < Api::BaseController
   before_action :set_category, except: %i[create index]
 
+  swagger_controller :tag_categories, 'Type de tags des établissements'
+
+  swagger_api :index do
+    summary 'Returns all tag categories'
+    notes 'Tous les types de tag'
+  end
+
+  swagger_api :create do
+    summary 'Create a tag category'
+    notes 'Créer un type de tag'
+    param :query, :short_labl, :string, :required, 'Short label'
+    param :query, :long_label, :string, :required, 'Long label'
+    param :query, :institution_tag_category_id, :string, :required, 'Tag Category ID'
+  end
+
+  swagger_api :show do
+    summary 'Show a tag category'
+    notes 'Afficher un type de tag'
+    param :query, :tag_category_id, :integer, :required, 'Tag Category ID'
+  end
+
+  swagger_api :update do
+    summary 'Update a tag category'
+    notes 'Mettre à jour un type de tag'
+    param :query, :tag_category_id, :integer, :required, 'Tag Category ID'
+    param :query, :short_labl, :string, :required, 'Short label'
+    param :query, :long_label, :string, :required, 'Long label'
+  end
+
+  swagger_api :destroy do
+    summary 'Delete a tag category'
+    notes 'Effacer un type de tag'
+    param :query, :tag_category_id, :integer, :required, 'Tag Category ID'
+  end
+
   def create
     @category = InstitutionTagCategory.new(category_params)
     if @category.save

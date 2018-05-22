@@ -12,7 +12,7 @@
           "notes": "Tous les codes pour un établissement",
           "parameters": [
             {
-              "paramType": "integer",
+              "paramType": "query",
               "name": "institution_id",
               "type": "integer",
               "description": "Institution ID",
@@ -32,14 +32,14 @@
           "notes": "Crée un code pour un établissement",
           "parameters": [
             {
-              "paramType": "integer",
+              "paramType": "query",
               "name": "institution_id",
               "type": "integer",
               "description": "Institution ID",
               "required": true
             },
             {
-              "paramType": "integer",
+              "paramType": "query",
               "name": "category_code_id",
               "type": "integer",
               "description": "Category code ID",
@@ -59,7 +59,7 @@
           "notes": "Afficher un code",
           "parameters": [
             {
-              "paramType": "integer",
+              "paramType": "query",
               "name": "code_id",
               "type": "integer",
               "description": "code ID",
@@ -99,7 +99,7 @@
           "notes": "Effacer un code",
           "parameters": [
             {
-              "paramType": "integer",
+              "paramType": "query",
               "name": "code_id",
               "type": "integer",
               "description": "code ID",

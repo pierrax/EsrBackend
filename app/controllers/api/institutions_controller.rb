@@ -10,9 +10,10 @@ class Api::InstitutionsController < Api::BaseController
 
   swagger_api :search do
     summary 'Returns all institutions with name or initials matches'
-    notes 'Filtre les établissements de l ESR par nom ou sigle'
+    notes "Filtre les établissements de l'ESR par nom ou sigle"
     param :header, 'Authentication-Token', :string, :required, 'Authentication token'
-    param :query, :q, :string, :required, 'query string'
+    param :query, :q, :string, :required, 'Query string'
+    param :query, :download, :boolean, :optional, 'Download CSV'
   end
 
   swagger_api :create do
@@ -44,6 +45,13 @@ class Api::InstitutionsController < Api::BaseController
     notes 'Effacer un établissement'
     param :header, 'Authentication-Token', :string, :required, 'Authentication token'
     param :query, :institution_id, :integer, :required, 'Institution ID'
+  end
+
+  swagger_api :import do
+    summary 'Import institutions with CSV file'
+    notes 'Créer / MAJ des établissements'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :file, :file, :required, 'CSV file'
   end
 
   def create

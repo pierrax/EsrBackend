@@ -3,23 +3,23 @@ class Api::CodesController < Api::BaseController
 
   swagger_controller :codes, 'Codes des établissements'
 
-  swagger_api :create do
-    summary 'Create a code'
-    notes 'Crée un code pour un établissement'
-    param :integer, :institution_id, :integer, :required, 'Institution ID'
-    param :integer, :category_code_id, :integer, :required, 'Category code ID'
-  end
-
   swagger_api :index do
     summary 'Returns all codes for an institution'
     notes 'Tous les codes pour un établissement'
-    param :integer, :institution_id, :integer, :required, 'Institution ID'
+    param :query, :institution_id, :integer, :required, 'Institution ID'
+  end
+
+  swagger_api :create do
+    summary 'Create a code'
+    notes 'Crée un code pour un établissement'
+    param :query, :institution_id, :integer, :required, 'Institution ID'
+    param :query, :category_code_id, :integer, :required, 'Category code ID'
   end
 
   swagger_api :show do
     summary 'Show a code'
     notes 'Afficher un code'
-    param :integer, :code_id, :integer, :required, 'code ID'
+    param :query, :code_id, :integer, :required, 'code ID'
   end
 
   swagger_api :update do
@@ -31,7 +31,7 @@ class Api::CodesController < Api::BaseController
   swagger_api :destroy do
     summary 'Delete a code'
     notes 'Effacer un code'
-    param :integer, :code_id, :integer, :required, 'code ID'
+    param :query, :code_id, :integer, :required, 'code ID'
   end
   
   def create

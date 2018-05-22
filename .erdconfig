@@ -3,17 +3,17 @@ attributes:
   - foreign_key
   - inheritance
 disconnected: true
-filename: erd
-filetype: pdf
+filename: public/database_schema
+filetype: png
 indirect: true
 inheritance: false
 markup: true
 notation: simple
-orientation: horizontal
+orientation: vertical
 polymorphism: false
 sort: true
 warn: true
-title: dataESR backend database schema
+title: dataESR Institution Database Schema
 exclude: null
 only: null
 only_recursion_depth: null

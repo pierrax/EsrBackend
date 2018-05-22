@@ -1,0 +1,123 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "addresses",
+  "apis": [
+    {
+      "path": "/api/institutions/{institution_id}/addresses",
+      "operations": [
+        {
+          "summary": "Returns all addresses for an institution",
+          "notes": "Tous les adresses pour un établissement",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Addresses#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/addresses",
+      "operations": [
+        {
+          "summary": "Create an address",
+          "notes": "Créer un adresse pour un établissement",
+          "parameters": [
+            {
+              "paramType": "integer",
+              "name": "institution_id",
+              "type": "integer",
+              "description": "Institution ID",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "address",
+              "type": "json",
+              "description": "business_name address_1 address_2 zip_code city country phone date_start date_end",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Addresses#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/addresses/{id}",
+      "operations": [
+        {
+          "summary": "Show a address",
+          "notes": "Afficher un adresse",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "address_id",
+              "type": "integer",
+              "description": "address ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Addresses#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/addresses/{id}",
+      "operations": [
+        {
+          "summary": "Update a address",
+          "notes": "Mettre à jour un adresse",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "address_id",
+              "type": "integer",
+              "description": "address ID",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "address",
+              "type": "json",
+              "description": "business_name address_1 address_2 zip_code city country phone date_start date_end",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Addresses#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/addresses/{id}",
+      "operations": [
+        {
+          "summary": "Delete a address",
+          "notes": "Effacer un adresse",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "address_id",
+              "type": "integer",
+              "description": "address ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Addresses#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

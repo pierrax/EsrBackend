@@ -3,6 +3,40 @@ class Api::AddressesController < Api::BaseController
   skip_before_action :authenticate_request, only: %i[login register]
   before_action :set_address, except: %i[create index]
 
+  swagger_controller :addresses, 'Adresses des établissements'
+
+  swagger_api :create do
+    summary 'Create an address'
+    notes 'Créer un adresse pour un établissement'
+    param :integer, :institution_id, :integer, :required, 'Institution ID'
+    param :body, :address, :json, :required, 'business_name address_1 address_2 zip_code city country phone date_start date_end'
+  end
+
+  swagger_api :index do
+    summary 'Returns all addresses for an institution'
+    notes 'Tous les adresses pour un établissement'
+    param :query, :institution_id, :integer, :required, 'Institution ID'
+  end
+
+  swagger_api :show do
+    summary 'Show a address'
+    notes 'Afficher un adresse'
+    param :query, :address_id, :integer, :required, 'address ID'
+  end
+
+  swagger_api :update do
+    summary 'Update a address'
+    notes 'Mettre à jour un adresse'
+    param :query, :address_id, :integer, :required, 'address ID'
+    param :body, :address, :json, :required, 'business_name address_1 address_2 zip_code city country phone date_start date_end'
+  end
+
+  swagger_api :destroy do
+    summary 'Delete a address'
+    notes 'Effacer un adresse'
+    param :query, :address_id, :integer, :required, 'address ID'
+  end
+  
   def create
     @institution = Institution.find(params[:institution_id])
     @address = @institution.addresses.new(address_params)

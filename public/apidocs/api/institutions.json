@@ -145,11 +145,38 @@
       ]
     },
     {
+      "path": "/api/institutions/import",
+      "operations": [
+        {
+          "summary": "Import institutions with CSV file",
+          "notes": "Créer / MAJ des établissements",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file",
+              "type": "file",
+              "description": "CSV file",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Institutions#import",
+          "method": "post"
+        }
+      ]
+    },
+    {
       "path": "/api/institutions/search",
       "operations": [
         {
           "summary": "Returns all institutions with name or initials matches",
-          "notes": "Filtre les établissements de l ESR par nom ou sigle",
+          "notes": "Filtre les établissements de l'ESR par nom ou sigle",
           "parameters": [
             {
               "paramType": "header",
@@ -162,8 +189,15 @@
               "paramType": "query",
               "name": "q",
               "type": "string",
-              "description": "query string",
+              "description": "Query string",
               "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "download",
+              "type": "boolean",
+              "description": "Download CSV",
+              "required": false
             }
           ],
           "nickname": "Api::Institutions#search",

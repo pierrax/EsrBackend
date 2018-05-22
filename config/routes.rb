@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get 'db_schema', to: redirect('/erd.pdf')
+  get 'db_schema', to: redirect('/database_schema.pdf')
 
   namespace :api do
     resources :institutions do
@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
     end
     post 'institutions/import', to: 'institutions#import'
+    post 'institutions/search', to: 'institutions#search'
 
     resources :links, only: [:show, :update, :destroy]
     resources :codes, only: [:show, :update, :destroy]
@@ -51,7 +52,6 @@ Rails.application.routes.draw do
     resources :institution_taggings
     resources :institution_evolution_categories
     resources :institution_connection_categories
-    post 'institutions/search', to: 'institutions#search'
   end
   match '*path', to: 'api/base#catch_404', via: :all
 end

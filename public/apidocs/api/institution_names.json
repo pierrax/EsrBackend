@@ -1,0 +1,144 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "institution_names",
+  "apis": [
+    {
+      "path": "/api/institutions/{institution_id}/institution_names",
+      "operations": [
+        {
+          "summary": "Returns all institution names",
+          "notes": "Tous les noms d'un établissement de l'ESR",
+          "nickname": "Api::InstitutionNames#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institutions/{institution_id}/institution_names",
+      "operations": [
+        {
+          "summary": "Create an institution name",
+          "notes": "Créer un nom d'établissement",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "institution_name",
+              "type": "json",
+              "description": "Institution Name",
+              "required": false,
+              "schema": [
+                {
+                  "type": "object"
+                },
+                {
+                  "properties": [
+                    {
+                      "text": [
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "nickname": "Api::InstitutionNames#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_names/{id}",
+      "operations": [
+        {
+          "summary": "Show an institution name",
+          "notes": "Afficher un nom d'établissement",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "institution_name_id",
+              "type": "integer",
+              "description": "Institution Name ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionNames#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_names/{id}",
+      "operations": [
+        {
+          "summary": "Update an institution name",
+          "notes": "Mettre à jour un nom d'établissement",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "institution_name_id",
+              "type": "integer",
+              "description": "Institution Name ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionNames#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_names/{id}",
+      "operations": [
+        {
+          "summary": "Delete an institution",
+          "notes": "Effacer à jour un nom d'établissement",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "institution_name_id",
+              "type": "integer",
+              "description": "Institution Name ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionNames#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

@@ -20,7 +20,7 @@ Swagger::Docs::Config.register_apis({
       },
       :attributes => {
           :info => {
-              "title" => "Api documentation",
+              "title" => "DataESR Api documentation",
               "description" => "Explore our API documentation",
               "termsOfServiceUrl" => "",
               "contact" => "",

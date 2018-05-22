@@ -3,28 +3,33 @@ class Api::LinkCategoriesController < Api::BaseController
 
   swagger_controller :liens, 'Type de liens des établissements'
 
+  swagger_api :index do
+    summary 'Returns all link categories'
+    notes 'Tous les types de lien'
+  end
+
   swagger_api :create do
-    summary 'Create a  link category'
-    notes 'Crée un type de lien'
-    param :string, :title, :string, :required, 'Title'
+    summary 'Create a link category'
+    notes 'Créer un type de lien'
+    param :query, :title, :string, :required, 'Title'
   end
 
   swagger_api :show do
     summary 'Show a link category'
     notes 'Afficher un type de lien'
-    param :integer, :link_category_id, :integer, :required, 'Link Category ID'
+    param :query, :link_category_id, :integer, :required, 'Link Category ID'
   end
 
   swagger_api :update do
     summary 'Update a link category'
     notes 'Mettre à jour un type de lien'
-    param :integer, :link_category_id, :integer, :required, 'Link Category ID'
+    param :query, :link_category_id, :integer, :required, 'Link Category ID'
   end
 
   swagger_api :destroy do
     summary 'Delete a link category'
     notes 'Effacer un type de lien'
-    param :integer, :link_category_id, :integer, :required, 'Link Category ID'
+    param :query, :link_category_id, :integer, :required, 'Link Category ID'
   end
   
   def create

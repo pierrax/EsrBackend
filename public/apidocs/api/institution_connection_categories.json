@@ -1,0 +1,107 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "institution_connection_categories",
+  "apis": [
+    {
+      "path": "/api/institution_connection_categories",
+      "operations": [
+        {
+          "summary": "Returns all connection categories",
+          "notes": "Tous les types de connection",
+          "nickname": "Api::InstitutionConnectionCategories#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_connection_categories",
+      "operations": [
+        {
+          "summary": "Create a connection category",
+          "notes": "Créer un type de connection",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "title",
+              "type": "string",
+              "description": "Title",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnectionCategories#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_connection_categories/{id}",
+      "operations": [
+        {
+          "summary": "Show a connection category",
+          "notes": "Afficher un type de connection",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "connection_category_id",
+              "type": "integer",
+              "description": "Connection Category ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnectionCategories#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_connection_categories/{id}",
+      "operations": [
+        {
+          "summary": "Update a connection category",
+          "notes": "Mettre à jour un type de connection",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "connection_category_id",
+              "type": "integer",
+              "description": "Connection Category ID",
+              "required": true
+            },
+            {
+              "paramType": "body",
+              "name": "title",
+              "type": "json",
+              "description": "Title",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnectionCategories#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_connection_categories/{id}",
+      "operations": [
+        {
+          "summary": "Delete a connection category",
+          "notes": "Effacer un type de connection",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "connection_category_id",
+              "type": "integer",
+              "description": "Connection Category ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnectionCategories#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

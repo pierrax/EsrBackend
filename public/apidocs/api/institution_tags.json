@@ -2,14 +2,14 @@
   "apiVersion": "1.0",
   "swaggerVersion": "1.2",
   "basePath": "https://esr-backend-staging.herokuapp.com",
-  "resourcePath": "links",
+  "resourcePath": "institution_tags",
   "apis": [
     {
-      "path": "/api/institutions/{institution_id}/links",
+      "path": "/api/institution_tags",
       "operations": [
         {
-          "summary": "Returns all links for an institution",
-          "notes": "Tous les liens pour un établissement",
+          "summary": "Returns all tags for an institution",
+          "notes": "Tous les tags pour un établissement",
           "parameters": [
             {
               "paramType": "query",
@@ -19,17 +19,17 @@
               "required": true
             }
           ],
-          "nickname": "Api::Links#index",
+          "nickname": "Api::InstitutionTags#index",
           "method": "get"
         }
       ]
     },
     {
-      "path": "/api/institutions/{institution_id}/links",
+      "path": "/api/institution_tags",
       "operations": [
         {
-          "summary": "Create a link",
-          "notes": "Créer un lien pour un établissement",
+          "summary": "Create a tag",
+          "notes": "Créer un tag pour un établissement",
           "parameters": [
             {
               "paramType": "integer",
@@ -40,80 +40,80 @@
             },
             {
               "paramType": "query",
-              "name": "category_link_id",
+              "name": "category_tag_id",
               "type": "integer",
-              "description": "Category link ID",
+              "description": "Category tag ID",
               "required": true
             },
             {
               "paramType": "query",
               "name": "content",
               "type": "string",
-              "description": "Content link",
+              "description": "Content tag",
               "required": true
             }
           ],
-          "nickname": "Api::Links#create",
+          "nickname": "Api::InstitutionTags#create",
           "method": "post"
         }
       ]
     },
     {
-      "path": "/api/links/{id}",
+      "path": "/api/institution_tags/{id}",
       "operations": [
         {
-          "summary": "Show a link",
-          "notes": "Afficher un lien",
+          "summary": "Show a tag",
+          "notes": "Afficher un tag",
           "parameters": [
             {
               "paramType": "query",
-              "name": "link_id",
+              "name": "tag_id",
               "type": "integer",
-              "description": "link ID",
+              "description": "tag ID",
               "required": true
             }
           ],
-          "nickname": "Api::Links#show",
+          "nickname": "Api::InstitutionTags#show",
           "method": "get"
         }
       ]
     },
     {
-      "path": "/api/links/{id}",
+      "path": "/api/institution_tags/{id}",
       "operations": [
         {
-          "summary": "Update a link",
-          "notes": "Mettre à jour un lien",
+          "summary": "Update a tag",
+          "notes": "Mettre à jour un tag",
           "parameters": [
             {
               "paramType": "query",
-              "name": "link_id",
+              "name": "tag_id",
               "type": "integer",
-              "description": "link ID",
+              "description": "tag ID",
               "required": true
             }
           ],
-          "nickname": "Api::Links#update",
+          "nickname": "Api::InstitutionTags#update",
           "method": "patch"
         }
       ]
     },
     {
-      "path": "/api/links/{id}",
+      "path": "/api/institution_tags/{id}",
       "operations": [
         {
-          "summary": "Delete a link",
-          "notes": "Effacer un lien",
+          "summary": "Delete a tag",
+          "notes": "Effacer un tag",
           "parameters": [
             {
               "paramType": "query",
-              "name": "link_id",
+              "name": "tag_id",
               "type": "integer",
-              "description": "link ID",
+              "description": "tag ID",
               "required": true
             }
           ],
-          "nickname": "Api::Links#destroy",
+          "nickname": "Api::InstitutionTags#destroy",
           "method": "delete"
         }
       ]

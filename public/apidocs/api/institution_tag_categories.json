@@ -1,0 +1,128 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "institution_tag_categories",
+  "apis": [
+    {
+      "path": "/api/institution_tag_categories",
+      "operations": [
+        {
+          "summary": "Returns all tag categories",
+          "notes": "Tous les types de tag",
+          "nickname": "Api::InstitutionTagCategories#index",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_tag_categories",
+      "operations": [
+        {
+          "summary": "Create a tag category",
+          "notes": "Créer un type de tag",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "short_labl",
+              "type": "string",
+              "description": "Short label",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "long_label",
+              "type": "string",
+              "description": "Long label",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "institution_tag_category_id",
+              "type": "string",
+              "description": "Tag Category ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionTagCategories#create",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_tag_categories/{id}",
+      "operations": [
+        {
+          "summary": "Show a tag category",
+          "notes": "Afficher un type de tag",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "tag_category_id",
+              "type": "integer",
+              "description": "Tag Category ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionTagCategories#show",
+          "method": "get"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_tag_categories/{id}",
+      "operations": [
+        {
+          "summary": "Update a tag category",
+          "notes": "Mettre à jour un type de tag",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "tag_category_id",
+              "type": "integer",
+              "description": "Tag Category ID",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "short_labl",
+              "type": "string",
+              "description": "Short label",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "long_label",
+              "type": "string",
+              "description": "Long label",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionTagCategories#update",
+          "method": "patch"
+        }
+      ]
+    },
+    {
+      "path": "/api/institution_tag_categories/{id}",
+      "operations": [
+        {
+          "summary": "Delete a tag category",
+          "notes": "Effacer un type de tag",
+          "parameters": [
+            {
+              "paramType": "query",
+              "name": "tag_category_id",
+              "type": "integer",
+              "description": "Tag Category ID",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionTagCategories#destroy",
+          "method": "delete"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}
