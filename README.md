@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/pierrax/EsrBackend.svg?branch=master)](https://travis-ci.com/pierrax/EsrBackend)
 # DataESR Institutions
 
 DataESR Institutions is a Rails open source application to manage higher education institutions and expose data through a REST API. 
