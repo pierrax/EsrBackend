@@ -37,6 +37,10 @@ class Api::BaseController < ApplicationController
     authenticate if request.headers['HTTP_AUTHORIZATION']
   end
 
+  def catch_404
+    return api_error(status: 404, errors: 'Url not found')
+  end
+
   private
   def api_error(status: 500, errors: [])
     unless Rails.env.production?

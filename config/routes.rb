@@ -53,4 +53,5 @@ Rails.application.routes.draw do
     resources :institution_connection_categories
     post 'institutions/search', to: 'institutions#search'
   end
+  match '*path', to: 'api/base#catch_404', via: :all
 end
