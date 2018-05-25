@@ -59,6 +59,53 @@
       ]
     },
     {
+      "path": "/api/links/import",
+      "operations": [
+        {
+          "summary": "Import links with CSV file",
+          "notes": "Créer / MAJ des liens",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file",
+              "type": "file",
+              "description": "CSV file",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Links#import",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/links/export",
+      "operations": [
+        {
+          "summary": "Export links with CSV file",
+          "notes": "Créer / MAJ des liens",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Links#export",
+          "method": "post"
+        }
+      ]
+    },
+    {
       "path": "/api/links/{id}",
       "operations": [
         {

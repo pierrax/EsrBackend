@@ -1,7 +1,7 @@
 class Api::AddressesController < Api::BaseController
   # before_action :authenticate, except: :create
   skip_before_action :authenticate_request, only: %i[login register]
-  before_action :set_address, except: %i[create index]
+  before_action :set_address, except: %i[create index import export]
 
   swagger_controller :addresses, 'Adresses des établissements'
 
@@ -35,6 +35,19 @@ class Api::AddressesController < Api::BaseController
     summary 'Delete a address'
     notes 'Effacer un adresse'
     param :query, :address_id, :integer, :required, 'address ID'
+  end
+
+  swagger_api :import do
+    summary 'Import addresses with CSV file'
+    notes 'Créer / MAJ des adresses'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :file, :file, :required, 'CSV file'
+  end
+
+  swagger_api :export do
+    summary 'Export addresses with CSV file'
+    notes 'Créer / MAJ des adresses'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
   end
   
   def create
@@ -70,6 +83,20 @@ class Api::AddressesController < Api::BaseController
     @addresses = @institution.addresses.page(params[:page_number]).per(params[:page_size])
     paginator @addresses, params.permit!
     respond_with @addresses
+  end
+
+  def import
+    if ImportAddresses.new(params[:file].tempfile).call
+      render json: { message: 'Addresses uploaded' }, status: 200
+    else
+      render json: { message: 'Error with the file uploaded' }, status: 401
+    end
+  end
+
+  def export
+    @addresses = Address.all
+    export_csv = ExportAddresses.new(@addresses).call
+    send_data export_csv, type: 'text/csv', disposition: 'inline'
   end
 
   private

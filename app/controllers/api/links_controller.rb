@@ -1,5 +1,5 @@
 class Api::LinksController < Api::BaseController
-  before_action :set_link, except: %i[create index]
+  before_action :set_link, except: %i[create index import export]
 
   swagger_controller :links, 'Liens des établissements'
 
@@ -35,6 +35,19 @@ class Api::LinksController < Api::BaseController
     param :query, :link_id, :integer, :required, 'link ID'
   end
 
+  swagger_api :import do
+    summary 'Import links with CSV file'
+    notes 'Créer / MAJ des liens'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :file, :file, :required, 'CSV file'
+  end
+
+  swagger_api :export do
+    summary 'Export links with CSV file'
+    notes 'Créer / MAJ des liens'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+  end
+
   def create
     @institution = Institution.find(params[:institution_id])
     @link = @institution.links.new(link_params)
@@ -66,6 +79,20 @@ class Api::LinksController < Api::BaseController
   def index
     @institution = Institution.find(params[:institution_id])
     @links = @institution.links
+  end
+
+  def import
+    if ImportLinks.new(params[:file].tempfile).call
+      render json: { message: 'Links uploaded' }, status: 200
+    else
+      render json: { message: 'Error with the file uploaded' }, status: 401
+    end
+  end
+
+  def export
+    @links = Link.all
+    export_csv = ExportLinks.new(@links).call
+    send_data export_csv, type: 'text/csv', disposition: 'inline'
   end
 
   private

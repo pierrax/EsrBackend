@@ -52,6 +52,53 @@
       ]
     },
     {
+      "path": "/api/addresses/import",
+      "operations": [
+        {
+          "summary": "Import addresses with CSV file",
+          "notes": "Créer / MAJ des adresses",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file",
+              "type": "file",
+              "description": "CSV file",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Addresses#import",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/addresses/export",
+      "operations": [
+        {
+          "summary": "Export addresses with CSV file",
+          "notes": "Créer / MAJ des adresses",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Addresses#export",
+          "method": "post"
+        }
+      ]
+    },
+    {
       "path": "/api/addresses/{id}",
       "operations": [
         {

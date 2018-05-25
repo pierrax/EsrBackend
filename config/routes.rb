@@ -38,6 +38,24 @@ Rails.application.routes.draw do
     post 'institutions/import', to: 'institutions#import'
     post 'institutions/search', to: 'institutions#search'
 
+    post 'addresses/import', to: 'addresses#import'
+    post 'addresses/export', to: 'addresses#export'
+
+    post 'codes/import', to: 'codes#import'
+    post 'codes/export', to: 'codes#export'
+
+    post 'connections/import', to: 'institution_connections#import'
+    post 'connections/export', to: 'institution_connections#export'
+
+    post 'links/import', to: 'links#import'
+    post 'links/export', to: 'links#export'
+
+    post 'taggings/import', to: 'institution_taggings#import'
+    post 'taggings/export', to: 'institution_taggings#export'
+
+    post 'evolutions/import', to: 'institution_evolutions#import'
+    post 'evolutions/export', to: 'institution_evolutions#export'
+
     resources :links, only: [:show, :update, :destroy]
     resources :codes, only: [:show, :update, :destroy]
     post 'codes/search', to: 'codes#search'

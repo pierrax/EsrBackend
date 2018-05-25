@@ -151,6 +151,53 @@
           "method": "delete"
         }
       ]
+    },
+    {
+      "path": "/api/connections/import",
+      "operations": [
+        {
+          "summary": "Import connections with CSV file",
+          "notes": "Créer / MAJ des connections",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file",
+              "type": "file",
+              "description": "CSV file",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnections#import",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/connections/export",
+      "operations": [
+        {
+          "summary": "Export connections with CSV file",
+          "notes": "Créer / MAJ des connections",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionConnections#export",
+          "method": "post"
+        }
+      ]
     }
   ],
   "authorizations": null

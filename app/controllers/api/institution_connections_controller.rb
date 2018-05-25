@@ -42,6 +42,19 @@ class Api::InstitutionConnectionsController < Api::BaseController
     param :query, :daughter_id, :integer, :required, 'daughter ID'
   end
 
+  swagger_api :import do
+    summary 'Import connections with CSV file'
+    notes 'Créer / MAJ des connections'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :file, :file, :required, 'CSV file'
+  end
+
+  swagger_api :export do
+    summary 'Export connections with CSV file'
+    notes 'Créer / MAJ des connections'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+  end
+
   def create_mother
     @institution = Institution.find(params[:institution_id])
     @connection = InstitutionConnection.new(mother_params)
@@ -89,6 +102,20 @@ class Api::InstitutionConnectionsController < Api::BaseController
     return not_found unless @connection
     @connection.destroy
     render json: { message: 'daughter deleted' }, status: 200
+  end
+
+  def import
+    if ImportConnections.new(params[:file].tempfile).call
+      render json: { message: 'Connections uploaded' }, status: 200
+    else
+      render json: { message: 'Error with the file uploaded' }, status: 401
+    end
+  end
+
+  def export
+    @connections = InstitutionConnection.all
+    export_csv = ExportConnections.new(@connections).call
+    send_data export_csv, type: 'text/csv', disposition: 'inline'
   end
 
   private

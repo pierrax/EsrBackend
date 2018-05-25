@@ -41,6 +41,19 @@ class Api::InstitutionEvolutionsController < Api::BaseController
     param :query, :institution_id, :integer, :required, 'Institution ID'
     param :query, :follower_id, :integer, :required, 'follower ID'
   end
+
+  swagger_api :import do
+    summary 'Import evolutions with CSV file'
+    notes 'Créer / MAJ des evolutions'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :file, :file, :required, 'CSV file'
+  end
+
+  swagger_api :export do
+    summary 'Export evolutions with CSV file'
+    notes 'Créer / MAJ des evolutions'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+  end
   
   def create_predecessor
     @institution = Institution.find(params[:institution_id])
@@ -89,6 +102,20 @@ class Api::InstitutionEvolutionsController < Api::BaseController
     return not_found unless @evolution
     @evolution.destroy
     render json: { message: 'Follower deleted' }, status: 200
+  end
+
+  def import
+    if ImportEvolutions.new(params[:file].tempfile).call
+      render json: { message: 'Evolutions uploaded' }, status: 200
+    else
+      render json: { message: 'Error with the file uploaded' }, status: 401
+    end
+  end
+
+  def export
+    @evolutions = InstitutionEvolution.all
+    export_csv = ExportEvolutions.new(@evolutions).call
+    send_data export_csv, type: 'text/csv', disposition: 'inline'
   end
 
   private

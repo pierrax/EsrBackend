@@ -6,8 +6,6 @@ class AuthorizeApiRequest
   end
 
   def call
-    p http_auth_header
-    p ENV['CHECK_TOKEN_URL']
     response = HTTParty.post(ENV['CHECK_TOKEN_URL'], headers: { Authorization:  "Bearer #{http_auth_header}"} )
     response.code
   end

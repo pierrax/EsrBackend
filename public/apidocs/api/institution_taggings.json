@@ -1,0 +1,56 @@
+{
+  "apiVersion": "1.0",
+  "swaggerVersion": "1.2",
+  "basePath": "https://esr-backend-staging.herokuapp.com",
+  "resourcePath": "institution_taggings",
+  "apis": [
+    {
+      "path": "/api/taggings/import",
+      "operations": [
+        {
+          "summary": "Import taggings with CSV file",
+          "notes": "Créer / MAJ des taggings",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file",
+              "type": "file",
+              "description": "CSV file",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionTaggings#import",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/taggings/export",
+      "operations": [
+        {
+          "summary": "Export taggings with CSV file",
+          "notes": "Créer / MAJ des taggings",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionTaggings#export",
+          "method": "post"
+        }
+      ]
+    }
+  ],
+  "authorizations": null
+}

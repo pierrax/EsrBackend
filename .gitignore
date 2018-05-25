@@ -20,5 +20,5 @@
 .byebug_history
 .idea/*
 .env
-/public/apidocs/
+#/public/apidocs/
 

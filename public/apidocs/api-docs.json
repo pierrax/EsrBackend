@@ -20,6 +20,10 @@
       "description": "Codes des établissements"
     },
     {
+      "path": "/apidocs/api/institution_taggings.{format}",
+      "description": "Evolutions des taggings"
+    },
+    {
       "path": "/apidocs/api/institution_evolutions.{format}",
       "description": "Evolutions des établissements"
     },

@@ -1,6 +1,21 @@
 class Api::InstitutionTaggingsController < Api::BaseController
-  before_action :set_institution, except: :update
+  before_action :set_institution, except: [:update, :import, :export]
 
+  swagger_controller :tagging, 'Evolutions des taggings'
+
+  swagger_api :import do
+    summary 'Import taggings with CSV file'
+    notes 'Créer / MAJ des taggings'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :file, :file, :required, 'CSV file'
+  end
+
+  swagger_api :export do
+    summary 'Export taggings with CSV file'
+    notes 'Créer / MAJ des taggings'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+  end
+  
   def index
     @taggings = @institution.institution_taggings
   end
@@ -38,6 +53,20 @@ class Api::InstitutionTaggingsController < Api::BaseController
 
     @institution.tags.delete(@tag)
     render json: { message: 'Tag removed from institution' }, status: 200
+  end
+
+  def import
+    if ImportTaggings.new(params[:file].tempfile).call
+      render json: { message: 'Taggings uploaded' }, status: 200
+    else
+      render json: { message: 'Error with the file uploaded' }, status: 401
+    end
+  end
+
+  def export
+    @taggings = InstitutionTagging.all
+    export_csv = ExportTaggings.new(@taggings).call
+    send_data export_csv, type: 'text/csv', disposition: 'inline'
   end
 
   private

@@ -1,5 +1,5 @@
 class Api::CodesController < Api::BaseController
-  before_action :set_code, except: %i[create index search]
+  before_action :set_code, except: %i[create index search export import]
 
   swagger_controller :codes, 'Codes des établissements'
 
@@ -32,6 +32,26 @@ class Api::CodesController < Api::BaseController
     summary 'Delete a code'
     notes 'Effacer un code'
     param :query, :code_id, :integer, :required, 'code ID'
+  end
+
+  swagger_api :search do
+    summary 'Returns all codes with content matches'
+    notes 'Filtre les codes par contenu'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :q, :string, :required, 'Query string'
+  end
+
+  swagger_api :import do
+    summary 'Import codes with CSV file'
+    notes 'Créer / MAJ des codes'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :file, :file, :required, 'CSV file'
+  end
+
+  swagger_api :export do
+    summary 'Export codes with CSV file'
+    notes 'Créer / MAJ des codes'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
   end
   
   def create
@@ -70,6 +90,20 @@ class Api::CodesController < Api::BaseController
   def search
     @code = Code.where(content: params[:q]).first
     @institution = @code.institution
+  end
+
+  def import
+    if ImportCodes.new(params[:file].tempfile).call
+      render json: { message: 'Codes uploaded' }, status: 200
+    else
+      render json: { message: 'Error with the file uploaded' }, status: 401
+    end
+  end
+
+  def export
+    @codes = Code.all
+    export_csv = ExportCodes.new(@codes).call
+    send_data export_csv, type: 'text/csv', disposition: 'inline'
   end
 
   private

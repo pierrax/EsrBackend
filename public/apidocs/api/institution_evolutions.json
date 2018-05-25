@@ -151,6 +151,53 @@
           "method": "delete"
         }
       ]
+    },
+    {
+      "path": "/api/evolutions/import",
+      "operations": [
+        {
+          "summary": "Import evolutions with CSV file",
+          "notes": "Créer / MAJ des evolutions",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file",
+              "type": "file",
+              "description": "CSV file",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutions#import",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/evolutions/export",
+      "operations": [
+        {
+          "summary": "Export evolutions with CSV file",
+          "notes": "Créer / MAJ des evolutions",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            }
+          ],
+          "nickname": "Api::InstitutionEvolutions#export",
+          "method": "post"
+        }
+      ]
     }
   ],
   "authorizations": null

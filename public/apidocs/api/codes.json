@@ -52,6 +52,53 @@
       ]
     },
     {
+      "path": "/api/codes/import",
+      "operations": [
+        {
+          "summary": "Import codes with CSV file",
+          "notes": "Créer / MAJ des codes",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "file",
+              "type": "file",
+              "description": "CSV file",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Codes#import",
+          "method": "post"
+        }
+      ]
+    },
+    {
+      "path": "/api/codes/export",
+      "operations": [
+        {
+          "summary": "Export codes with CSV file",
+          "notes": "Créer / MAJ des codes",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Codes#export",
+          "method": "post"
+        }
+      ]
+    },
+    {
       "path": "/api/codes/{id}",
       "operations": [
         {
@@ -108,6 +155,33 @@
           ],
           "nickname": "Api::Codes#destroy",
           "method": "delete"
+        }
+      ]
+    },
+    {
+      "path": "/api/codes/search",
+      "operations": [
+        {
+          "summary": "Returns all codes with content matches",
+          "notes": "Filtre les codes par contenu",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "q",
+              "type": "string",
+              "description": "Query string",
+              "required": true
+            }
+          ],
+          "nickname": "Api::Codes#search",
+          "method": "post"
         }
       ]
     }
