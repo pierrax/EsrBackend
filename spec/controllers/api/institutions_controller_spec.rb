@@ -61,6 +61,7 @@ RSpec.describe Api::InstitutionsController, :type => :request do
         institution: {
           id: i.id,
           date_start: Date.current - 2.days,
+          synonym: 'Uni sckool'
         }
       }
 
@@ -69,6 +70,7 @@ RSpec.describe Api::InstitutionsController, :type => :request do
 
       expect(last_response.status).to eq(200)
       expect(i.date_start).to eq(Date.current - 2.days)
+      expect(i.synonym).to eq('Uni sckool')
     end
   end
 
@@ -120,9 +122,20 @@ RSpec.describe Api::InstitutionsController, :type => :request do
       end
     end
 
+    context 'when match is in institution synonym' do
+      it 'returns an institution' do
+        i = create(:institution, synonym: '123 abx abc')
+
+        post 'api/institutions/search?q=ABC', format: 'json'
+
+        expect(last_response.status).to eq(200)
+        expect(json_response.count).to eq(1)
+      end
+    end
+
     context 'when no match in institution name or initials' do
       it 'returns an empty array' do
-        i = create(:institution)
+        i = create(:institution, synonym: 'xxx aaa')
         i.names.first.update(text: 'aaaaa', initials: 'bbbbb')
 
         post 'api/institutions/search?q=ABC', format: 'json'

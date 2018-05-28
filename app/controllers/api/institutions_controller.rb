@@ -119,6 +119,7 @@ class Api::InstitutionsController < Api::BaseController
     params[:institution].permit(
         :date_start,
         :date_end,
+        :synonym,
         names_attributes: [:text, :initials]
     )
   end

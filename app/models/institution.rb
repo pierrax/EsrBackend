@@ -25,7 +25,7 @@ class Institution < ApplicationRecord
   validates :date_start, presence: true
 
   # Scopes
-  scope :with_name_or_initials, -> (q) { joins(:names).where("lower(institution_names.text) LIKE ? OR lower(institution_names.initials) LIKE ?", "%#{q.downcase}%", "%#{q.downcase}%") }
+  scope :with_name_or_initials, -> (q) { joins(:names).where("lower(institution_names.text) LIKE ? OR lower(institution_names.initials) LIKE ? OR lower(institutions.synonym) LIKE ?", "%#{q.downcase}%", "%#{q.downcase}%", "%#{q.downcase}%") }
 
   def name
     names.active.first.try(:text)

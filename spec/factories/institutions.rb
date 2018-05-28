@@ -4,6 +4,7 @@ FactoryGirl.define do
     # association :name, factory: :institution_name
     date_start { 10.years.ago }
     date_end { nil }
+    synonym { FFaker::Lorem.words(10) }
 
     after(:create) do |institution|
       create(:institution_name, institution_id: institution.id)

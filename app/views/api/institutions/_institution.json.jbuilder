@@ -1,6 +1,7 @@
 json.id institution.id
 json.date_start institution.date_start
 json.date_end institution.date_end
+json.synonym institution.synonym
 json.names(institution.names) do |name|
   json.id name.id
   json.status name.status
