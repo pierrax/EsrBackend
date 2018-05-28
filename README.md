@@ -13,7 +13,7 @@ DataESR Institutions is a Rails open source application to manage higher educati
 
 First, clone down the repository:
 
-    git clone https://github.com/pierrax/EsrBackend.git && cd esrbackend
+    git clone https://github.com/MinistereSupRecherche/data_esr_institutions && cd data_esr_institutions
 
 Update dependencies, run:
 
@@ -62,7 +62,7 @@ Visit ```http://localhost:3000/api``` :
 ##### Authentification
 
 You need to add an authentification application in order to successfully authenticate your requests.
-Please check: https://github.com/pierrax/data_esr_authenfication
+Please check: https://github.com/MinistereSupRecherche/data_esr_authenfication
 
 ##### Front-end
 
