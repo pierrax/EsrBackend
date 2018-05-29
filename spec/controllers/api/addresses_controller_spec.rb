@@ -8,80 +8,100 @@ RSpec.describe Api::AddressesController, :type => :request do
   end
 
   describe '#create' do
-    context 'when  no archived params' do
+    context 'when params are valid' do
+      context 'when  no archived params' do
+        it 'creates an active address and sets others to archived' do
+          i = create(:institution)
+
+          params = {
+            address: {
+              business_name: 'Sorbonne 12',
+              address_1: '1 rue des écoles',
+              address_2: '',
+              zip_code: '75005',
+              city: 'Paris',
+              country: 'France',
+              phone: '0101010101',
+              latitude: 2.00,
+              longitude: 4.00
+            }
+          }
+
+          post "api/institutions/#{i.id}/addresses", params.merge(format: 'json')
+
+          i.reload
+          expect(last_response.status).to eq(200)
+          expect(i.addresses.count).to eq(2)
+          expect(i.addresses.last.business_name).to eq('Sorbonne 12')
+          expect(i.addresses.last.address_1).to eq('1 rue des écoles')
+          expect(i.addresses.last.address_2).to eq('')
+          expect(i.addresses.last.zip_code).to eq('75005')
+          expect(i.addresses.last.city).to eq('Paris')
+          expect(i.addresses.last.country).to eq('France')
+          expect(i.addresses.last.phone).to eq('0101010101')
+          expect(i.addresses.last.latitude).to eq(48.847408)
+          expect(i.addresses.last.longitude).to eq(2.352397)
+          expect(i.addresses.last.status).to eq('active')
+          expect(i.addresses.first.status).to eq('archived')
+        end
+      end
+
+      context 'when archived params' do
+        it 'creates an archived name and does not set active others to archived' do
+          i = create(:institution)
+          archived_address = create(:address, addressable: i, status: 'archived')
+
+          params = {
+            address: {
+              business_name: 'Sorbonne 12',
+              address_1: '1 rue des écoles',
+              address_2: '',
+              zip_code: '75005',
+              city: 'Paris',
+              country: 'France',
+              phone: '0101010101',
+              latitude: 2.00,
+              longitude: 4.00,
+              status: 'archived'
+            }
+          }
+
+          post "api/institutions/#{i.id}/addresses", params.merge(format: 'json')
+
+          i.reload
+          expect(last_response.status).to eq(200)
+          expect(i.addresses.count).to eq(3)
+          expect(i.addresses.last.business_name).to eq('Sorbonne 12')
+          expect(i.addresses.last.address_1).to eq('1 rue des écoles')
+          expect(i.addresses.last.address_2).to eq('')
+          expect(i.addresses.last.zip_code).to eq('75005')
+          expect(i.addresses.last.city).to eq('Paris')
+          expect(i.addresses.last.country).to eq('France')
+          expect(i.addresses.last.phone).to eq('0101010101')
+          expect(i.addresses.last.latitude).to eq(48.847408)
+          expect(i.addresses.last.longitude).to eq(2.352397)
+          expect(i.addresses.last.status).to eq('archived')
+          expect(archived_address.reload.status).to eq('archived')
+          expect(i.addresses.first.status).to eq('active')
+        end
+      end
+    end
+
+    context 'when params are not valid' do
       it 'creates an active address and sets others to archived' do
         i = create(:institution)
 
         params = {
           address: {
-            business_name: 'Sorbonne 12',
-            address_1: '1 rue des écoles',
-            address_2: '',
-            zip_code: '75005',
-            city: 'Paris',
-            country: 'France',
-            phone: '0101010101',
-            latitude: 2.00,
-            longitude: 4.00
+            business_name: 'S'
           }
         }
 
         post "api/institutions/#{i.id}/addresses", params.merge(format: 'json')
 
         i.reload
-        expect(last_response.status).to eq(200)
-        expect(i.addresses.count).to eq(2)
-        expect(i.addresses.last.business_name).to eq('Sorbonne 12')
-        expect(i.addresses.last.address_1).to eq('1 rue des écoles')
-        expect(i.addresses.last.address_2).to eq('')
-        expect(i.addresses.last.zip_code).to eq('75005')
-        expect(i.addresses.last.city).to eq('Paris')
-        expect(i.addresses.last.country).to eq('France')
-        expect(i.addresses.last.phone).to eq('0101010101')
-        expect(i.addresses.last.latitude).to eq(48.847408)
-        expect(i.addresses.last.longitude).to eq(2.352397)
-        expect(i.addresses.last.status).to eq('active')
-        expect(i.addresses.first.status).to eq('archived')
-      end
-    end
-
-    context 'when archived params' do
-      it 'creates an archived name and does not set active others to archived' do
-        i = create(:institution)
-        archived_address = create(:address, addressable: i, status: 'archived')
-
-        params = {
-          address: {
-            business_name: 'Sorbonne 12',
-            address_1: '1 rue des écoles',
-            address_2: '',
-            zip_code: '75005',
-            city: 'Paris',
-            country: 'France',
-            phone: '0101010101',
-            latitude: 2.00,
-            longitude: 4.00,
-            status: 'archived'
-          }
-        }
-
-        post "api/institutions/#{i.id}/addresses", params.merge(format: 'json')
-
-        i.reload
-        expect(last_response.status).to eq(200)
-        expect(i.addresses.count).to eq(3)
-        expect(i.addresses.last.business_name).to eq('Sorbonne 12')
-        expect(i.addresses.last.address_1).to eq('1 rue des écoles')
-        expect(i.addresses.last.address_2).to eq('')
-        expect(i.addresses.last.zip_code).to eq('75005')
-        expect(i.addresses.last.city).to eq('Paris')
-        expect(i.addresses.last.country).to eq('France')
-        expect(i.addresses.last.phone).to eq('0101010101')
-        expect(i.addresses.last.latitude).to eq(48.847408)
-        expect(i.addresses.last.longitude).to eq(2.352397)
-        expect(i.addresses.last.status).to eq('archived')
-        expect(archived_address.reload.status).to eq('archived')
-        expect(i.addresses.first.status).to eq('active')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Address 1 can't be blank, Address 1 is too short (minimum is 2 characters), Zip code can't be blank, Zip code is too short (minimum is 2 characters), City can't be blank, City is too short (minimum is 2 characters), Country can't be blank, Country is too short (minimum is 2 characters)")
       end
     end
   end

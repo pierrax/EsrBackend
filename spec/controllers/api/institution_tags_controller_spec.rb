@@ -20,22 +20,41 @@ RSpec.describe Api::InstitutionTagsController, :type => :request do
   end
 
   describe '#create' do
-    it 'creates an institution tag' do
-      category = create(:institution_tag_category)
-      params = {
-          institution_tag: {
-              short_label: 'PV',
-              long_label: 'Privé',
-              institution_tag_category_id: category.id
-          }
-      }
+    context 'when params are valid' do
+      it 'creates an institution tag' do
+        category = create(:institution_tag_category)
+        params = {
+            institution_tag: {
+                short_label: 'PV',
+                long_label: 'Privé',
+                institution_tag_category_id: category.id
+            }
+        }
 
-      post 'api/institution_tags', params.merge(format: 'json')
-      expect(last_response.status).to eq(200)
-      expect(InstitutionTag.count).to eq(1)
-      expect(InstitutionTag.last.short_label).to eq('PV')
-      expect(InstitutionTag.last.long_label).to eq('Privé')
-      expect(InstitutionTag.last.category).to eq(category)
+        post 'api/institution_tags', params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(InstitutionTag.count).to eq(1)
+        expect(InstitutionTag.last.short_label).to eq('PV')
+        expect(InstitutionTag.last.long_label).to eq('Privé')
+        expect(InstitutionTag.last.category).to eq(category)
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        category = create(:institution_tag_category)
+        params = {
+            institution_tag: {
+                short_label: '',
+                long_label: '',
+                institution_tag_category_id: ''
+            }
+        }
+
+        post 'api/institution_tags', params.merge(format: 'json')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Category must exist, Short label can't be blank, Long label can't be blank")
+      end
     end
   end
 

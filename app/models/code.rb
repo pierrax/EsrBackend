@@ -13,6 +13,7 @@ class Code < ApplicationRecord
 
   # Scopes
   scope :from_category, -> (category_id) { where(code_category_id: category_id) }
+  scope :active, -> { where(status: 'active') }
 
   def archive_others
     return if self.status == 'archived'

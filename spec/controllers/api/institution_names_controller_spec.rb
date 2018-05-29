@@ -8,52 +8,71 @@ RSpec.describe Api::InstitutionNamesController, :type => :request do
   end
 
   describe '#create' do
-    context 'when  no archived params' do
-      it 'creates an active name and sets others to archived' do
-        i = create(:institution)
+    context 'when params are valid' do
+      context 'when  no archived params' do
+        it 'creates an active name and sets others to archived' do
+          i = create(:institution)
 
-        params = {
-            institution_name: {
-                text: 'Sorbonne 12',
-                initials: 'SO'
-            }
-        }
+          params = {
+              institution_name: {
+                  text: 'Sorbonne 12',
+                  initials: 'SO'
+              }
+          }
 
-        post "api/institutions/#{i.id}/institution_names", params.merge(format: 'json')
+          post "api/institutions/#{i.id}/institution_names", params.merge(format: 'json')
 
-        i.reload
-        expect(last_response.status).to eq(200)
-        expect(i.names.count).to eq(2)
-        expect(i.names.last.text).to eq('Sorbonne 12')
-        expect(i.names.last.initials).to eq('SO')
-        expect(i.names.last.status).to eq('active')
-        expect(i.names.first.status).to eq('archived')
+          i.reload
+          expect(last_response.status).to eq(200)
+          expect(i.names.count).to eq(2)
+          expect(i.names.last.text).to eq('Sorbonne 12')
+          expect(i.names.last.initials).to eq('SO')
+          expect(i.names.last.status).to eq('active')
+          expect(i.names.first.status).to eq('archived')
+        end
+      end
+
+      context 'when archived params' do
+        it 'creates an archived name and does not set active others to archived' do
+          i = create(:institution)
+          archived_name = create(:institution_name, institution: i, status: 'archived')
+
+          params = {
+              institution_name: {
+                  text: 'Sorbonne 12',
+                  initials: 'SO',
+                  status: 'archived'
+              }
+          }
+
+          post "api/institutions/#{i.id}/institution_names", params.merge(format: 'json')
+
+          i.reload
+          expect(last_response.status).to eq(200)
+          expect(i.names.count).to eq(3)
+          expect(i.names.last.text).to eq('Sorbonne 12')
+          expect(i.names.last.initials).to eq('SO')
+          expect(i.names.last.status).to eq('archived')
+          expect(archived_name.reload.status).to eq('archived')
+          expect(i.names.first.status).to eq('active')
+        end
       end
     end
 
-    context 'when archived params' do
-      it 'creates an archived name and does not set active others to archived' do
+    context 'when params are not valid' do
+      it 'returns an error' do
         i = create(:institution)
-        archived_name = create(:institution_name, institution: i, status: 'archived')
 
         params = {
-            institution_name: {
-                text: 'Sorbonne 12',
-                initials: 'SO',
-                status: 'archived'
-            }
+          institution_name: {
+            text: 'S',
+            initials: ''
+          }
         }
 
         post "api/institutions/#{i.id}/institution_names", params.merge(format: 'json')
-
-        i.reload
-        expect(last_response.status).to eq(200)
-        expect(i.names.count).to eq(3)
-        expect(i.names.last.text).to eq('Sorbonne 12')
-        expect(i.names.last.initials).to eq('SO')
-        expect(i.names.last.status).to eq('archived')
-        expect(archived_name.reload.status).to eq('archived')
-        expect(i.names.first.status).to eq('active')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Text is too short (minimum is 2 characters), Initials can't be blank, Initials is too short (minimum is 2 characters)")
       end
     end
   end

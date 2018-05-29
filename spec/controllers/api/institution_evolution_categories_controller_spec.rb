@@ -8,17 +8,33 @@ RSpec.describe Api::InstitutionEvolutionCategoriesController, :type => :request 
   end
 
   describe '#create' do
-    it 'creates an institution evolution category' do
-      params = {
-          institution_evolution_category: {
-              title: 'Fusion'
-          }
-      }
+    context 'when params are valid' do
+      it 'creates an institution evolution category' do
+        params = {
+            institution_evolution_category: {
+                title: 'Fusion'
+            }
+        }
 
-      post 'api/institution_evolution_categories', params.merge(format: 'json')
-      expect(last_response.status).to eq(200)
-      expect(InstitutionEvolutionCategory.count).to eq(1)
-      expect(InstitutionEvolutionCategory.first.title).to eq('Fusion')
+        post 'api/institution_evolution_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(InstitutionEvolutionCategory.count).to eq(1)
+        expect(InstitutionEvolutionCategory.first.title).to eq('Fusion')
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        params = {
+          institution_evolution_category: {
+            title: ''
+          }
+        }
+
+        post 'api/institution_evolution_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Title can't be blank")
+      end
     end
   end
 

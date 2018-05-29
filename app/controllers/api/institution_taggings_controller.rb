@@ -27,23 +27,14 @@ class Api::InstitutionTaggingsController < Api::BaseController
 
     @tagging = @institution.institution_taggings.build(tagging_params)
     @tagging.institution_tag_id = @tag.id
-    if @tagging.save
-
-    else
-      p @tagging.errors
-      return api_error(status: 302, errors: "Error: Can't add this tag" )
-    end
+    @tagging.save!
+    respond_with @tagging
   end
 
   def update
     @tagging = InstitutionTagging.find(params[:id])
-
-    if @tagging.update(tagging_params)
-
-    else
-      p @tagging.errors
-      return api_error(status: 302, errors: "Error: Can't modify this tagging" )
-    end
+    @tagging.update!(tagging_params)
+    respond_with @tagging
   end
 
   def delete

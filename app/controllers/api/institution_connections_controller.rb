@@ -57,13 +57,8 @@ class Api::InstitutionConnectionsController < Api::BaseController
 
   def create_mother
     @institution = Institution.find(params[:institution_id])
-    @connection = InstitutionConnection.new(mother_params)
-    if @connection.save
-      @connections = @institution.mother_connections
-    else
-      p @connection.errors
-      return not_saved
-    end
+    @connection = InstitutionConnection.create!(mother_params)
+    respond_with @connection
   end
 
   def index_mothers
@@ -81,14 +76,8 @@ class Api::InstitutionConnectionsController < Api::BaseController
 
   def create_daughter
     @institution = Institution.find(params[:institution_id])
-    @connection = InstitutionConnection.new(daughter_params)
-
-    if @connection.save
-      @connections = @institution.daughter_connections
-    else
-      p @connection.errors
-      return not_saved
-    end
+    @connection = InstitutionConnection.create!(daughter_params)
+    respond_with @connection
   end
 
   def index_daughters

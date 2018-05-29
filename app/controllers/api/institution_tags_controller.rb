@@ -36,13 +36,8 @@ class Api::InstitutionTagsController < Api::BaseController
   end
   
   def create
-    @tag = InstitutionTag.new(tag_params)
-    if @tag.save
-      respond_with @tag
-    else
-      p @tag.errors
-      return not_saved
-    end
+    @tag = InstitutionTag.create!(tag_params)
+    respond_with @tag
   end
 
   def show
@@ -50,12 +45,8 @@ class Api::InstitutionTagsController < Api::BaseController
   end
 
   def update
-    if @tag.update(tag_params)
-      respond_with @tag
-    else
-      p @tag.errors
-      return not_saved
-    end
+    @tag.update!(tag_params)
+    respond_with @tag
   end
 
   def destroy

@@ -24,19 +24,37 @@ RSpec.describe Api::LinksController, :type => :request do
   describe '#create' do
     let(:link_category) { create(:link_category) }
 
-    it 'creates a link' do
-      i = create(:institution)
-      params = {
-        link: {
-          content: 'www.dataesr.com',
-          link_category_id: link_category.id
+    context 'when params are valid' do
+      it 'creates a link' do
+        i = create(:institution)
+        params = {
+          link: {
+            content: 'www.dataesr.com',
+            link_category_id: link_category.id
+          }
         }
-      }
 
-      post "api/institutions/#{i.id}/links", params.merge(format: 'json')
-      expect(last_response.status).to eq(200)
-      expect(i.links.count).to eq(1)
-      expect(i.links.first.content).to eq('www.dataesr.com')
+        post "api/institutions/#{i.id}/links", params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(i.links.count).to eq(1)
+        expect(i.links.first.content).to eq('www.dataesr.com')
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        i = create(:institution)
+        params = {
+            link: {
+                content: '',
+                link_category_id: ''
+            }
+        }
+
+        post "api/institutions/#{i.id}/links", params.merge(format: 'json')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Category must exist, Content can't be blank")
+      end
     end
   end
 

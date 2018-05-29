@@ -50,13 +50,8 @@ class Api::LinksController < Api::BaseController
 
   def create
     @institution = Institution.find(params[:institution_id])
-    @link = @institution.links.new(link_params)
-    if @link.save
-      @link
-    else
-      p @link.errors
-      return not_saved
-    end
+    @link = @institution.links.create!(link_params)
+    respond_with @link
   end
 
   def show
@@ -64,11 +59,8 @@ class Api::LinksController < Api::BaseController
   end
 
   def update
-    if @link.update(link_params)
-      respond_with @link
-    else
-      return not_saved
-    end
+    @link.update!(link_params)
+    respond_with @link
   end
 
   def destroy

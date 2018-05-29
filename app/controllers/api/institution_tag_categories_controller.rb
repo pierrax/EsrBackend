@@ -37,13 +37,8 @@ class Api::InstitutionTagCategoriesController < Api::BaseController
   end
 
   def create
-    @category = InstitutionTagCategory.new(category_params)
-    if @category.save
-      respond_with @category
-    else
-      p @category.errors
-      return not_saved
-    end
+    @category = InstitutionTagCategory.create!(category_params)
+    respond_with @category
   end
 
   def show
@@ -51,12 +46,8 @@ class Api::InstitutionTagCategoriesController < Api::BaseController
   end
 
   def update
-    if @category.update(category_params)
-      respond_with @category
-    else
-      p @category.errors
-      return not_saved
-    end
+    @category.update!(category_params)
+    respond_with @category
   end
 
   def destroy

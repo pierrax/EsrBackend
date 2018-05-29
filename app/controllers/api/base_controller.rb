@@ -4,7 +4,6 @@ class Api::BaseController < ApplicationController
   include Paginator
 
   class Responder < ActionController::Responder
-    # simply render the resource even on POST instead of redirecting for ajax
     def api_behavior
       if post? || put? || delete?
         display resource, status: :ok
@@ -20,9 +19,14 @@ class Api::BaseController < ApplicationController
   respond_to :json
 
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable
 
   def not_found
     return api_error(status: 404, errors: 'Record not found')
+  end
+
+  def unprocessable(exception)
+    return api_error(status: 404, errors: exception.record.errors.full_messages.join(', '))
   end
 
   def not_saved

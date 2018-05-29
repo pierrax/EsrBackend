@@ -20,16 +20,32 @@ RSpec.describe Api::CodeCategoriesController, :type => :request do
   end
 
   describe '#create' do
-    it 'creates a code category' do
-      params = {
-        code_category: {
-          title: 'GRID'
+    context 'when params are valid' do
+      it 'creates a code category' do
+        params = {
+          code_category: {
+            title: 'GRID'
+          }
         }
-      }
 
-      post 'api/code_categories', params.merge(format: 'json')
-      expect(last_response.status).to eq(200)
-      expect(CodeCategory.count).to eq(1)
+        post 'api/code_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(CodeCategory.count).to eq(1)
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        params = {
+          code_category: {
+            title: ''
+          }
+        }
+
+        post 'api/code_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Title can't be blank")
+      end
     end
   end
 

@@ -20,16 +20,32 @@ RSpec.describe Api::LinkCategoriesController, :type => :request do
   end
 
   describe '#create' do
-    it 'creates a category link' do
-      params = {
-        link_category: {
-          title: 'Facebook'
+    context 'when params are valid' do
+      it 'creates a category link' do
+        params = {
+          link_category: {
+            title: 'Facebook'
+          }
         }
-      }
 
-      post 'api/link_categories', params.merge(format: 'json')
-      expect(last_response.status).to eq(200)
-      expect(LinkCategory.count).to eq(1)
+        post 'api/link_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(LinkCategory.count).to eq(1)
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        params = {
+            link_category: {
+                title: ''
+            }
+        }
+
+        post 'api/link_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Title can't be blank")
+      end
     end
   end
 

@@ -1,5 +1,6 @@
 class Api::CodesController < Api::BaseController
   before_action :set_code, except: %i[create index search export import]
+  skip_before_action :authenticate_request, only: :search
 
   swagger_controller :codes, 'Codes des établissements'
 
@@ -56,13 +57,8 @@ class Api::CodesController < Api::BaseController
   
   def create
     @institution = Institution.find(params[:institution_id])
-    @code = @institution.codes.new(code_params)
-    if @code.save
-      @code
-    else
-      p @code.errors
-      return not_saved
-    end
+    @code = @institution.codes.create!(code_params)
+    respond_with @code
   end
 
   def show
@@ -70,11 +66,8 @@ class Api::CodesController < Api::BaseController
   end
 
   def update
-    if @code.update(code_params)
-      respond_with @code
-    else
-      return not_saved
-    end
+    @code.update!(code_params)
+    respond_with @code
   end
 
   def destroy
@@ -89,7 +82,12 @@ class Api::CodesController < Api::BaseController
 
   def search
     @code = Code.where(content: params[:q]).first
-    @institution = @code.institution
+    if @code
+      @active = params[:status] == 'active'
+      @institution = @code.try(:institution)
+    else
+      render json: { message: 'No institution' }, status: 200
+    end
   end
 
   def import

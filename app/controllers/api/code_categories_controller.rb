@@ -33,13 +33,8 @@ class Api::CodeCategoriesController < Api::BaseController
   end
 
   def create
-    @category = CodeCategory.new(code_category_params)
-    if @category.save
-      respond_with @category
-    else
-      p @category.errors
-      return not_saved
-    end
+    @category = CodeCategory.create!(code_category_params)
+    respond_with @category
   end
 
   def show
@@ -47,12 +42,8 @@ class Api::CodeCategoriesController < Api::BaseController
   end
 
   def update
-    if @category.update(code_category_params)
-      respond_with @category
-    else
-      p @category.errors
-      return not_saved
-    end
+    @category.update!(code_category_params)
+    respond_with @category
   end
 
   def destroy

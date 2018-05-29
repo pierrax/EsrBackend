@@ -57,13 +57,8 @@ class Api::InstitutionEvolutionsController < Api::BaseController
   
   def create_predecessor
     @institution = Institution.find(params[:institution_id])
-    @evolution = InstitutionEvolution.new(predecessor_params)
-    if @evolution.save
-      @evolutions = @institution.predecessor_evolutions
-    else
-      p @evolution.errors
-      return not_saved
-    end
+    @evolution = InstitutionEvolution.create!(predecessor_params)
+    respond_with @evolution
   end
 
   def index_predecessors
@@ -81,14 +76,8 @@ class Api::InstitutionEvolutionsController < Api::BaseController
 
   def create_follower
     @institution = Institution.find(params[:institution_id])
-    @evolution = InstitutionEvolution.new(follower_params)
-
-    if @evolution.save
-      @evolutions = @institution.follower_evolutions
-    else
-      p @evolution.errors
-      return not_saved
-    end
+    @evolution = InstitutionEvolution.create!(follower_params)
+    respond_with @evolution
   end
 
   def index_followers

@@ -9,26 +9,48 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
   end
 
   describe '#create_predecessor' do
-    it 'creates an institution evolution' do
-      i = create(:institution)
-      predecessor = create(:institution)
-      evolution_category = create(:institution_evolution_category)
+    context 'when params are valid' do
+      it 'creates an institution evolution' do
+        i = create(:institution)
+        predecessor = create(:institution)
+        evolution_category = create(:institution_evolution_category)
 
-      params = {
-        predecessor: {
-          predecessor_id: predecessor.id,
-          date: '2018-01-13',
-          institution_evolution_category_id: evolution_category.id
+        params = {
+          predecessor: {
+            predecessor_id: predecessor.id,
+            date: '2018-01-13',
+            institution_evolution_category_id: evolution_category.id
+          }
         }
-      }
 
-      post "api/institutions/#{i.id}/predecessors", params.merge(format: 'json')
+        post "api/institutions/#{i.id}/predecessors", params.merge(format: 'json')
 
-      expect(last_response.status).to eq(200)
-      expect(InstitutionEvolution.count).to eq(1)
-      expect(i.predecessors.last).to eq(predecessor)
-      expect(InstitutionEvolution.last.date).to eq(Date.new(2018,01,13))
+        expect(last_response.status).to eq(200)
+        expect(InstitutionEvolution.count).to eq(1)
+        expect(i.predecessors.last).to eq(predecessor)
+        expect(InstitutionEvolution.last.date).to eq(Date.new(2018,01,13))
+      end
     end
+
+    context 'when params are valid' do
+      it 'creates an institution evolution' do
+        i = create(:institution)
+
+        params = {
+          predecessor: {
+            predecessor_id: '',
+            date: '',
+            institution_evolution_category_id: ''
+          }
+        }
+
+        post "api/institutions/#{i.id}/predecessors", params.merge(format: 'json')
+
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Predecessor must exist, Category must exist, Predecessor can't be blank, Institution evolution category can't be blank")
+      end
+    end
+
   end
 
   describe '#index_predecessors' do
@@ -58,26 +80,48 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
 
 
   describe '#create_follower' do
-    it 'creates an institution follower' do
-      i = create(:institution)
-      follower = create(:institution)
-      evolution_category = create(:institution_evolution_category)
+    context 'when params are valid' do
+      it 'creates an institution follower' do
+        i = create(:institution)
+        follower = create(:institution)
+        evolution_category = create(:institution_evolution_category)
 
-      params = {
+        params = {
           follower: {
-              follower_id: follower.id,
-              date: '2018-01-13',
-              institution_evolution_category_id: evolution_category.id
+            follower_id: follower.id,
+            date: '2018-01-13',
+            institution_evolution_category_id: evolution_category.id
           }
-      }
+        }
 
-      post "api/institutions/#{i.id}/followers", params.merge(format: 'json')
+        post "api/institutions/#{i.id}/followers", params.merge(format: 'json')
 
-      expect(last_response.status).to eq(200)
-      expect(InstitutionEvolution.count).to eq(1)
-      expect(i.followers.last).to eq(follower)
-      expect(InstitutionEvolution.first.date).to eq(Date.new(2018,01,13))
+        expect(last_response.status).to eq(200)
+        expect(InstitutionEvolution.count).to eq(1)
+        expect(i.followers.last).to eq(follower)
+        expect(InstitutionEvolution.first.date).to eq(Date.new(2018,01,13))
+      end
     end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        i = create(:institution)
+
+        params = {
+            follower: {
+                follower_id: '',
+                date: '',
+                institution_evolution_category_id: ''
+            }
+        }
+
+        post "api/institutions/#{i.id}/followers", params.merge(format: 'json')
+
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Follower must exist, Category must exist, Follower can't be blank, Institution evolution category can't be blank")
+      end
+    end
+
   end
 
   describe '#index_followers' do

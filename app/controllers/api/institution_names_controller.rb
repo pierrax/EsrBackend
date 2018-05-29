@@ -39,12 +39,8 @@ class Api::InstitutionNamesController < Api::BaseController
 
   def create
     @institution = Institution.find(params[:institution_id])
-    @institution_name = @institution.names.new(institution_name_params)
-    if @institution_name.save
-      @institution_name
-    else
-      return not_found
-    end
+    @institution_name = @institution.names.create!(institution_name_params)
+    respond_with @institution_name
   end
 
   def show
@@ -52,11 +48,8 @@ class Api::InstitutionNamesController < Api::BaseController
   end
 
   def update
-    if @institution_name.update(institution_name_params)
-      respond_with @institution_name
-    else
-      return not_found
-    end
+    @institution_name.update!(institution_name_params)
+    respond_with @institution_name
   end
 
   def destroy

@@ -52,13 +52,8 @@ class Api::AddressesController < Api::BaseController
   
   def create
     @institution = Institution.find(params[:institution_id])
-    @address = @institution.addresses.new(address_params)
-    if @address.save
-      @address
-    else
-      p @address.errors
-      return not_found
-    end
+    @address = @institution.addresses.create!(address_params)
+    respond_with @address
   end
 
   def show
@@ -66,11 +61,8 @@ class Api::AddressesController < Api::BaseController
   end
 
   def update
-    if @address.update(address_params)
-      respond_with @address
-    else
-      return not_found
-    end
+    @address.update!(address_params)
+    respond_with @address
   end
 
   def destroy

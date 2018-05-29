@@ -58,25 +58,14 @@ class Api::InstitutionsController < Api::BaseController
     if params[:institution][:name].present? || params[:institution][:initials].present?
       params[:institution][:names_attributes] = [{ text: params[:institution][:name], initials: params[:institution][:initials], insitution_id: params[:institution_id]  }]
     end
-    @institution = Institution.new(institution_params)
-    if @institution.save
-      # respond_with @institution
-    else
-      p @institution.errors
-      return not_found
-    end
+    @institution = Institution.create!(institution_params)
   end
 
   def show
-    # respond_with @institution
   end
 
   def update
-    if @institution.update(institution_params)
-      # respond_with @institution
-    else
-      return not_found
-    end
+    @institution.update!(institution_params)
   end
 
   def destroy

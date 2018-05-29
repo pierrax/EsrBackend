@@ -20,19 +20,36 @@ RSpec.describe Api::InstitutionTagCategoriesController, :type => :request do
   end
 
   describe '#create' do
-    it 'creates an institution tag category' do
-      params = {
-          institution_tag_category: {
-              title: 'Privé',
-              origin: 'BCN'
-          }
-      }
+    context 'when params are valid' do
+      it 'creates an institution tag category' do
+        params = {
+            institution_tag_category: {
+                title: 'Privé',
+                origin: 'BCN'
+            }
+        }
 
-      post 'api/institution_tag_categories', params.merge(format: 'json')
-      expect(last_response.status).to eq(200)
-      expect(InstitutionTagCategory.count).to eq(1)
-      expect(InstitutionTagCategory.last.title).to eq('Privé')
-      expect(InstitutionTagCategory.last.origin).to eq('BCN')
+        post 'api/institution_tag_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(InstitutionTagCategory.count).to eq(1)
+        expect(InstitutionTagCategory.last.title).to eq('Privé')
+        expect(InstitutionTagCategory.last.origin).to eq('BCN')
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        params = {
+            institution_tag_category: {
+                title: '',
+                origin: ''
+            }
+        }
+
+        post 'api/institution_tag_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Title can't be blank")
+      end
     end
   end
 

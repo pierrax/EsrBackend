@@ -33,13 +33,8 @@ class Api::LinkCategoriesController < Api::BaseController
   end
   
   def create
-    @category = LinkCategory.new(link_category_params)
-    if @category.save
-      respond_with @category
-    else
-      p @category.errors
-      return not_saved
-    end
+    @category = LinkCategory.create!(link_category_params)
+    respond_with @category
   end
 
   def show
@@ -47,11 +42,8 @@ class Api::LinkCategoriesController < Api::BaseController
   end
 
   def update
-    if @category.update(link_category_params)
-      respond_with @category
-    else
-      return not_saved
-    end
+    @category.update!(link_category_params)
+    respond_with @category
   end
 
   def destroy

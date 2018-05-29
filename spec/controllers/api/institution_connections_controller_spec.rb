@@ -9,25 +9,46 @@ RSpec.describe Api::InstitutionConnectionsController, :type => :request do
   end
 
   describe '#create_mother' do
-    it 'creates an institution connection' do
-      i = create(:institution)
-      mother = create(:institution)
-      connection_category = create(:institution_connection_category)
+    context 'when params are valid' do
+      it 'creates an institution connection' do
+        i = create(:institution)
+        mother = create(:institution)
+        connection_category = create(:institution_connection_category)
 
-      params = {
+        params = {
+            mother: {
+                mother_id: mother.id,
+                date: '2018-01-13',
+                institution_connection_category_id: connection_category.id
+            }
+        }
+
+        post "api/institutions/#{i.id}/mothers", params.merge(format: 'json')
+
+        expect(last_response.status).to eq(200)
+        expect(InstitutionConnection.count).to eq(1)
+        expect(i.mothers.last).to eq(mother)
+        expect(InstitutionConnection.last.date).to eq(Date.new(2018,01,13))
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        i = create(:institution)
+
+        params = {
           mother: {
-              mother_id: mother.id,
-              date: '2018-01-13',
-              institution_connection_category_id: connection_category.id
+            mother_id: '',
+            date: '',
+            institution_connection_category_id: ''
           }
-      }
+        }
 
-      post "api/institutions/#{i.id}/mothers", params.merge(format: 'json')
+        post "api/institutions/#{i.id}/mothers", params.merge(format: 'json')
 
-      expect(last_response.status).to eq(200)
-      expect(InstitutionConnection.count).to eq(1)
-      expect(i.mothers.last).to eq(mother)
-      expect(InstitutionConnection.last.date).to eq(Date.new(2018,01,13))
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Mother must exist, Category must exist, Mother can't be blank, Institution connection category can't be blank")
+      end
     end
   end
 

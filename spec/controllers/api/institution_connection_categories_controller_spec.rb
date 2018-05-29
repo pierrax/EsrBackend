@@ -8,17 +8,41 @@ RSpec.describe Api::InstitutionConnectionCategoriesController, :type => :request
   end
 
   describe '#create' do
-    it 'creates an institution connection category' do
-      params = {
+    context 'when params are valid' do
+      it 'creates an institution connection category' do
+        params = {
           institution_connection_category: {
-              title: 'Département'
+            title: 'Département'
           }
-      }
+        }
 
-      post 'api/institution_connection_categories', params.merge(format: 'json')
+        post 'api/institution_connection_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(200)
+        expect(InstitutionConnectionCategory.count).to eq(1)
+        expect(InstitutionConnectionCategory.first.title).to eq('Département')
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'returns an error' do
+        params = {
+          institution_connection_category: {
+            title: ''
+          }
+        }
+
+        post 'api/institution_connection_categories', params.merge(format: 'json')
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Title can't be blank")
+      end
+    end
+  end
+
+  describe '#show' do
+    it 'returns all institution connection categories' do
+      category = create(:institution_connection_category)
+      get "api/institution_connection_categories/#{category.id}", format: :json
       expect(last_response.status).to eq(200)
-      expect(InstitutionConnectionCategory.count).to eq(1)
-      expect(InstitutionConnectionCategory.first.title).to eq('Département')
     end
   end
 

@@ -55,22 +55,42 @@ RSpec.describe Api::InstitutionsController, :type => :request do
   end
 
   describe '#update' do
-    it 'updates an institution' do
-      i = create(:institution)
-      params = {
-        institution: {
-          id: i.id,
-          date_start: Date.current - 2.days,
-          synonym: 'Uni sckool'
+    context 'when params are valid' do
+      it 'updates an institution' do
+        i = create(:institution)
+        params = {
+          institution: {
+            id: i.id,
+            date_start: Date.current - 2.days,
+            synonym: 'Uni sckool'
+          }
         }
-      }
 
-      put "api/institutions/#{i.id}", params.merge(format: 'json')
-      i.reload
+        put "api/institutions/#{i.id}", params.merge(format: 'json')
+        i.reload
 
-      expect(last_response.status).to eq(200)
-      expect(i.date_start).to eq(Date.current - 2.days)
-      expect(i.synonym).to eq('Uni sckool')
+        expect(last_response.status).to eq(200)
+        expect(i.date_start).to eq(Date.current - 2.days)
+        expect(i.synonym).to eq('Uni sckool')
+      end
+    end
+
+    context 'when params are not valid' do
+      it 'raises an error' do
+        i = create(:institution)
+        params = {
+          institution: {
+            id: i.id,
+            date_start: 'New Uni'
+          }
+        }
+
+        put "api/institutions/#{i.id}", params.merge(format: 'json')
+        i.reload
+
+        expect(last_response.status).to eq(404)
+        expect(json_response).to eq("Date start can't be blank")
+      end
     end
   end
 
