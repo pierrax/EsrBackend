@@ -16,6 +16,8 @@ class ImportAddresses
 
   def initialize(file)
     @file = file
+    @addresses = []
+    @errors = []
   end
 
   def call
@@ -24,7 +26,7 @@ class ImportAddresses
       if row
         address = Address.find_or_initialize_by(id: row[ADDRESS_ID])
 
-        address.institution_id = row[INSTITUTION_ID]
+        address.addressable_id = row[INSTITUTION_ID]
         address.business_name = row[BUSINESS_NAME]
         address.address_1 = row[ADDRESS_1]
         address.address_2 = row[ADDRESS_2]
@@ -37,10 +39,18 @@ class ImportAddresses
         address.status = row[STATUS] if %w(archived active).include?(row[STATUS])
         address.addressable_type = 'Institution'
 
-        p address.errors unless address.save
+        @addresses << address
       end
     end
 
-    true
+    if @addresses.map(&:valid?).all?
+      @addresses.each(&:save!)
+      true
+    else
+      @addresses.each_with_index do |address, index|
+        @errors << "Ligne #{index+1}: #{address.errors.full_messages.join(', ')}" if address.errors.full_messages.present?
+      end
+      @errors.join('; ')
+    end
   end
 end

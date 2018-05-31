@@ -78,10 +78,11 @@ class Api::AddressesController < Api::BaseController
   end
 
   def import
-    if ImportAddresses.new(params[:file].tempfile).call
+    import_response = ImportAddresses.new(params[:file].tempfile).call
+    if import_response == true
       render json: { message: 'Addresses uploaded' }, status: 200
     else
-      render json: { message: 'Error with the file uploaded' }, status: 401
+      render json: { message: import_response }, status: 401
     end
   end
 

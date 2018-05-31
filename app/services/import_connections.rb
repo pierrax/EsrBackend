@@ -9,6 +9,8 @@ class ImportConnections
 
   def initialize(file)
     @file = file
+    @connections = []
+    @errors = []
   end
 
   def call
@@ -22,10 +24,18 @@ class ImportConnections
         connection.institution_connection_category_id = row[CONNECTION_CATEGORY_ID].to_i
         connection.date = row[DATE]
 
-        p connection.errors.messages unless connection.save
+        @connections << connection
       end
     end
 
-    true
+    if @connections.map(&:valid?).all?
+      @connections.each(&:save!)
+      true
+    else
+      @connections.each_with_index do |connection, index|
+        @errors << "Ligne #{index+1}: #{connection.errors.full_messages.join(', ')}" if connection.errors.full_messages.present?
+      end
+      @errors.join('; ')
+    end
   end
 end

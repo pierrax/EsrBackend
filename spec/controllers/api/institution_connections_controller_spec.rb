@@ -125,4 +125,36 @@ RSpec.describe Api::InstitutionConnectionsController, :type => :request do
       expect(InstitutionConnection.count).to eq(0)
     end
   end
+
+  describe '#import' do
+    context 'when the file is valid' do
+      it 'creates 3 connections' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/connections.csv'), 'text/csv'
+        4.times { create(:institution) }
+        create(:institution_connection_category)
+
+        post 'api/connections/import', file: file
+
+        expect(last_response.status).to eq(200)
+        expect(InstitutionConnection.count).to eq(3)
+        expect(InstitutionConnection.last.mother_id).to eq(1)
+      end
+    end
+
+    context 'when the file is invalid' do
+      it 'creates 0 connections and returns an error' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/wrong_connections.csv'), 'text/csv'
+        4.times { create(:institution) }
+        create(:institution_connection_category)
+
+        post 'api/connections/import', file: file
+
+        expect(last_response.status).to eq(401)
+        expect(json_response[:message]).to eq('Ligne 3: Mother must exist')
+        expect(InstitutionConnection.count).to eq(0)
+      end
+    end
+  end
 end

@@ -184,4 +184,34 @@ RSpec.describe Api::AddressesController, :type => :request do
       }.to change(Address, :count).by(-1)
     end
   end
+
+  describe '#import' do
+    context 'when the file is valid' do
+      it 'creates 4 new addresses' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/addresses.csv'), 'text/csv'
+        create(:institution)
+
+        post 'api/addresses/import', file: file
+
+        expect(last_response.status).to eq(200)
+        expect(Address.count).to eq(5)
+        expect(Address.last.business_name).to eq('Sorbonne 4')
+      end
+    end
+
+    context 'when the file is invalid' do
+      it 'creates 0 new addresses and returns an error' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/wrong_addresses.csv'), 'text/csv'
+        create(:institution)
+
+        post 'api/addresses/import', file: file
+
+        expect(last_response.status).to eq(401)
+        expect(json_response[:message]).to eq("Ligne 4: Address 1 can't be blank, Address 1 is too short (minimum is 2 characters)")
+        expect(Address.count).to eq(1)
+      end
+    end
+  end
 end

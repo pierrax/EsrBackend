@@ -11,6 +11,8 @@ class ImportCodes
 
   def initialize(file)
     @file = file
+    @codes = []
+    @errors = []
   end
 
   def call
@@ -26,10 +28,18 @@ class ImportCodes
         code.date_end = row[DATE_END]
         code.status = row[STATUS] if %w(archived active).include?(row[DATE_END])
 
-        p code.errors.messages unless code.save
+        @codes << code
       end
     end
 
-    true
+    if @codes.map(&:valid?).all?
+      @codes.each(&:save!)
+      true
+    else
+      @codes.each_with_index do |code, index|
+        @errors << "Ligne #{index+1}: #{code.errors.full_messages.join(', ')}" if code.errors.full_messages.present?
+      end
+      @errors.join('; ')
+    end
   end
 end

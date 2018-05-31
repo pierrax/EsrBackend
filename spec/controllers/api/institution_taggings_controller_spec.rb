@@ -134,4 +134,36 @@ RSpec.describe Api::InstitutionTaggingsController, :type => :request do
       end
     end
   end
+
+  describe '#import' do
+    context 'when the file is valid' do
+      it 'creates 3 taggings' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/taggings.csv'), 'text/csv'
+        create(:institution)
+        3.times { create(:institution_tag) }
+
+        post 'api/taggings/import', file: file
+
+        expect(last_response.status).to eq(200)
+        expect(InstitutionTagging.count).to eq(3)
+        expect(InstitutionTagging.last.institution_tag_id).to eq(3)
+      end
+    end
+
+    context 'when the file is invalid' do
+      it 'creates 0 taggings and returns an error' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/wrong_taggings.csv'), 'text/csv'
+        create(:institution)
+        3.times { create(:institution_tag) }
+
+        post 'api/taggings/import', file: file
+
+        expect(last_response.status).to eq(401)
+        expect(json_response[:message]).to eq('Ligne 3: Institution must exist')
+        expect(InstitutionTagging.count).to eq(0)
+      end
+    end
+  end
 end

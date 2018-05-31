@@ -7,7 +7,7 @@ class Api::LinksController < Api::BaseController
     summary 'Create a link'
     notes 'Créer un lien pour un établissement'
     param :integer, :institution_id, :integer, :required, 'Institution ID'
-    param :query, :category_link_id, :integer, :required, 'Category link ID'
+    param :query, :link_category_id, :integer, :required, 'Category link ID'
     param :query, :content, :string, :required, 'Content link'
   end
 
@@ -74,10 +74,11 @@ class Api::LinksController < Api::BaseController
   end
 
   def import
-    if ImportLinks.new(params[:file].tempfile).call
+    import_response = ImportLinks.new(params[:file].tempfile).call
+    if import_response == true
       render json: { message: 'Links uploaded' }, status: 200
     else
-      render json: { message: 'Error with the file uploaded' }, status: 401
+      render json: { message: import_response }, status: 401
     end
   end
 

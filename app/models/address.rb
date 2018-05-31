@@ -1,6 +1,8 @@
 class Address < ApplicationRecord
 
   enum status: { archived: 0, active: 1 }
+  attr_accessor :skip_validation
+
   # Relations
   belongs_to :addressable, polymorphic: true
 
@@ -18,6 +20,19 @@ class Address < ApplicationRecord
 
   def full_address
     "#{address_1} #{address_2} #{zip_code} #{city} #{country}"
+  end
+
+  def valid_attributes?(*attributes)
+    attributes.each do |attribute|
+      self.class.validators_on(attribute).each do |validator|
+        validator.validate_each(self, attribute, send(attribute))
+      end
+    end
+    errors.none?
+  end
+
+  def base_valid?
+    valid_attributes?(:address_1) && valid_attributes?(:zip_code) && valid_attributes?(:city) && valid_attributes?(:country)
   end
   
   private

@@ -180,26 +180,44 @@ RSpec.describe Api::InstitutionsController, :type => :request do
   end
 
   describe '#import' do
-    let(:file) { Rack::Test::UploadedFile.new (fixture_path + '/institutions.csv'), 'text/csv' }
+    context 'when the file is valid' do
+      let(:file) { Rack::Test::UploadedFile.new (fixture_path + '/institutions.csv'), 'text/csv' }
 
-    it 'creates 2 institutions' do
-      create(:code_category, title: 'uai')
+      it 'creates 2 institutions' do
+        DatabaseCleaner.clean_with :truncation
+        create(:code_category, title: 'uai')
 
-      post 'api/institutions/import', file: file
+        post 'api/institutions/import', file: file
 
-      expect(last_response.status).to eq(200)
-      expect(Institution.count).to eq(2)
-      expect(Institution.last.date_start).to eq(Date.new(2000, 01, 01))
-      expect(Institution.last.codes.first.content).to eq('Uaaa33bbb')
-      expect(Institution.last.names.first.text).to eq('Central')
-      expect(Institution.last.names.first.initials).to eq('CCC')
-      expect(Institution.last.addresses.first.business_name).to eq('Central')
-      expect(Institution.last.addresses.first.address_1).to eq('1 rue des bois')
-      expect(Institution.last.addresses.first.address_2).to be_nil
-      expect(Institution.last.addresses.first.zip_code).to eq('92150')
-      expect(Institution.last.addresses.first.city).to eq('Suresnes')
-      expect(Institution.last.addresses.first.country).to eq('France')
-      expect(Institution.last.addresses.first.phone).to eq('0100990099')
+        expect(last_response.status).to eq(200)
+        expect(Institution.count).to eq(2)
+        expect(Institution.last.date_start).to eq(Date.new(2000, 01, 01))
+        expect(Institution.last.codes.first.content).to eq('Uaaa33bbb')
+        expect(Institution.last.names.first.text).to eq('Central')
+        expect(Institution.last.names.first.initials).to eq('CCC')
+        expect(Institution.last.addresses.first.business_name).to eq('Central')
+        expect(Institution.last.addresses.first.address_1).to eq('1 rue des bois')
+        expect(Institution.last.addresses.first.address_2).to be_nil
+        expect(Institution.last.addresses.first.zip_code).to eq('92150')
+        expect(Institution.last.addresses.first.city).to eq('Suresnes')
+        expect(Institution.last.addresses.first.country).to eq('France')
+        expect(Institution.last.addresses.first.phone).to eq('0100990099')
+      end
+    end
+
+    context 'when the file is invalid' do
+      let(:file) { Rack::Test::UploadedFile.new (fixture_path + '/wrong_institutions.csv'), 'text/csv' }
+
+      it 'creates 0 institutions and returns an error' do
+        DatabaseCleaner.clean_with :truncation
+        create(:code_category, title: 'uai')
+
+        post 'api/institutions/import', file: file
+
+        expect(last_response.status).to eq(401)
+        expect(Institution.count).to eq(0)
+        expect(json_response[:message]).to eq("Ligne 3: Names text can't be blank, Names text is too short (minimum is 2 characters); Ligne 3: Text can't be blank, Text is too short (minimum is 2 characters)")
+      end
     end
   end
 end

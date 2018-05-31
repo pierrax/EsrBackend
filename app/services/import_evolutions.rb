@@ -8,6 +8,8 @@ class ImportEvolutions
 
   def initialize(file)
     @file = file
+    @evolutions = []
+    @errors = []
   end
 
   def call
@@ -20,10 +22,18 @@ class ImportEvolutions
         evolution.follower_id = row[FOLLOWER_ID].to_i
         evolution.institution_evolution_category_id = row[EVOLUTION_CATEGORY_ID].to_i
 
-        p evolution.errors.messages unless evolution.save
+        @evolutions << evolution
       end
     end
 
-    true
+    if @evolutions.map(&:valid?).all?
+      @evolutions.each(&:save!)
+      true
+    else
+      @evolutions.each_with_index do |evolution, index|
+        @errors << "Ligne #{index+1}: #{evolution.errors.full_messages.join(', ')}" if evolution.errors.full_messages.present?
+      end
+      @errors.join('; ')
+    end
   end
 end

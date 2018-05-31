@@ -1,0 +1,5 @@
+Addresse ID;Etablissement ID;Business Name;Address 1;Address 2;ZipCode;City;Country;Phone;Date Start;Date End;Status
+;1;Sorbonne;1 rue des ecoles;;75005;Paris;France;0100110011;;;
+;1;Sorbonne 2;2 rue des ecoles;;75005;Paris;France;0100110011;;;
+;1;Sorbonne 3;3 rue des ecoles;;75005;Paris;France;0100110011;;;
+;1;;;;75005;Paris;France;0100110011;;;

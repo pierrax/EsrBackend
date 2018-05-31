@@ -47,10 +47,11 @@ class Api::InstitutionTaggingsController < Api::BaseController
   end
 
   def import
-    if ImportTaggings.new(params[:file].tempfile).call
+    import_response = ImportTaggings.new(params[:file].tempfile).call
+    if import_response == true
       render json: { message: 'Taggings uploaded' }, status: 200
     else
-      render json: { message: 'Error with the file uploaded' }, status: 401
+      render json: { message: import_response }, status: 401
     end
   end
 

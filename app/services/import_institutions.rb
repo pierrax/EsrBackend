@@ -16,29 +16,52 @@ class ImportInstitutions
   def initialize(file)
     @file = file
     @code_uai = CodeCategory.where(title: 'uai').first
+    @errors = []
   end
 
   def call
     csv_text = File.read(@file)
-    CSV.parse(csv_text, col_sep: ';', headers: true).each do |row|
-      if row
-        code_uai = Code.where(content: row[UAI_CODE], code_category_id: @code_uai.id).first
+    ActiveRecord::Base.transaction do
+      CSV.parse(csv_text, col_sep: ';', headers: true).each_with_index do |row, i|
+        if row
+          @code = Code.where(content: row[UAI_CODE], code_category_id: @code_uai.id).first
 
-        if code_uai
-          # modify institution
-          @institution = code_uai.institution
-          @institution.names.active.first.update(text: row[NAME], initials: row[INITIALS])
-          @institution.address.update(business_name: row[BUSINESS_NAME], address_1: row[ADDRESS_1], address_2: row[ADDRESS_2], zip_code: row[ZIP_CODE], city: row[CITY], country: row[COUNTRY], phone: row[PHONE] )
-        else
-          # create institution
-          @institution = Institution.create(date_start: row[DATE_START])
-          @institution.codes.create(content: row[UAI_CODE], category: @code_uai)
-          @institution.names.create(text: row[NAME], initials: row[INITIALS])
-          @institution.addresses.create(business_name: row[BUSINESS_NAME], address_1: row[ADDRESS_1], address_2: row[ADDRESS_2], zip_code: row[ZIP_CODE], city: row[CITY], country: row[COUNTRY], phone: row[PHONE] )
+          if @code
+            # modify institution
+            @institution = code_uai.institution
+            @name = @institution.names.active.first.attributes(text: row[NAME], initials: row[INITIALS])
+            @address = @institution.address.attributes(business_name: row[BUSINESS_NAME], address_1: row[ADDRESS_1], address_2: row[ADDRESS_2], zip_code: row[ZIP_CODE], city: row[CITY], country: row[COUNTRY], phone: row[PHONE] )
+          else
+            # create institution
+            @institution = Institution.new(date_start: row[DATE_START])
+            @code = @institution.codes.build(content: row[UAI_CODE], category: @code_uai)
+            @name = @institution.names.build(text: row[NAME], initials: row[INITIALS])
+            @address = Address.new(business_name: row[BUSINESS_NAME], address_1: row[ADDRESS_1], address_2: row[ADDRESS_2], zip_code: row[ZIP_CODE], city: row[CITY], country: row[COUNTRY], phone: row[PHONE], addressable_type: 'Institution')
+          end
+
+          objects = [@institution, @code, @name, @address]
+          if @institution.valid? && @code.valid? && @name.valid? && valid_address?(row)
+            @institution.save!
+            @code.save!
+            @name.save!
+            @address.addressable_id = @institution.id
+            @address.save!
+          else
+            objects.each do |object|
+              @errors << "Ligne #{i+2}: #{object.errors.full_messages.join(', ')}" if object.errors.full_messages.present? && !object.errors.full_messages.include?('Addressable must exist')
+            end
+            objects.each(&:save!)
+          end
         end
       end
     end
-
     true
+  rescue ActiveRecord::RecordInvalid => exception
+    return @errors.join('; ')
+  end
+
+  private
+  def valid_address?(row)
+    row[BUSINESS_NAME].present? && row[BUSINESS_NAME].size > 2 && row[ADDRESS_1].present? && row[ADDRESS_1].size > 2 && row[ZIP_CODE].present? && row[CITY].present? && row[COUNTRY].present?
   end
 end

@@ -145,4 +145,36 @@ RSpec.describe Api::CodesController, :type => :request do
       end
     end
   end
+
+  describe '#import' do
+    context 'when the file is valid' do
+      it 'creates 4 new codes' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/codes.csv'), 'text/csv'
+        create(:institution)
+        create(:code_category)
+
+        post 'api/codes/import', file: file
+
+        expect(last_response.status).to eq(200)
+        expect(Code.count).to eq(4)
+        expect(Code.last.content).to eq('111')
+      end
+    end
+
+    context 'when the file is invalid' do
+      it 'creates 0 new codes and returns an error' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/wrong_codes.csv'), 'text/csv'
+        create(:institution)
+        create(:code_category)
+
+        post 'api/codes/import', file: file
+
+        expect(last_response.status).to eq(401)
+        expect(json_response[:message]).to eq("Ligne 4: Institution must exist, Category must exist")
+        expect(Code.count).to eq(0)
+      end
+    end
+  end
 end

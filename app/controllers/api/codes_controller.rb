@@ -91,10 +91,11 @@ class Api::CodesController < Api::BaseController
   end
 
   def import
-    if ImportCodes.new(params[:file].tempfile).call
+    import_response = ImportCodes.new(params[:file].tempfile).call
+    if import_response == true
       render json: { message: 'Codes uploaded' }, status: 200
     else
-      render json: { message: 'Error with the file uploaded' }, status: 401
+      render json: { message: import_response }, status: 401
     end
   end
 

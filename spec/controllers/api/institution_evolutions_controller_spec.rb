@@ -148,4 +148,36 @@ RSpec.describe Api::InstitutionEvolutionsController, :type => :request do
       expect(InstitutionEvolution.count).to eq(0)
     end
   end
+
+  describe '#import' do
+    context 'when the file is valid' do
+      it 'creates 3 evolutions' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/evolutions.csv'), 'text/csv'
+        4.times { create(:institution) }
+        create(:institution_evolution_category)
+
+        post 'api/evolutions/import', file: file
+
+        expect(last_response.status).to eq(200)
+        expect(InstitutionEvolution.count).to eq(3)
+        expect(InstitutionEvolution.last.predecessor_id).to eq(1)
+      end
+    end
+
+    context 'when the file is invalid' do
+      it 'creates 0 evolutions and returns an error' do
+        DatabaseCleaner.clean_with :truncation
+        file = Rack::Test::UploadedFile.new (fixture_path + '/wrong_evolutions.csv'), 'text/csv'
+        4.times { create(:institution) }
+        create(:institution_evolution_category)
+
+        post 'api/evolutions/import', file: file
+
+        expect(last_response.status).to eq(401)
+        expect(json_response[:message]).to eq('Ligne 3: Predecessor must exist')
+        expect(InstitutionEvolution.count).to eq(0)
+      end
+    end
+  end
 end

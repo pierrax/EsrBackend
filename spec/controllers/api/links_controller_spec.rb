@@ -83,4 +83,39 @@ RSpec.describe Api::LinksController, :type => :request do
       expect(Link.count).to eq(0)
     end
   end
+
+  describe '#import' do
+    context 'when the file is valid' do
+      let(:file) { Rack::Test::UploadedFile.new (fixture_path + '/links.csv'), 'text/csv' }
+
+      it 'creates 3 links' do
+        DatabaseCleaner.clean_with :truncation
+        create(:institution)
+        category = create(:link_category, title: 'website')
+
+        post 'api/links/import', file: file
+
+        expect(last_response.status).to eq(200)
+        expect(Link.count).to eq(3)
+        expect(Link.last.content).to eq('www.esr3.com')
+        expect(Link.last.category).to eq(category)
+      end
+    end
+
+    context 'when the file is invalid' do
+      let(:file) { Rack::Test::UploadedFile.new (fixture_path + '/wrong_links.csv'), 'text/csv' }
+
+      it 'creates 0 links and returns an error' do
+        DatabaseCleaner.clean_with :truncation
+        create(:institution)
+        category = create(:link_category, title: 'website')
+
+        post 'api/links/import', file: file
+
+        expect(last_response.status).to eq(401)
+        expect(json_response[:message]).to eq("Ligne 2: Institution must exist; Ligne 4: Institution must exist")
+        expect(Link.count).to eq(0)
+      end
+    end
+  end
 end

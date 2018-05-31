@@ -10,6 +10,8 @@ class ImportTaggings
 
   def initialize(file)
     @file = file
+    @taggings = []
+    @errors = []
   end
 
   def call
@@ -24,10 +26,18 @@ class ImportTaggings
         tagging.date_end = row[DATE_END]
         tagging.status = row[STATUS] if %w(archived active).include?(row[STATUS])
 
-        p tagging.errors.messages unless tagging.save
+        @taggings << tagging
       end
     end
 
-    true
+    if @taggings.map(&:valid?).all?
+      @taggings.each(&:save!)
+      true
+    else
+      @taggings.each_with_index do |tagging, index|
+        @errors << "Ligne #{index+1}: #{tagging.errors.full_messages.join(', ')}" if tagging.errors.full_messages.present?
+      end
+      @errors.join('; ')
+    end
   end
 end

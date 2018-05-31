@@ -11,13 +11,14 @@ class ImportLinks
 
   def initialize(file)
     @file = file
+    @links = []
+    @errors = []
   end
 
   def call
     csv_text = File.read(@file)
     CSV.parse(csv_text, col_sep: ';', headers: true).each do |row|
       if row
-        p row
         link = Link.find_or_initialize_by(id: row[LINK_ID])
 
         link.institution_id = row[INSTITUTION_ID].to_i
@@ -27,10 +28,18 @@ class ImportLinks
         link.date_end = row[DATE_END]
         link.status = row[STATUS] if %w(archived active).include?(row[DATE_END])
 
-        p link.errors.messages unless link.save
+        @links << link
       end
     end
 
-    true
+    if @links.map(&:valid?).all?
+      @links.each(&:save!)
+      true
+    else
+      @links.each_with_index do |link, index|
+        @errors << "Ligne #{index+1}: #{link.errors.full_messages.join(', ')}" if link.errors.full_messages.present?
+      end
+      @errors.join('; ')
+    end
   end
 end
