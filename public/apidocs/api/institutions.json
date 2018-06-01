@@ -83,6 +83,13 @@
               "type": "string",
               "description": "Institution date end",
               "required": false
+            },
+            {
+              "paramType": "query",
+              "name": "synonym",
+              "type": "string",
+              "description": "Institution synonyms",
+              "required": false
             }
           ],
           "nickname": "Api::Institutions#create",

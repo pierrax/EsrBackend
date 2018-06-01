@@ -31,6 +31,7 @@ class Api::InstitutionsController < Api::BaseController
     param :query, :initials, :string, :optional, 'Institution Initials'
     param :query, :date_start, :string, :optional, 'Institution date start'
     param :query, :date_end, :string, :optional, 'Institution date end'
+    param :query, :synonym, :string, :optional, 'Institution synonyms'
   end
 
   swagger_api :show do
