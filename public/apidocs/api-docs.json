@@ -4,6 +4,10 @@
   "basePath": "https://esr-backend-staging.herokuapp.com",
   "apis": [
     {
+      "path": "/apidocs/api/institutions.{format}",
+      "description": "Les établissements de l'ESR"
+    },
+    {
       "path": "/apidocs/api/institution_names.{format}",
       "description": "Les Noms des établissements de l'ESR"
     },
@@ -30,10 +34,6 @@
     {
       "path": "/apidocs/api/institution_connections.{format}",
       "description": "Connections des établissements"
-    },
-    {
-      "path": "/apidocs/api/institutions.{format}",
-      "description": "Les établissements de l'ESR"
     },
     {
       "path": "/apidocs/api/link_categories.{format}",

@@ -5,6 +5,33 @@
   "resourcePath": "institutions",
   "apis": [
     {
+      "path": "/api/institutions/last",
+      "operations": [
+        {
+          "summary": "Returns last institutions created",
+          "notes": "Derniers établissements de l ESR créés",
+          "parameters": [
+            {
+              "paramType": "header",
+              "name": "Authentication-Token",
+              "type": "string",
+              "description": "Authentication token",
+              "required": true
+            },
+            {
+              "paramType": "query",
+              "name": "size",
+              "type": "integer",
+              "description": "Number of Institutions (20 by default)",
+              "required": false
+            }
+          ],
+          "nickname": "Api::Institutions#last",
+          "method": "get"
+        }
+      ]
+    },
+    {
       "path": "/api/institutions",
       "operations": [
         {

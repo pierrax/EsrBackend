@@ -40,7 +40,7 @@
             },
             {
               "paramType": "query",
-              "name": "category_link_id",
+              "name": "link_category_id",
               "type": "integer",
               "description": "Category link ID",
               "required": true

@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'db_schema', to: redirect('/database_schema.pdf')
 
   namespace :api do
+    get 'institutions/last', to: 'institutions#last'
     resources :institutions do
       resources :institution_names, only: [:create, :index]
       resources :addresses, only: [:create, :index]

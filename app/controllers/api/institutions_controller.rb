@@ -1,11 +1,18 @@
 class Api::InstitutionsController < Api::BaseController
-  before_action :set_institution, except: %i[create index search import]
+  before_action :set_institution, except: %i[create index search import last]
 
   swagger_controller :institutions, "Les établissements de l'ESR"
 
   swagger_api :index do
     summary 'Returns all institutions'
     notes 'Tous les établissements de l ESR'
+  end
+
+  swagger_api :last do
+    summary 'Returns last institutions created'
+    notes 'Derniers établissements de l ESR créés'
+    param :header, 'Authentication-Token', :string, :required, 'Authentication token'
+    param :query, :size, :integer, :optional, 'Number of Institutions (20 by default)'
   end
 
   swagger_api :search do
@@ -97,6 +104,11 @@ class Api::InstitutionsController < Api::BaseController
     else
       render json: { message: import_response }, status: 401
     end
+  end
+
+  def last
+    @institutions = Kaminari.paginate_array(Institution.last(params[:size] || 20)).page(params[:page_number]).per(params[:page_size])
+    paginator @institutions, params.permit!
   end
 
   private

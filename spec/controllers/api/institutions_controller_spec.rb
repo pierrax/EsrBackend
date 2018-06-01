@@ -220,4 +220,30 @@ RSpec.describe Api::InstitutionsController, :type => :request do
       end
     end
   end
+
+  describe '#last' do
+    context 'when no size params given' do
+      it 'returns 20 last institutions' do
+        35.times { create(:institution) }
+
+        get 'api/institutions/last', format: 'json'
+
+        expect(last_response.status).to eq(200)
+        expect(json_response.count).to eq(20)
+        expect(last_response.header['Link'].split(',')[0]).to eq("<http://example.org/api/institutions/last?format=json&page_number=1&page_size=20>; rel=\"self\"")
+      end
+    end
+
+    context 'when size params is 5' do
+      it 'returns 5 last institutions' do
+        15.times { create(:institution) }
+
+        get 'api/institutions/last?size=5', format: 'json'
+
+        expect(last_response.status).to eq(200)
+        expect(json_response.count).to eq(5)
+        expect(last_response.header['Link'].split(',')[0]).to eq("<http://example.org/api/institutions/last?format=json&size=5&page_number=1&page_size=20>; rel=\"self\"")
+      end
+    end
+  end
 end
