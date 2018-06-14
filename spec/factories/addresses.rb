@@ -13,5 +13,6 @@ FactoryGirl.define do
     date_start { 10.years.ago }
     date_end { nil }
     status { 'active' }
+    city_code { 123 }
   end
 end

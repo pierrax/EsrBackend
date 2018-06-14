@@ -38,4 +38,8 @@ class Institution < ApplicationRecord
   def code_uai
     codes.from_category(CodeCategory::UAI_ID).first.try(:content)
   end
+
+  def code_siret
+    codes.from_category(CodeCategory::SIRET_ID).first.try(:content)
+  end
 end

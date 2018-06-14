@@ -2,6 +2,7 @@ json.id institution.id
 json.date_start institution.date_start
 json.date_end institution.date_end
 json.synonym institution.synonym
+json.size_range institution.size_range
 json.names(institution.names) do |name|
   json.id name.id
   json.status name.status
@@ -24,6 +25,7 @@ json.addresses(institution.addresses) do |address|
   json.date_start address.date_start
   json.date_end address.date_end
   json.status address.status
+  json.city_code address.city_code
 end
 json.links(institution.links) do |link|
   json.id link.id

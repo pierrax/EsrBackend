@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180528083137) do
+ActiveRecord::Schema.define(version: 20180608080342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20180528083137) do
     t.string "addressable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "city_code"
     t.index ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id"
   end
 
@@ -134,6 +135,7 @@ ActiveRecord::Schema.define(version: 20180528083137) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "synonym"
+    t.string "size_range"
   end
 
   create_table "link_categories", force: :cascade do |t|

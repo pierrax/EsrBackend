@@ -6,5 +6,6 @@ class CodeCategory < ApplicationRecord
   # Validations
   validates :title, presence: true, uniqueness: true
 
-  UAI_ID = 2
+  UAI_ID = 1
+  SIRET_ID = 2
 end

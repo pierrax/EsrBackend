@@ -4,6 +4,7 @@ if @active
     json.date_start @institution.date_start
     json.date_end @institution.date_end
     json.synonym @institution.synonym
+    json.city_code @institution.city_code
     json.name do
       json.id @institution.names.try(:active).try(:first).try(:id)
       json.status @institution.names.try(:active).try(:first).try(:status)

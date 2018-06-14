@@ -9,7 +9,7 @@ class Api::AddressesController < Api::BaseController
     summary 'Create an address'
     notes 'Créer un adresse pour un établissement'
     param :integer, :institution_id, :integer, :required, 'Institution ID'
-    param :body, :address, :json, :required, 'business_name address_1 address_2 zip_code city country phone date_start date_end'
+    param :body, :address, :json, :required, 'business_name address_1 address_2 zip_code city country phone date_start date_end city_code'
   end
 
   swagger_api :index do
@@ -28,7 +28,7 @@ class Api::AddressesController < Api::BaseController
     summary 'Update a address'
     notes 'Mettre à jour un adresse'
     param :query, :address_id, :integer, :required, 'address ID'
-    param :body, :address, :json, :required, 'business_name address_1 address_2 zip_code city country phone date_start date_end'
+    param :body, :address, :json, :required, 'business_name address_1 address_2 zip_code city country phone date_start date_end city_code'
   end
 
   swagger_api :destroy do
@@ -111,7 +111,8 @@ class Api::AddressesController < Api::BaseController
         :longitude,
         :date_start,
         :date_end,
-        :status
+        :status,
+        :city_code
     )
   end
 end

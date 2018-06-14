@@ -23,7 +23,8 @@ RSpec.describe Api::AddressesController, :type => :request do
               country: 'France',
               phone: '0101010101',
               latitude: 2.00,
-              longitude: 4.00
+              longitude: 4.00,
+              city_code: 111
             }
           }
 
@@ -42,6 +43,7 @@ RSpec.describe Api::AddressesController, :type => :request do
           expect(i.addresses.last.latitude).to eq(48.847408)
           expect(i.addresses.last.longitude).to eq(2.352397)
           expect(i.addresses.last.status).to eq('active')
+          expect(i.addresses.last.city_code).to eq(111)
           expect(i.addresses.first.status).to eq('archived')
         end
       end
@@ -62,7 +64,8 @@ RSpec.describe Api::AddressesController, :type => :request do
               phone: '0101010101',
               latitude: 2.00,
               longitude: 4.00,
-              status: 'archived'
+              status: 'archived',
+              city_code: 111
             }
           }
 
@@ -81,6 +84,7 @@ RSpec.describe Api::AddressesController, :type => :request do
           expect(i.addresses.last.latitude).to eq(48.847408)
           expect(i.addresses.last.longitude).to eq(2.352397)
           expect(i.addresses.last.status).to eq('archived')
+          expect(i.addresses.last.city_code).to eq(111)
           expect(archived_address.reload.status).to eq('archived')
           expect(i.addresses.first.status).to eq('active')
         end
@@ -133,7 +137,8 @@ RSpec.describe Api::AddressesController, :type => :request do
                 country: 'France',
                 phone: '0101010101',
                 latitude: 2.00,
-                longitude: 4.00
+                longitude: 4.00,
+                city_code: 111
             }
         }
 
@@ -150,6 +155,7 @@ RSpec.describe Api::AddressesController, :type => :request do
         expect(address.phone).to eq('0101010101')
         expect(address.latitude).to eq(48.847408)
         expect(address.longitude).to eq(2.352397)
+        expect(address.city_code).to eq(111)
       end
     end
 

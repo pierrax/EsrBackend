@@ -12,4 +12,5 @@ json.array!(@addresses) do |address|
   json.date_start address.date_start
   json.date_end address.date_end
   json.status address.status
+  json.city_code address.city_code
 end

@@ -26,6 +26,7 @@ code_wikidata = CodeCategory.create(title: 'wikidata')
 code_orgref = CodeCategory.create(title: 'orgref')
 code_isni = CodeCategory.create(title: 'isni')
 code_funding_data = CodeCategory.create(title: 'funding_data')
+code_naf = CodeCategory.create(title: 'naf')
 
 ##### CONNECTION CATEGORIES ######
 connection_composante_juridique = InstitutionConnectionCategory.create(title: 'Composante juridique')
