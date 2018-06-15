@@ -37,6 +37,8 @@ gem 'kaminari'
 
 gem 'geocoder'
 gem 'httparty'
+# Monitoring
+gem 'scout_apm'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
