@@ -82,18 +82,20 @@ class Api::InstitutionsController < Api::BaseController
   end
 
   def index
-    @institutions = Institution.all.page(params[:page_number]).per(params[:page_size])
+    @institutions = Institution.includes(:names, :addresses, :links, { :links => :category }, :codes, :tags, { :tags => :category }, :predecessors, :followers, :mothers, :daughters, ).all.page(params[:page_number]).per(params[:page_size])
+    @institutions = Institution.includes(:names, :addresses, :links, { :links => :category }, :codes, :tags, { :tags => :category }, :predecessors, :followers, :mothers, :daughters, ).all.page(params[:page_number]).per(params[:page_size])
     paginator @institutions, params.permit!
     respond_with @institutions
   end
 
   def search
     if params[:download] == 'true'
-      @institutions = Institution.with_name_or_initials(params[:q])
-      export_csv = ExportInstitutions.new(@institutions).call
+      export_csv = ExportInstitutions.new(params[:q]).call
       send_data export_csv, type: 'text/csv', disposition: 'inline'
     else
-      @institutions = Institution.with_name_or_initials(params[:q]).distinct.page(params[:page_number]).per(params[:page_size])
+      institutions = Institution.includes(:names, :addresses, :codes, :tags, { :tags => :category }).with_name_or_initials(params[:q]).distinct
+      headers['Count'] = institutions.count
+      @institutions = institutions.page(params[:page_number]).per(params[:page_size])
       paginator @institutions, params.permit!
     end
   end

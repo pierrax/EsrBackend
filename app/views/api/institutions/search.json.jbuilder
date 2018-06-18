@@ -1,2 +1,1 @@
-json.array! @institutions, partial: 'api/institutions/institution', as: :institution
-
+json.array! @institutions, partial: 'api/institutions/light_institution', as: :institution

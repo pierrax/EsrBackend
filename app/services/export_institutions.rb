@@ -1,15 +1,15 @@
 require 'csv'
 class ExportInstitutions
 
-  def initialize(collection)
-    @institutions = collection
+  def initialize(query)
+    @institutions = Institution.includes(:names, :addresses, :codes).with_name_or_initials(query)
   end
 
   def call
     CSV.generate(col_sep: ';') do |csv|
       csv << %w(NumeroUAI NomEtablissement SigleEtablissement BusinessName Adresse1 Adresse2 CodePostal Ville Pays Telephone DateCreation)
 
-      @institutions.each do |institution|
+      @institutions.find_each do |institution|
         csv << [institution.code_uai,
                 institution.name,
                 institution.names.active.first.try(:initials),

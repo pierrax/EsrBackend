@@ -44,6 +44,9 @@ GEM
     bcrypt (3.1.11)
     bindex (0.5.0)
     builder (3.2.3)
+    bullet (5.7.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (10.0.1)
     capybara (2.18.0)
       addressable
@@ -123,6 +126,7 @@ GEM
     minitest (5.11.3)
     multi_json (1.13.1)
     multi_xml (0.6.0)
+    newrelic_rpm (4.4.0.336)
     nio4r (2.3.0)
     nokogiri (1.8.2)
       mini_portile2 (~> 2.3.0)
@@ -238,6 +242,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.1.8)
       execjs (>= 0.3.0, < 3)
+    uniform_notifier (1.10.0)
     warden (1.2.7)
       rack (>= 1.0)
     web-console (3.5.1)
@@ -256,6 +261,7 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
+  bullet
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
@@ -270,6 +276,7 @@ DEPENDENCIES
   jwt
   kaminari
   listen (>= 3.0.5, < 3.2)
+  newrelic_rpm
   pg (~> 0.18)
   puma (~> 3.7)
   rack-cors

@@ -4,7 +4,6 @@ if @active
     json.date_start @institution.date_start
     json.date_end @institution.date_end
     json.synonym @institution.synonym
-    json.city_code @institution.city_code
     json.name do
       json.id @institution.names.try(:active).try(:first).try(:id)
       json.status @institution.names.try(:active).try(:first).try(:status)
@@ -27,6 +26,7 @@ if @active
       json.date_start @institution.addresses.try(:active).try(:first).try(:date_start)
       json.date_end @institution.addresses.try(:active).try(:first).try(:date_end)
       json.status @institution.addresses.try(:active).try(:first).try(:status)
+      json.city_code @institution.addresses.try(:active).try(:first).city_code
     end
     json.links(@institution.links) do |link|
       json.id link.id

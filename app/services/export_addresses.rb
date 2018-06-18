@@ -7,11 +7,11 @@ class ExportAddresses
 
   def call
     CSV.generate(col_sep: ';') do |csv|
-      csv << %w(Id InstitutionID BusinessName Adresse1 Adresse2 CodePostal Ville Pays Telephone DateCreation DateFermeture Status)
+      csv << %w(Id InstitutionID BusinessName Adresse1 Adresse2 CodePostal Ville Pays Telephone DateCreation DateFermeture Status CityCode)
 
       @addresses.each do |address|
         csv << [address.id,
-                address.institution_id,
+                address.addressable_id,
                 address.business_name,
                 address.address_1,
                 address.address_2,
@@ -21,7 +21,8 @@ class ExportAddresses
                 address.phone,
                 address.date_start,
                 address.date_end,
-                address.status]
+                address.status,
+                address.city_code]
       end
     end
   end
