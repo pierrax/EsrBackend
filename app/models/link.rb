@@ -7,4 +7,7 @@ class Link < ApplicationRecord
 
   # Validation
   validates :content, presence: true
+
+  # Scopes
+  scope :ordered_by_category, -> { order('link_category_id asc') }
 end

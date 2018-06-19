@@ -10,4 +10,7 @@ class InstitutionTag < ApplicationRecord
   # Validation
   validates :short_label, presence: true
   validates :long_label, presence: true
+
+  # Scopes
+  scope :ordered_by_category, -> { order('institution_tag_category_id asc') }
 end

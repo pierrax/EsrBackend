@@ -42,4 +42,8 @@ class Institution < ApplicationRecord
   def code_siret
     codes.from_category(CodeCategory::SIRET_ID).first.try(:content)
   end
+
+  def old_names
+    names.archived.map { |n| [n.text, n.initials].compact.join(', ') }
+  end
 end

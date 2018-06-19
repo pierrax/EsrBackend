@@ -11,7 +11,7 @@ RSpec.describe Api::InstitutionNamesController, :type => :request do
     context 'when params are valid' do
       context 'when  no archived params' do
         it 'creates an active name and sets others to archived' do
-          i = create(:institution)
+          i = create(:institution, synonym: 'uni, vers, city')
 
           params = {
               institution_name: {
@@ -29,13 +29,14 @@ RSpec.describe Api::InstitutionNamesController, :type => :request do
           expect(i.names.last.initials).to eq('SO')
           expect(i.names.last.status).to eq('active')
           expect(i.names.first.status).to eq('archived')
+          expect(i.synonym).to eq('uni, vers, city' + ", #{i.names.first.text}, #{i.names.first.initials}")
         end
       end
 
       context 'when archived params' do
-        it 'creates an archived name and does not set active others to archived' do
-          i = create(:institution)
-          archived_name = create(:institution_name, institution: i, status: 'archived')
+        it 'creates an archived name, adds it to synonym and does not set active others to archived' do
+          i = create(:institution, synonym: 'uni, vers, city')
+          archived_name = create(:institution_name, institution: i, status: 'archived', text: 'ArchiName', initials: 'AN')
 
           params = {
               institution_name: {
@@ -55,6 +56,7 @@ RSpec.describe Api::InstitutionNamesController, :type => :request do
           expect(i.names.last.status).to eq('archived')
           expect(archived_name.reload.status).to eq('archived')
           expect(i.names.first.status).to eq('active')
+          expect(i.synonym).to eq('uni, vers, city' + ", ArchiName, AN, #{i.names.last.text}, #{i.names.last.initials}")
         end
       end
     end

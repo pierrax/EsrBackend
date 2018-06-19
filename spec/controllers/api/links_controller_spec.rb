@@ -8,16 +8,23 @@ RSpec.describe Api::LinksController, :type => :request do
   end
 
   describe '#index' do
-    let(:link_category) { create(:link_category) }
 
-    it 'returns all links' do
+    it 'returns all links ordered by category' do
+      link_category_1 = create(:link_category)
+      link_category_2 = create(:link_category)
+      link_category_3 = create(:link_category)
+
       i = create(:institution)
-      create(:link, institution_id: i.id)
-      create(:link, institution_id: i.id)
+      create(:link, institution_id: i.id, category: link_category_2)
+      create(:link, institution_id: i.id, category: link_category_3)
+      create(:link, institution_id: i.id, category: link_category_1)
 
       get "api/institutions/#{i.id}/links", format: :json
       expect(last_response.status).to eq(200)
-      expect(JSON.parse(last_response.body).count).to eq(2)
+      expect(json_response.count).to eq(3)
+      expect(json_response[0][:category]).to eq(link_category_2.title)
+      expect(json_response[1][:category]).to eq(link_category_3.title)
+      expect(json_response[2][:category]).to eq(link_category_1.title)
     end
   end
 
