@@ -7,12 +7,13 @@ class ExportTaggings
 
   def call
     CSV.generate(col_sep: ';') do |csv|
-      csv << %w(Id InstitutionID TagID DateCreation DateFermeture Status)
+      csv << %w(Id InstitutionID TagID Tag DateCreation DateFermeture Status)
 
       @taggings.each do |tagging|
         csv << [tagging.id,
                 tagging.institution_id,
                 tagging.institution_tag_id,
+                tagging.institution_tag.short_label,
                 tagging.date_start,
                 tagging.date_end,
                 tagging.status]

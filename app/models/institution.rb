@@ -1,24 +1,24 @@
 class Institution < ApplicationRecord
 
   # Relations
-  has_many :names, class_name: 'InstitutionName', foreign_key: 'institution_id'
+  has_many :names, class_name: 'InstitutionName', foreign_key: 'institution_id', dependent: :destroy
   accepts_nested_attributes_for :names
-  has_many :addresses, as: :addressable
-  has_many :links
-  has_many :codes
-  has_many :institution_taggings, foreign_key: :institution_id, class_name: 'InstitutionTagging'
+  has_many :addresses, as: :addressable, dependent: :destroy
+  has_many :links, dependent: :destroy
+  has_many :codes, dependent: :destroy
+  has_many :institution_taggings, foreign_key: :institution_id, class_name: 'InstitutionTagging', dependent: :destroy
   has_many :tags, through: :institution_taggings, source: :institution_tag
 
-  has_many :predecessor_evolutions, foreign_key: :follower_id, class_name: 'InstitutionEvolution'
+  has_many :predecessor_evolutions, foreign_key: :follower_id, class_name: 'InstitutionEvolution', dependent: :destroy
   has_many :predecessors, through: :predecessor_evolutions, source: :predecessor
 
-  has_many :follower_evolutions, foreign_key: :predecessor_id, class_name: 'InstitutionEvolution'
+  has_many :follower_evolutions, foreign_key: :predecessor_id, class_name: 'InstitutionEvolution', dependent: :destroy
   has_many :followers, through: :follower_evolutions, source: :follower
 
-  has_many :mother_connections, foreign_key: :daughter_id, class_name: 'InstitutionConnection'
+  has_many :mother_connections, foreign_key: :daughter_id, class_name: 'InstitutionConnection', dependent: :destroy
   has_many :mothers, through: :mother_connections, source: :mother
 
-  has_many :daughter_connections, foreign_key: :mother_id, class_name: 'InstitutionConnection'
+  has_many :daughter_connections, foreign_key: :mother_id, class_name: 'InstitutionConnection', dependent: :destroy
   has_many :daughters, through: :daughter_connections, source: :daughter
 
   # Validations

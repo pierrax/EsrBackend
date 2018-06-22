@@ -204,89 +204,89 @@ InstitutionTag.create(short_label: "Opérateurs LOLF Hors MIRE", long_label: "Op
 InstitutionTag.create(short_label: "Opérateurs MIRES", long_label: "Opérateurs MIRES 2015", institution_tag_category_id: 11)
 
 ########## INSTITUTIONS ##########
-univ_paris = Institution.create(date_start: 100.years.ago)
-InstitutionName.create(text: 'Université de Paris',
-                       initials: 'UP',
-                       institution_id: univ_paris.id)
+# univ_paris = Institution.create(date_start: 100.years.ago)
+# InstitutionName.create(text: 'Université de Paris',
+#                        initials: 'UP',
+#                        institution_id: univ_paris.id)
+#
+#
+#
+# hec = Institution.create(date_start: 50.years.ago)
+# InstitutionName.create(text: 'HEC',
+#                        initials: 'HEC',
+#                        institution_id: hec.id)
+# Address.create(business_name: 'HEC',
+#                address_1: '1 Rue de la Libération',
+#                address_2: '',
+#                zip_code: '78350',
+#                city: 'Jouy-en-Josas',
+#                country: 'France',
+#                phone: '01 39 67 70 00',
+#                latitude: 48.757887,
+#                longitude: 2.1694163,
+#                date_start: 50.years.ago,
+#                date_end: '',
+#                addressable_id: hec.id,
+#                addressable_type: Institution)
+# Code.create(content: '0783054W', code_category_id: code_uai.id, institution_id: hec.id)
+# InstitutionConnection.create(mother_id: univ_paris.id, daughter_id: hec.id, institution_connection_category_id: connection_siege_composante.id)
+# Link.create(content: 'http://www.hec.fr/', link_category_id: link_website.id, institution_id: hec.id)
+# Link.create(content: 'http://www.twitter.com/hecparis', link_category_id: link_twitter.id, institution_id: hec.id)
+# Link.create(content: 'http://www.linkedin.com/edu/hec-paris-12443', link_category_id: link_linkedin.id, institution_id: hec.id)
+# Link.create(content: 'http://www.facebook.com/HECParis', link_category_id: link_facebook.id, institution_id: hec.id)
+# Link.create(content: 'http://www.instagram.com/hec_paris', link_category_id: link_instagram.id, institution_id: hec.id)
+# Link.create(content: 'http://www.youtube.com/channel/UCOlxIv6pqgiCpdiaFXxLmNw', link_category_id: link_youtube.id, institution_id: hec.id)
+# InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_private.id)
+# InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_business_school.id)
+# InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_educ_nat.id)
 
-
-
-hec = Institution.create(date_start: 50.years.ago)
-InstitutionName.create(text: 'HEC',
-                       initials: 'HEC',
-                       institution_id: hec.id)
-Address.create(business_name: 'HEC',
-               address_1: '1 Rue de la Libération',
-               address_2: '',
-               zip_code: '78350',
-               city: 'Jouy-en-Josas',
-               country: 'France',
-               phone: '01 39 67 70 00',
-               latitude: 48.757887,
-               longitude: 2.1694163,
-               date_start: 50.years.ago,
-               date_end: '',
-               addressable_id: hec.id,
-               addressable_type: Institution)
-Code.create(content: '0783054W', code_category_id: code_uai.id, institution_id: hec.id)
-InstitutionConnection.create(mother_id: univ_paris.id, daughter_id: hec.id, institution_connection_category_id: connection_siege_composante.id)
-Link.create(content: 'http://www.hec.fr/', link_category_id: link_website.id, institution_id: hec.id)
-Link.create(content: 'http://www.twitter.com/hecparis', link_category_id: link_twitter.id, institution_id: hec.id)
-Link.create(content: 'http://www.linkedin.com/edu/hec-paris-12443', link_category_id: link_linkedin.id, institution_id: hec.id)
-Link.create(content: 'http://www.facebook.com/HECParis', link_category_id: link_facebook.id, institution_id: hec.id)
-Link.create(content: 'http://www.instagram.com/hec_paris', link_category_id: link_instagram.id, institution_id: hec.id)
-Link.create(content: 'http://www.youtube.com/channel/UCOlxIv6pqgiCpdiaFXxLmNw', link_category_id: link_youtube.id, institution_id: hec.id)
-InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_private.id)
-InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_business_school.id)
-InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_educ_nat.id)
-
-
-sorbonne = Institution.create(date_start: 38.years.ago)
-InstitutionName.create(text: 'Université Paris Sorbonne',
-                       initials: 'Paris IV',
-                       institution_id: sorbonne.id)
-Address.create(business_name: 'Sorbonne',
-               address_1: '1 Rue des Ecoles',
-               address_2: '',
-               zip_code: '75005',
-               city: 'Paris',
-               country: 'France',
-               phone: '01 40 46 22 11',
-               latitude: 48.8479781,
-               longitude: 2.3438391,
-               date_start: 50.years.ago,
-               date_end: '',
-               addressable_id: sorbonne.id,
-               addressable_type: Institution)
-Code.create(content: '0752756N', code_category_id: code_uai.id, institution_id: sorbonne.id)
-InstitutionConnection.create(mother_id: univ_paris.id, daughter_id: sorbonne.id, institution_connection_category_id: connection_siege_composante.id)
-Link.create(content: 'http://www.paris-sorbonne.fr/', link_category_id: link_website.id, institution_id: sorbonne.id)
-Link.create(content: 'https://fr.wikipedia.org/wiki/Sorbonne_Universit%C3%A9', link_category_id: link_wikipedia.id, institution_id: sorbonne.id)
-InstitutionTagging.create(institution_id: sorbonne.id, institution_tag_id: tag_public.id)
-InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_educ_nat.id)
-
-
-
-centrale = Institution.create(date_start: 63.years.ago)
-InstitutionName.create(text: 'CentraleSupelec',
-                       initials: 'ECS',
-                       institution_id: centrale.id)
-Address.create(business_name: 'CentraleSupelec',
-               address_1: '3 Rue Joliot Curie',
-               address_2: '',
-               zip_code: '91190',
-               city: 'Gif-sur-Yvette',
-               country: 'France',
-               phone: '01 69 85 12 12',
-               latitude: 48.7088206,
-               longitude: 2.1639495,
-               date_start: 50.years.ago,
-               date_end: '',
-               addressable_id: centrale.id,
-               addressable_type: Institution)
-Code.create(content: '0752756N', code_category_id: code_uai.id, institution_id: centrale.id)
-InstitutionConnection.create(mother_id: univ_paris.id, daughter_id: centrale.id, institution_connection_category_id: connection_siege_composante.id)
-Link.create(content: 'http://www.centralesupelec.fr/', link_category_id: link_website.id, institution_id: centrale.id)
-Link.create(content: 'Wikipedia', link_category_id: link_wikipedia.id, institution_id: centrale.id)
-InstitutionTagging.create(institution_id: centrale.id, institution_tag_id: tag_private.id)
-InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_educ_nat.id)
+#
+# sorbonne = Institution.create(date_start: 38.years.ago)
+# InstitutionName.create(text: 'Université Paris Sorbonne',
+#                        initials: 'Paris IV',
+#                        institution_id: sorbonne.id)
+# Address.create(business_name: 'Sorbonne',
+#                address_1: '1 Rue des Ecoles',
+#                address_2: '',
+#                zip_code: '75005',
+#                city: 'Paris',
+#                country: 'France',
+#                phone: '01 40 46 22 11',
+#                latitude: 48.8479781,
+#                longitude: 2.3438391,
+#                date_start: 50.years.ago,
+#                date_end: '',
+#                addressable_id: sorbonne.id,
+#                addressable_type: Institution)
+# Code.create(content: '0752756N', code_category_id: code_uai.id, institution_id: sorbonne.id)
+# InstitutionConnection.create(mother_id: univ_paris.id, daughter_id: sorbonne.id, institution_connection_category_id: connection_siege_composante.id)
+# Link.create(content: 'http://www.paris-sorbonne.fr/', link_category_id: link_website.id, institution_id: sorbonne.id)
+# Link.create(content: 'https://fr.wikipedia.org/wiki/Sorbonne_Universit%C3%A9', link_category_id: link_wikipedia.id, institution_id: sorbonne.id)
+# InstitutionTagging.create(institution_id: sorbonne.id, institution_tag_id: tag_public.id)
+# InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_educ_nat.id)
+#
+#
+#
+# centrale = Institution.create(date_start: 63.years.ago)
+# InstitutionName.create(text: 'CentraleSupelec',
+#                        initials: 'ECS',
+#                        institution_id: centrale.id)
+# Address.create(business_name: 'CentraleSupelec',
+#                address_1: '3 Rue Joliot Curie',
+#                address_2: '',
+#                zip_code: '91190',
+#                city: 'Gif-sur-Yvette',
+#                country: 'France',
+#                phone: '01 69 85 12 12',
+#                latitude: 48.7088206,
+#                longitude: 2.1639495,
+#                date_start: 50.years.ago,
+#                date_end: '',
+#                addressable_id: centrale.id,
+#                addressable_type: Institution)
+# Code.create(content: '0752756N', code_category_id: code_uai.id, institution_id: centrale.id)
+# InstitutionConnection.create(mother_id: univ_paris.id, daughter_id: centrale.id, institution_connection_category_id: connection_siege_composante.id)
+# Link.create(content: 'http://www.centralesupelec.fr/', link_category_id: link_website.id, institution_id: centrale.id)
+# Link.create(content: 'Wikipedia', link_category_id: link_wikipedia.id, institution_id: centrale.id)
+# InstitutionTagging.create(institution_id: centrale.id, institution_tag_id: tag_private.id)
+# InstitutionTagging.create(institution_id: hec.id, institution_tag_id: tag_educ_nat.id)

@@ -21,6 +21,10 @@ class Api::BaseController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   rescue_from ActiveRecord::RecordInvalid, with: :unprocessable
 
+  def params_not_found
+    return api_error(status: 404, errors: 'Params not found')
+  end
+
   def not_found
     return api_error(status: 404, errors: 'Record not found')
   end

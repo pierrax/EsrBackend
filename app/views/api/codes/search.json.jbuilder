@@ -26,14 +26,14 @@ if @active
       json.date_start @institution.addresses.try(:active).try(:first).try(:date_start)
       json.date_end @institution.addresses.try(:active).try(:first).try(:date_end)
       json.status @institution.addresses.try(:active).try(:first).try(:status)
-      json.city_code @institution.addresses.try(:active).try(:first).city_code
+      json.city_code @institution.addresses.try(:active).try(:first).try(:city_code)
     end
     json.links(@institution.links) do |link|
       json.id link.id
       json.content link.content
       json.category link.category.title
     end
-    json.codes(@institution.codes.active) do |code|
+    json.codes(@institution.codes.active.ordered_by_category) do |code|
       json.id code.id
       json.content code.content
       json.category code.category.title

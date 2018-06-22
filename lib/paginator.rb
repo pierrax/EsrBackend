@@ -11,7 +11,7 @@ module Paginator
       links << %(<#{options.fetch(:url, request.base_url)}#{request.path}?#{request.query_parameters.except(:page_number, :page_size).to_query}&#{params}>; rel="#{key}")
     end
     headers['Link'] = links.join(', ') unless links.empty?
-    headers['Access-Control-Expose-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token, Link'
+    headers['Access-Control-Expose-Headers'] = 'Origin, Content-Type, Accept, Authorization, Token, Link, Count'
   end
 
   def pages_from(collection)

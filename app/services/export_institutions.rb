@@ -2,7 +2,8 @@ require 'csv'
 class ExportInstitutions
 
   def initialize(query)
-    @institutions = Institution.includes(:names, :addresses, :codes).with_name_or_initials(query)
+    institution_ids = Institution.with_name_or_initials(query).pluck(:id)
+    @institutions = Institution.includes(:names, :addresses, :codes).where(id: institution_ids)
   end
 
   def call
@@ -10,16 +11,19 @@ class ExportInstitutions
       csv << %w(NumeroUAI NomEtablissement SigleEtablissement BusinessName Adresse1 Adresse2 CodePostal Ville Pays Telephone DateCreation)
 
       @institutions.find_each do |institution|
+        address = institution.addresses.active.try(:first)
+        name = institution.names.active.first
+        
         csv << [institution.code_uai,
-                institution.name,
-                institution.names.active.first.try(:initials),
-                institution.addresses.active.try(:first).try(:business_name),
-                institution.addresses.active.try(:first).try(:address_1),
-                institution.addresses.active.try(:first).try(:address_2),
-                institution.addresses.active.try(:first).try(:zip_code),
-                institution.addresses.active.try(:first).try(:city),
-                institution.addresses.active.try(:first).try(:country),
-                institution.addresses.active.try(:first).try(:phone),
+                name.try(:text),
+                name.try(:initials),
+                address.try(:business_name),
+                address.try(:address_1),
+                address.try(:address_2),
+                address.try(:zip_code),
+                address.try(:city),
+                address.try(:country),
+                address.try(:phone),
                 institution.date_start]
       end
     end

@@ -95,11 +95,16 @@ RSpec.describe Api::InstitutionsController, :type => :request do
   end
 
   describe '#delete' do
-    it 'deletes an institution' do
+    it 'deletes an institution and its connections and relations' do
       i = create(:institution)
+      i2 = create(:institution)
+      create(:institution_connection, mother: i, daughter: i2)
+      create(:institution_evolution, predecessor: i, follower: i2)
       delete "api/institutions/#{i.id}"
       expect(last_response.status).to eq(200)
-      expect(Institution.count).to eq(0)
+      expect(Institution.count).to eq(1)
+      expect(InstitutionConnection.count).to eq(0)
+      expect(InstitutionEvolution.count).to eq(0)
     end
   end
 
@@ -214,7 +219,7 @@ RSpec.describe Api::InstitutionsController, :type => :request do
 
         post 'api/institutions/import', file: file
 
-        expect(last_response.status).to eq(401)
+        expect(last_response.status).to eq(400)
         expect(Institution.count).to eq(0)
         expect(json_response[:message]).to eq("Ligne 3: Names text can't be blank, Names text is too short (minimum is 2 characters); Ligne 3: Text can't be blank, Text is too short (minimum is 2 characters)")
       end

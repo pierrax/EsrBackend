@@ -27,12 +27,12 @@ json.addresses(institution.addresses) do |address|
   json.status address.status
   json.city_code address.city_code
 end
-json.links(institution.links) do |link|
+json.links(institution.links.ordered_by_category) do |link|
   json.id link.id
   json.content link.content
   json.category link.category.title
 end
-json.codes(institution.codes) do |code|
+json.codes(institution.codes.ordered_by_category) do |code|
   json.id code.id
   json.content code.content
   json.category code.category.title
@@ -40,7 +40,7 @@ json.codes(institution.codes) do |code|
   json.date_end code.date_end
   json.status code.status
 end
-json.tags(institution.tags) do |tag|
+json.tags(institution.tags.ordered_by_category) do |tag|
   json.id tag.id
   json.short_label tag.short_label
   json.long_label tag.long_label

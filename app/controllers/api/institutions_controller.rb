@@ -82,8 +82,9 @@ class Api::InstitutionsController < Api::BaseController
   end
 
   def index
-    @institutions = Institution.includes(:names, :addresses, :links, { :links => :category }, :codes, :tags, { :tags => :category }, :predecessors, :followers, :mothers, :daughters, ).all.page(params[:page_number]).per(params[:page_size])
-    @institutions = Institution.includes(:names, :addresses, :links, { :links => :category }, :codes, :tags, { :tags => :category }, :predecessors, :followers, :mothers, :daughters, ).all.page(params[:page_number]).per(params[:page_size])
+    institutions = Institution.includes(:names, :addresses, :links, { :links => :category }, :codes, :tags, { :tags => :category }, :predecessors, :followers, :mothers, :daughters, ).all
+    headers['Count'] = institutions.count
+    @institutions = institutions.page(params[:page_number]).per(params[:page_size])
     paginator @institutions, params.permit!
     respond_with @institutions
   end
@@ -101,11 +102,12 @@ class Api::InstitutionsController < Api::BaseController
   end
 
   def import
+    return params_not_found unless params[:file]
     import_response = ImportInstitutions.new(params[:file].tempfile).call
     if import_response == true
       render json: { message: 'Institution uploaded' }, status: 200
     else
-      render json: { message: import_response }, status: 401
+      render json: { message: import_response }, status: 400
     end
   end
 

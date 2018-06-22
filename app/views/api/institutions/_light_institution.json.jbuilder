@@ -1,4 +1,5 @@
 json.id institution.id
+json.date_end institution.date_end
 json.names(institution.names) do |name|
   json.id name.id
   json.text name.text
@@ -14,12 +15,12 @@ json.addresses(institution.addresses) do |address|
   json.country address.country
   json.status address.status
 end
-json.codes(institution.codes) do |code|
+json.codes(institution.codes.ordered_by_category) do |code|
   json.id code.id
   json.content code.content
   json.category code.category.title
 end
-json.tags(institution.tags) do |tag|
+json.tags(institution.tags.ordered_by_category) do |tag|
   json.id tag.id
   json.short_label tag.short_label
   json.long_label tag.long_label

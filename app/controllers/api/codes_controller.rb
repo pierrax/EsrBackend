@@ -77,7 +77,7 @@ class Api::CodesController < Api::BaseController
 
   def index
     @institution = Institution.find(params[:institution_id])
-    @codes = @institution.codes
+    @codes = @institution.codes.ordered_by_category
   end
 
   def search

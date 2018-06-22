@@ -7,13 +7,14 @@ class ExportEvolutions
 
   def call
     CSV.generate(col_sep: ';') do |csv|
-      csv << %w(Id Predecesseur Successeur EvolutionCategoryID Date)
+      csv << %w(Id Predecesseur Successeur EvolutionCategoryID EvolutionCategory Date)
 
       @evolutions.each do |evolution|
         csv << [evolution.id,
                 evolution.predecessor_id,
                 evolution.follower_id,
                 evolution.institution_evolution_category_id,
+                evolution.category.title,
                 evolution.date]
       end
     end

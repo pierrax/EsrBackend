@@ -62,6 +62,6 @@ class ImportInstitutions
 
   private
   def valid_address?(row)
-    row[BUSINESS_NAME].present? && row[BUSINESS_NAME].size > 2 && row[ADDRESS_1].present? && row[ADDRESS_1].size > 2 && row[ZIP_CODE].present? && row[CITY].present? && row[COUNTRY].present?
+    row[ADDRESS_1].present? && row[ADDRESS_1].size > 2 && row[ZIP_CODE].present? && row[CITY].present? && row[COUNTRY].present?
   end
 end
