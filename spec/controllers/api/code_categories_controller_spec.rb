@@ -24,13 +24,15 @@ RSpec.describe Api::CodeCategoriesController, :type => :request do
       it 'creates a code category' do
         params = {
           code_category: {
-            title: 'GRID'
+            title: 'GRID',
+            position: 10
           }
         }
 
         post 'api/code_categories', params.merge(format: 'json')
         expect(last_response.status).to eq(200)
         expect(CodeCategory.count).to eq(1)
+        expect(CodeCategory.last.position).to eq(10)
       end
     end
 
@@ -54,13 +56,15 @@ RSpec.describe Api::CodeCategoriesController, :type => :request do
       c = create(:code_category)
       params = {
         code_category: {
-          title: 'GRID'
+          title: 'GRID',
+          position: 5
         }
       }
 
       put "api/code_categories/#{c.id}", params.merge(format: 'json')
       expect(last_response.status).to eq(200)
       expect(CodeCategory.last.title).to eq('GRID')
+      expect(CodeCategory.last.position).to eq(5)
     end
   end
 

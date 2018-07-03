@@ -63,8 +63,6 @@ class Api::CodeCategoriesController < Api::BaseController
   end
 
   def code_category_params
-    params[:code_category].permit(
-        :title
-    )
+    params[:code_category].permit(:title, :position)
   end
 end

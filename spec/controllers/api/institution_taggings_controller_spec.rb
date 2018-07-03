@@ -11,12 +11,25 @@ RSpec.describe Api::InstitutionTaggingsController, :type => :request do
     context 'when institution has tags' do
       it 'returns tags' do
         i = create(:institution)
-        create(:institution_tagging, institution: i)
+        cat_1 = create(:institution_tag_category, position: 1)
+        cat_2 = create(:institution_tag_category, position: 5)
+        cat_3 = create(:institution_tag_category, position: 10)
+
+        tag_1 = create(:institution_tag, category: cat_1)
+        tag_2 = create(:institution_tag, category: cat_3)
+        tag_3 = create(:institution_tag, category: cat_2)
+
+        t1 = create(:institution_tagging, institution: i, institution_tag: tag_1)
+        t2 = create(:institution_tagging, institution: i, institution_tag: tag_2)
+        t3 = create(:institution_tagging, institution: i, institution_tag: tag_3)
 
         get "api/institutions/#{i.id}/tags", format: 'json'
 
         expect(last_response.status).to eq(200)
-        expect(json_response.count).to eq(1)
+        expect(json_response.count).to eq(3)
+        expect(json_response[0][:tag][:category]).to eq(cat_1.title)
+        expect(json_response[1][:tag][:category]).to eq(cat_2.title)
+        expect(json_response[2][:tag][:category]).to eq(cat_3.title)
       end
     end
   end

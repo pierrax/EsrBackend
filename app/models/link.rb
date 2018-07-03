@@ -9,5 +9,5 @@ class Link < ApplicationRecord
   validates :content, presence: true
 
   # Scopes
-  scope :ordered_by_category, -> { order('link_category_id asc') }
+  scope :ordered_by_category, -> { joins(:category).order('position asc') }
 end

@@ -10,9 +10,9 @@ RSpec.describe Api::LinksController, :type => :request do
   describe '#index' do
 
     it 'returns all links ordered by category' do
-      link_category_1 = create(:link_category)
-      link_category_2 = create(:link_category)
-      link_category_3 = create(:link_category)
+      link_category_1 = create(:link_category, position: 1)
+      link_category_2 = create(:link_category, position: 5)
+      link_category_3 = create(:link_category, position: 10)
 
       i = create(:institution)
       create(:link, institution_id: i.id, category: link_category_2)
@@ -22,9 +22,9 @@ RSpec.describe Api::LinksController, :type => :request do
       get "api/institutions/#{i.id}/links", format: :json
       expect(last_response.status).to eq(200)
       expect(json_response.count).to eq(3)
-      expect(json_response[0][:category]).to eq(link_category_2.title)
-      expect(json_response[1][:category]).to eq(link_category_3.title)
-      expect(json_response[2][:category]).to eq(link_category_1.title)
+      expect(json_response[0][:category]).to eq(link_category_1.title)
+      expect(json_response[1][:category]).to eq(link_category_2.title)
+      expect(json_response[2][:category]).to eq(link_category_3.title)
     end
   end
 

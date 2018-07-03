@@ -70,7 +70,7 @@ class Api::LinksController < Api::BaseController
 
   def index
     @institution = Institution.find(params[:institution_id])
-    @links = @institution.links
+    @links = @institution.links.ordered_by_category
   end
 
   def import

@@ -63,8 +63,6 @@ class Api::LinkCategoriesController < Api::BaseController
   end
 
   def link_category_params
-    params[:link_category].permit(
-      :title
-    )
+    params[:link_category].permit(:title, :position)
   end
 end

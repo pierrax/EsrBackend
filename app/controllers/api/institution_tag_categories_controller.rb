@@ -69,7 +69,8 @@ class Api::InstitutionTagCategoriesController < Api::BaseController
   def category_params
     params[:institution_tag_category].permit(
         :title,
-        :origin
+        :origin,
+        :position
     )
   end
 end

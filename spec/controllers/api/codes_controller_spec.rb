@@ -79,16 +79,22 @@ RSpec.describe Api::CodesController, :type => :request do
   end
 
   describe '#index' do
-    let(:code_category) { create(:code_category) }
+    it 'returns all codes ordered by category' do
+      cc_1 = create(:code_category, position: 1, title: 'CC1')
+      cc_2 = create(:code_category, position: 10, title: 'CC2')
+      cc_3 = create(:code_category, position: 5, title: 'CC3')
 
-    it 'returns all codes' do
       i = create(:institution)
-      create(:code, institution_id: i.id)
-      create(:code, institution_id: i.id)
+      create(:code, institution_id: i.id, category: cc_1)
+      create(:code, institution_id: i.id, category: cc_2)
+      create(:code, institution_id: i.id, category: cc_3)
 
       get "api/institutions/#{i.id}/codes", format: :json
       expect(last_response.status).to eq(200)
-      expect(json_response.count).to eq(2)
+      expect(json_response.count).to eq(3)
+      expect(json_response[0][:category]).to eq('CC1')
+      expect(json_response[1][:category]).to eq('CC3')
+      expect(json_response[2][:category]).to eq('CC2')
     end
   end
 

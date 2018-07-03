@@ -24,13 +24,15 @@ RSpec.describe Api::LinkCategoriesController, :type => :request do
       it 'creates a category link' do
         params = {
           link_category: {
-            title: 'Facebook'
+            title: 'Facebook',
+            position: 10
           }
         }
 
         post 'api/link_categories', params.merge(format: 'json')
         expect(last_response.status).to eq(200)
         expect(LinkCategory.count).to eq(1)
+        expect(LinkCategory.last.position).to eq(10)
       end
     end
 
@@ -54,13 +56,15 @@ RSpec.describe Api::LinkCategoriesController, :type => :request do
       c = create(:link_category)
       params = {
         link_category: {
-          title: 'Facebook'
+          title: 'Facebook',
+          position: 5
         }
       }
 
       put "api/link_categories/#{c.id}", params.merge(format: 'json')
       expect(last_response.status).to eq(200)
       expect(LinkCategory.last.title).to eq('Facebook')
+      expect(LinkCategory.last.position).to eq(5)
     end
   end
 

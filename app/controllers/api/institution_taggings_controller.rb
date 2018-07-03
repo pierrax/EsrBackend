@@ -17,7 +17,7 @@ class Api::InstitutionTaggingsController < Api::BaseController
   end
   
   def index
-    @taggings = @institution.institution_taggings
+    @taggings = @institution.institution_taggings.ordered_by_category
   end
 
   def create

@@ -12,5 +12,5 @@ class InstitutionTag < ApplicationRecord
   validates :long_label, presence: true
 
   # Scopes
-  scope :ordered_by_category, -> { order('institution_tag_category_id asc') }
+  scope :ordered_by_category, -> { joins(:category).order('position asc') }
 end

@@ -25,7 +25,8 @@ RSpec.describe Api::InstitutionTagCategoriesController, :type => :request do
         params = {
             institution_tag_category: {
                 title: 'Privé',
-                origin: 'BCN'
+                origin: 'BCN',
+                position: 5
             }
         }
 
@@ -34,6 +35,7 @@ RSpec.describe Api::InstitutionTagCategoriesController, :type => :request do
         expect(InstitutionTagCategory.count).to eq(1)
         expect(InstitutionTagCategory.last.title).to eq('Privé')
         expect(InstitutionTagCategory.last.origin).to eq('BCN')
+        expect(InstitutionTagCategory.last.position).to eq(5)
       end
     end
 
@@ -59,7 +61,8 @@ RSpec.describe Api::InstitutionTagCategoriesController, :type => :request do
       params = {
           institution_tag_category: {
               title: 'Privé',
-              origin: 'BCN'
+              origin: 'BCN',
+              position: 3
           }
       }
 
@@ -67,6 +70,7 @@ RSpec.describe Api::InstitutionTagCategoriesController, :type => :request do
       expect(last_response.status).to eq(200)
       expect(InstitutionTagCategory.last.title).to eq('Privé')
       expect(InstitutionTagCategory.last.origin).to eq('BCN')
+      expect(InstitutionTagCategory.last.position).to eq(3)
     end
   end
 
